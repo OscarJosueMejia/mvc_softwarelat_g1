@@ -8,7 +8,7 @@ CREATE TABLE `pianos` (
   `pianoprice` DECIMAL(13,2) NULL,
   `pianoest` CHAR(3) NULL,
   PRIMARY KEY (`pianoid`));
-
+/*  */
 CREATE TABLE `scores` (
   `scoreid` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `scoredsc` VARCHAR(128) NULL,
