@@ -18,10 +18,10 @@
       use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
-      use Dao\Mnt\Productos;
+      use Dao\Mnt\Categorias;
 
       /**
-       * Producto
+       * Categoria
        *
        * @category Public
        * @package  Controllers\Admin;
@@ -29,7 +29,7 @@
        * @license  MIT http://
        * @link     http://
        */
-    class Producto extends PublicController
+    class Categoria extends PublicController
     {
       private $viewData = array();
       private $arrModeDesc = array();
@@ -54,7 +54,7 @@
         }
         // Ejecutar Siempre
         $this->processView();
-        Renderer::render("productos/Producto", $this->viewData);
+        Renderer::render("productos/Categoria", $this->viewData);
     }
 
     private function init()
@@ -63,42 +63,31 @@
         $this->viewData["mode"] = "";
         $this->viewData["mode_desc"] = "";
         $this->viewData["crsf_token"] = "";
-        $this->viewData["invPrdId"] = "";
-        $this->viewData["invPrdName"] = "";
-        $this->viewData["invPrdDsc"] = "";
-        $this->viewData["invPrd"] = "";
-        $this->viewData["invPrdPrice"] = "";
-        $this->viewData["invPrdImg"] = "";
+        $this->viewData["catid"] = "";
+        $this->viewData["catnom"] = "";
+        $this->viewData["catest"] = "";
+        $this->viewData["catestArr"] = array();
 
-        $this->viewData["error_invPrdName"] = array();
-        $this->viewData["error_invPrdDsc"] = array();
-        $this->viewData["error_invPrdCat"] = array();
-        $this->viewData["error_invPrdEst"] = array();
-        $this->viewData["error_invPrd"] = array();
-        $this->viewData["error_invPrdPrice"] = array();
-        $this->viewData["error_invPrdImg"] = array();
+        $this->viewData["error_catnom"] = array();
+        $this->viewData["error_catest"] = array();
 
-        $this->viewData["invPrdEst"] = "";
-        $this->viewData["invPrdEstArr"] = array();
-        $this->viewData["invPrdCat"] = "";
-        $this->viewData["invPrdCatArr"] = array();
-      
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
         $this->viewData["showBtn"] = true;
 
         $this->arrModeDesc = array(
-            "INS"=>"Nuevo Producto",
+            "INS"=>"Nuevo Categoria",
             "UPD"=>"Editando %s %s",
             "DSP"=>"Detalle de %s %s",
             "DEL"=>"Eliminado %s %s"
         );
 
-        $this->arrEstados = array( 
-            array("value" => "ACT", "text" => "Activo"),
-            array("value" => "INA", "text" => "Inactivo"),
-        );
-        $this->viewData["invPrdEstArr"] = $this->arrEstados;
+         $this->arrEstados = array(
+             array("value" => "ACT", "text" => "Activo"),
+             array("value" => "INA", "text" => "Inactivo"),
+         );
+
+         $this->viewData["catestArr"] = $this->arrEstados;
 
     }
 
@@ -107,18 +96,18 @@
         if (isset($_GET["mode"])) {
             $this->viewData["mode"] = $_GET["mode"];
             if (!isset($this->arrModeDesc[$this->viewData["mode"]])) {
-                error_log("Error: (Producto) Mode solicitado no existe.");
+                error_log("Error: (Categoria) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
-                    "index.php?page=productos_Productos",
+                    "index.php?page=productos_Categorias",
                     "No se puede procesar su solicitud!"
                 );
             }
         }
         if ($this->viewData["mode"] !== "INS" && isset($_GET["id"])) {
-            $this->viewData["invPrdId"] = intval($_GET["id"]);
-            $tmpProductos = Productos::getById($this->viewData["invPrdId"]);
-            error_log(json_encode($tmpProductos));
-            \Utilities\ArrUtils::mergeFullArrayTo($tmpProductos, $this->viewData);
+            $this->viewData["catid"] = intval($_GET["id"]);
+            $tmpCategorias = Categorias::getById($this->viewData["catid"]);
+            error_log(json_encode($tmpCategorias));
+            \Utilities\ArrUtils::mergeFullArrayTo($tmpCategorias, $this->viewData);
         }
     }
     private function procesarPost()
@@ -131,104 +120,59 @@
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {
             \Utilities\Site::redirectToWithMsg(
-                "index.php?page=productos_Productos",
+                "index.php?page=productos_Categorias",
                 "ERROR: Algo inesperado sucedió con la petición Intente de nuevo."
             );
         }
 
-        if (Validators::IsEmpty($this->viewData["invPrdName"])) {
-            $this->viewData["error_invPrdName"][]
-             = "El invPrdName es requerido";
+        if (Validators::IsEmpty($this->viewData["catnom"])) {
+            $this->viewData["error_catnom"][] = "El catnom es requerido";
             $hasErrors = true;
             }
 
-            if (Validators::IsEmpty($this->viewData["invPrdDsc"])) {
-            $this->viewData["error_invPrdDsc"][]
-             = "El invPrdDsc es requerido";
+            if (Validators::IsEmpty($this->viewData["catest"])) {
+            $this->viewData["error_catest"][] = "El catest es requerido";
             $hasErrors = true;
-            }
+        }
 
-            if (Validators::IsEmpty($this->viewData["invPrdCat"])) {
-            $this->viewData["error_invPrdCat"][]
-             = "El invPrdCat es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdEst"])) {
-            $this->viewData["error_invPrdEst"][]
-             = "El invPrdEst es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrd"])) {
-            $this->viewData["error_invPrd"][]
-             = "El invPrd es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdPrice"])) {
-            $this->viewData["error_invPrdPrice"][]
-             = "El invPrdPrice es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdImg"])) {
-            $this->viewData["error_invPrdImg"][]
-             = "El invPrdImg es requerido";
-            $hasErrors = true;
-    }
-
-
-
-        
         error_log(json_encode($this->viewData));
         // Ahora procedemos con las modificaciones al registro
         if (!$hasErrors) {
             $result = null;
             switch($this->viewData["mode"]) {
             case "INS":
-                $result = Productos::insert(
-                    $this->viewData["invPrdName"],
-                    $this->viewData["invPrdDsc"],
-                    $this->viewData["invPrdCat"],
-                    $this->viewData["invPrdEst"],
-                    $this->viewData["invPrd"],
-                    $this->viewData["invPrdPrice"],
-                    $this->viewData["invPrdImg"]
+                $result = Categorias::insert(
+                    $this->viewData["catnom"],
+            $this->viewData["catest"]
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
-                            "index.php?page=productos_Productos",
-                            "Producto Guardado Satisfactoriamente!"
+                            "index.php?page=productos_Categorias",
+                            "Categoria Guardado Satisfactoriamente!"
                         );
                 }
                 break;
             case "UPD":
-                $result = Productos::update(
-                  $this->viewData["invPrdId"],
-                  $this->viewData["invPrdName"],
-                  $this->viewData["invPrdDsc"],
-                  $this->viewData["invPrdCat"],
-                  $this->viewData["invPrdEst"],
-                  $this->viewData["invPrd"],
-                  $this->viewData["invPrdPrice"],
-                  $this->viewData["invPrdImg"]
+                $result = Categorias::update(
+                  $this->viewData["catid"],
+                $this->viewData["catnom"],
+                $this->viewData["catest"]
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Productos",
-                        "Producto Actualizado Satisfactoriamente"
+                        "index.php?page=productos_Categorias",
+                        "Categoria Actualizado Satisfactoriamente"
                     );
                 }
                 break;
             case "DEL":
-                $result = Productos::delete(
-                    intval($this->viewData["invPrdId"])
+                $result = Categorias::delete(
+                    intval($this->viewData["catid"])
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Productos",
-                        "Producto Eliminado Satisfactoriamente"
+                        "index.php?page=productos_Categorias",
+                        "Categoria Eliminado Satisfactoriamente"
                     );
                 }
                 break;
@@ -244,18 +188,18 @@
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
-                $this->viewData["invPrdId"],
-                $this->viewData["invPrdName"]
+                $this->viewData["catid"],
+                $this->viewData["catnom"]
             );
-            $this->viewData["invPrdEstArr"]
-                = \Utilities\ArrUtils::objectArrToOptionsArray(
-                    $this->arrEstados,
-                    "value",
-                    "text",
-                    "value",
-                    $this->viewData["invPrdEst"]
-                );
-
+          $this->viewData["catestArr"]
+              = \Utilities\ArrUtils::objectArrToOptionsArray(
+                  $this->arrEstados,
+                  "value",
+                  "text",
+                  "value",
+                  $this->viewData["catest"]
+              );
+            
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;
@@ -272,5 +216,3 @@
         $_SESSION[$this->name . "crsf_token"] = $this->viewData["crsf_token"];
     }
 }
-
-      
