@@ -14,13 +14,51 @@
 <div class="content">
     <div class="container-fluid">
         <label for="grid">Producto a buscar</label>
-        <div id="grid"></div>
+        <table id="grid">
+            <thead>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Acción</th>
+            </thead>
+            <tbody>
+                {{foreach Productos}}
+                <tr>
+                    <td>{{invPrdId}}</td>
+
+                    <td>
+                        {{if ~CanView}}
+                            <a href="index.php?page=admin_producto&mode=DSP&id={{invPrdId}}">{{invPrdName}}</a>
+                        {{endif ~CanView}}
+                        {{ifnot ~CanView}}
+                            {{invPrdName}}
+                        {{endifnot ~CanView}}
+                    </td>
+                    <td>{{invPrdCat}}</td>
+                    <td>5</td>
+                    <td>L. {{invPrdPrice}}</td>
+
+                    <td>
+                        {{if ~CanUpdate}}
+                            <a id="update" href="index.php?page=admin_producto&mode=UPD&id={{invPrdId}}" role="button"><i class="fas fa-pen"></i></a>
+                        {{endif ~CanUpdate}}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {{if ~CanDelete}}
+                            <a id="delete" href="index.php?page=admin_producto&mode=DEL&id={{invPrdId}}" role="button"><i class="fas fa-trash-alt"></i></a>
+                        {{endif ~CanDelete}}
+                    </td>
+                </tr>
+                {{endfor Productos}}
+            </tbody>
+        </table>
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
 
 <script>
-    $("div#grid").Grid({
+    $("table#grid").Grid({
 
         width: "100%",
 
@@ -49,43 +87,10 @@
             }
         },
 
-        columns: ["ID", "Nombre", "Categoría", "Precio", {name: "Acción", width: '95px', sort: false}],
-        data: [
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-            ["1", gridjs.html(`<a href="#" >Office 2021 Professional Plus PA</a>`), "Ofimatica", "L. 400.00", gridjs.html(`<a id="update" href="#" role="button"><i class="fas fa-pen"></i></a> &nbsp;&nbsp;&nbsp;&nbsp; <a id="delete" href="#" role="button"><i class="fas fa-trash-alt"></i></a>`)],
-        ]
+        columns: [{ name: "Acción", width: '95px', sort: false }],
     });
 
-    $(`<a style="float: right;width: 97px;" class="btn btn-primary" href="#" role="button">AGREGAR</a>`).insertBefore(".gridjs-search");
+    {{if CanInsert}}
+        $(`<a style="float: right;width: 97px;" class="btn btn-primary" href="index.php?page=admin_producto&mode=INS&id=0" role="button">AGREGAR</a>`).insertBefore(".gridjs-search");
+    {{endif CanInsert}}
 </script>
