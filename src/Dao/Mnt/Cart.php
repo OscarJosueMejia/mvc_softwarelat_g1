@@ -52,7 +52,7 @@ class Cart extends Table
         
         $sqlParams = [
             "usercod" => $usercod ,
-            "created_at" => date('m/d/y h:i:s',time()),
+            "created_at" => date('y/m/d h:i:s',time()),
         ];
         return self::executeNonQuery($sqlstr, $sqlParams);
     }
@@ -63,14 +63,15 @@ class Cart extends Table
      * @param [type] $usercod Current User Code
      * @return void
      */
-    public static function updateShopSession($usercod) {
+    public static function updateShopSession($usercod, $total) {
         $sqlstr = "UPDATE `shopping_session` SET 
-        `modified_at`=:modified_at 
+        `total`=:total, `modified_at`=:modified_at 
         where `usercod`=:usercod;";
         
         $sqlParams = [
             "usercod" => $usercod ,
-            "modified_at" => date('m/d/y h:i:s',time()),
+            "total" => $total,
+            "modified_at" => date('y/m/d h:i:s',time()),
         ];
 
         return self::executeNonQuery($sqlstr, $sqlParams);
@@ -94,7 +95,7 @@ class Cart extends Table
             "shopSessionId" => $shopSessionId ,
             "invPrdId" => $invPrdId ,
             "quantity" => $quantity ,
-            "created_at" => date('m/d/y h:i:s',time()),
+            "created_at" => date('y/m/d h:i:s',time()),
         ];
 
         return self::executeNonQuery($sqlstr, $sqlParams);
@@ -111,13 +112,13 @@ class Cart extends Table
     public static function updateCartItem($shopSessionId, $cartItemId, $quantity) {
         $sqlstr = "UPDATE `cart_item` SET 
         `quantity`=:quantity, `modified_at`=:modified_at 
-        where `cartItemId`=:cartItemId and `shopSessionId`=:$shopSessionId;";
+        where `cartItemId`=:cartItemId and `shopSessionId`=:shopSessionId;";
         
         $sqlParams = [
             "cartItemId" => $cartItemId ,
             "shopSessionId" => $shopSessionId ,
             "quantity" => $quantity ,
-            "modified_at" => date('m/d/y h:i:s',time()),
+            "modified_at" => date('y/m/d h:i:s',time()),
         ];
 
         return self::executeNonQuery($sqlstr, $sqlParams);
@@ -150,7 +151,20 @@ class Cart extends Table
         $sqlstr = "SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId =:invPrdId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT';";
         $sqlParams = array("invPrdId" => $invPrdId);
 
-        return self::obtenerRegistros($sqlstr, $sqlParams);
+        return self::obtenerUnRegistro($sqlstr, $sqlParams);
+    }
+
+     /**
+     * Sum cart amounts by shopping session.
+     *
+     * @param [type] $shopSessionId Shopping Session Id
+     * @return void
+     */
+    public static function getCartTotal($shopSessionId){
+        $sqlstr = "SELECT sum(b.invPrdPrice * a.quantity) as session_total from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId =:shopSessionId;";
+        $sqlParams = array("shopSessionId" => $shopSessionId);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams);
     }
 
     /**
@@ -171,4 +185,5 @@ class Cart extends Table
 
         return self::obtenerRegistros($sqlstr, $sqlParams);
     }
+    
 }

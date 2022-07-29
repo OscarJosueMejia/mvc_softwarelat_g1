@@ -18,5 +18,4 @@ class Accept extends PublicController{
         \Views\Renderer::render("paypal/accept", $dataview);
     }
 }
-
 ?>

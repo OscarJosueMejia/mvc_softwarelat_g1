@@ -199,8 +199,8 @@ CREATE TABLE `shopping_session` (
   `shopSessionId` bigint(13) NOT NULL AUTO_INCREMENT,
   `usercod` bigint(13) NOT NULL,
   `total` decimal(10,2) DEFAULT NULL,
-  `created_at` date DEFAULT NULL,
-  `modified_at` date DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
 
     primary key(`shopSessionId`),
 
@@ -216,8 +216,8 @@ CREATE TABLE `cart_item` (
   `shopSessionId` bigint(13) NOT NULL,
   `invPrdId` bigint(13) NOT NULL,
   `quantity` bigint(13) NOT NULL,
-  `created_at` date DEFAULT NULL,
-  `modified_at` date DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
 
     primary key(`cartItemId`),
 
@@ -282,6 +282,7 @@ insert into shopping_session values(2,2,0,now(),now());
 insert into cart_item values(2,2,1,1, now(),now());
 
 select * from shopping_session;
+select * from cart_item;
 
 select a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount from cart_item a inner join productos b on a.invPrdId = b.invPrdId;
 
@@ -291,4 +292,6 @@ SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId = 1) as di
 /*Verifica si el producto ya esta en el carrito del usuario*/
 SELECT count(a.cartItemId) from cart_item a inner join shopping_session b on a.shopSessionId = b.shopSessionId where invPrdId = 1 and usercod = 1;
 
-
+/*Sumar los carritos de una shop session*/
+SELECT sum(b.invPrdPrice * a.quantity) from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId = 1;
+ 
