@@ -252,3 +252,43 @@ CREATE TABLE `payment_details` (
     on update no action
 );
  
+
+insert into categorias values(1,'Ejemplo1','ACT');
+
+insert into usuario values(1,null,'usuario1','examplepass',null,null,null,'ACT',null,null,'ADM');
+insert into usuario values(2,null,'usuario2','examplepass',null,null,null,'ACT',null,null,'ADM');
+
+insert into productos values(1,'Product1','DescProduct1',1,'ACT',750,null);
+insert into claves_detalle values(1,1,'serialexample1-1','2022-08-28','ACT');
+insert into claves_detalle values(2,1,'serialexample1-2','2022-08-28','ACT');
+insert into claves_detalle values(3,1,'serialexample1-3','2022-08-28','ACT');
+insert into claves_detalle values(10,1,'serialexample1-4','2022-08-28','ACT');
+
+insert into productos values(2,'Product2','DescProduct2',1,'ACT',400,null);
+insert into claves_detalle values(4,2,'serialexample2-1','2022-08-28','ACT');
+insert into claves_detalle values(5,2,'serialexample2-2','2022-08-28','ACT');
+insert into claves_detalle values(6,2,'serialexample2-3','2022-08-28','ACT');
+
+insert into productos values(3,'Product3','DescProduct3',1,'ACT',1240,null);
+insert into claves_detalle values(7,3,'serialexample3-1','2022-08-28','ACT');
+insert into claves_detalle values(8,3,'serialexample3-2','2022-08-28','ACT');
+insert into claves_detalle values(9,3,'serialexample3-3','2022-08-28','ACT');
+
+insert into shopping_session values(1,1,0,now(),now());
+insert into cart_item values(1,1,1,2, now(),now());
+insert into cart_item values(3,1,2,1, now(),now());
+
+insert into shopping_session values(2,2,0,now(),now());
+insert into cart_item values(2,2,1,1, now(),now());
+
+select * from shopping_session;
+
+select a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount from cart_item a inner join productos b on a.invPrdId = b.invPrdId;
+
+/*Retorna la cantidad de producto disponible para ofrecer*/
+SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId = 1) as disponibles_venta from claves_detalle where invPrdId = 1 and invClvEst = "ACT";
+
+/*Verifica si el producto ya esta en el carrito del usuario*/
+SELECT count(a.cartItemId) from cart_item a inner join shopping_session b on a.shopSessionId = b.shopSessionId where invPrdId = 1 and usercod = 1;
+
+
