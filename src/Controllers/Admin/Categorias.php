@@ -16,7 +16,7 @@
       // Sección de imports
       // ---------------------------------------------------------------
       use Controllers\PublicController;
-      use Dao\Mnt\Categorias as DaoCategorias;
+      use Dao\Admin\Categorias as DaoCategorias;
       use Views\Renderer;
 
       /**
@@ -40,9 +40,13 @@
               // code
               $viewData = array();
               $viewData["Categorias"] = DaoCategorias::getAll();
+              $viewData["CanInsert"] = true;
+              $viewData["CanUpdate"] = true;
+              $viewData["CanDelete"] = true;
+              $viewData["CanView"] = true;
               error_log(json_encode($viewData));
 
-              Renderer::render("productos/Categorias", $viewData);
+              Renderer::render("admin/categorias", $viewData);
           }
       }
 ?>

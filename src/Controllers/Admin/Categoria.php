@@ -18,7 +18,7 @@
       use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
-      use Dao\Mnt\Categorias;
+      use Dao\Admin\Categorias;
 
       /**
        * Categoria
@@ -33,7 +33,7 @@
     {
       private $viewData = array();
       private $arrModeDesc = array();
-      //private $arrEstados = array(); Descomentar en caso que la tabla tenga estados
+      private $arrEstados = array();
 
       /**
        * Runs the controller
@@ -54,7 +54,7 @@
         }
         // Ejecutar Siempre
         $this->processView();
-        Renderer::render("productos/Categoria", $this->viewData);
+        Renderer::render("admin/categoria", $this->viewData);
     }
 
     private function init()
@@ -76,7 +76,7 @@
         $this->viewData["showBtn"] = true;
 
         $this->arrModeDesc = array(
-            "INS"=>"Nuevo Categoria",
+            "INS"=>"Nueva Categoria",
             "UPD"=>"Editando %s %s",
             "DSP"=>"Detalle de %s %s",
             "DEL"=>"Eliminado %s %s"
@@ -98,8 +98,10 @@
             if (!isset($this->arrModeDesc[$this->viewData["mode"]])) {
                 error_log("Error: (Categoria) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
-                    "index.php?page=productos_Categorias",
-                    "No se puede procesar su solicitud!"
+                    "index.php?page=admin_Categorias",
+                    "No se puede procesar su solicitud!",
+                    "Error en la operación Ejecutada",
+                    true
                 );
             }
         }
@@ -120,18 +122,15 @@
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {
             \Utilities\Site::redirectToWithMsg(
-                "index.php?page=productos_Categorias",
-                "ERROR: Algo inesperado sucedió con la petición Intente de nuevo."
+                "index.php?page=admin_Categorias",
+                "ERROR: Algo inesperado sucedió con la petición Intente de nuevo.",
+                "Error en la operación Ejecutada",
+                true
             );
         }
 
         if (Validators::IsEmpty($this->viewData["catnom"])) {
             $this->viewData["error_catnom"][] = "El catnom es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["catest"])) {
-            $this->viewData["error_catest"][] = "El catest es requerido";
             $hasErrors = true;
         }
 
@@ -147,8 +146,10 @@
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
-                            "index.php?page=productos_Categorias",
-                            "Categoria Guardado Satisfactoriamente!"
+                            "index.php?page=admin_Categorias",
+                            "Categoria Guardada Satisfactoriamente!",
+                            "Operación Ejecutada Correctamente",
+                            false
                         );
                 }
                 break;
@@ -160,8 +161,10 @@
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Categorias",
-                        "Categoria Actualizado Satisfactoriamente"
+                        "index.php?page=admin_Categorias",
+                        "Categoria Actualizada Satisfactoriamente",
+                        "Operación Ejecutada Correctamente",
+                        true
                     );
                 }
                 break;
@@ -171,8 +174,10 @@
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Categorias",
-                        "Categoria Eliminado Satisfactoriamente"
+                        "index.php?page=admin_Categorias",
+                        "Categoria Eliminada Satisfactoriamente",
+                        "Operación Ejecutada Correctamente",
+                        false
                     );
                 }
                 break;

@@ -1,6 +1,6 @@
 <?php
 
-      namespace Dao\Mnt;
+      namespace Dao\Admin;
 
       use Dao\Table;
       /**
@@ -18,8 +18,8 @@
           /*
           Tabla a generar:
           catid
-catnom
-catest
+            catnom
+            catest
 
           */
           /**
@@ -92,9 +92,9 @@ catest
           public static function delete($catid)
           {
               $sqlstr = "DELETE from `categorias` where catid=:catid;";
-              $sqlParams = array(
+              $sqlParams = [
                   "catid" => $catid
-              );
+              ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
       

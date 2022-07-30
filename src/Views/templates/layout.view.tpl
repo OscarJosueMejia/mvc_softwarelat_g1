@@ -24,6 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <style>
       .gridjs-pages>button { color: #6b7280; }
+      .error { color: red; }
     </style>
 
   </head>
@@ -90,15 +91,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="index.php?page=admin_productos" class="nav-link">
                   <i class="nav-icon fas fa-boxes"></i>
                   <p>
-                    Productos
+                    &nbsp;&nbsp;&nbsp;Productos
                   </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="index.php?page=admin_categorias" class="nav-link">
-
+                  <i class="nav-icon fas fa-tags"></i>
                   <p>
-                    Categorías
+                   &nbsp;&nbsp;&nbsp;Categorías
                   </p>
                 </a>
               </li>
