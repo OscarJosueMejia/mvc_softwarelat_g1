@@ -1,3 +1,12 @@
+<script src="/{{BASE_DIR}}/vendor/tinymce/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+      selector: '#invPrdDsc',
+      plugins: [
+        'link', 'preview'
+      ],
+  });
+</script>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -12,7 +21,7 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-      <div style="width:40%">
+      <div id="containerForm">
         <form action="index.php?page=productos_Producto" method="post" style="border-radius:1rem; padding:1rem; font-size:1.1rem">
           <input type="hidden" name="mode" value="{{mode}}" />
           <input type="hidden" name="crsf_token" value="{{crsf_token}}" />
@@ -40,7 +49,7 @@
 
            <div class="form-group" style="border-color:transparent;">
               <label for="invPrdCat"> Categoría</label><br />
-              <select name="invPrdCat" id="invPrdCat" {{if readonly}} readonly disabled {{endif readonly}} class="form-control col-md-6">
+              <select name="invPrdCat" id="invPrdCat" {{if readonly}} readonly disabled {{endif readonly}} class="form-control col-md-12">
                 {{foreach invPrdCatArr}}
                 <option value="{{value}}" {{selected}}>{{text}}</option>
                 {{endfor invPrdCatArr}}
@@ -48,7 +57,7 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6" style="border-color:transparent;">
+            <div class="form-group col-md-6 col-sm-12" style="border-color:transparent;">
               <label for="invPrdPrice"> Precio</label><br />
               <input type="number" class="form-control" id="invPrdPrice" placeholder="Precio" name="invPrdPrice" {{if readonly}} readonly {{endif readonly}} value="{{invPrdPrice}}"/>
                {{if error_invPrdPrice}}
@@ -58,24 +67,18 @@
                {{endif error_invPrdPrice}}
             </div>
 
-            <div class="form-group col-md-6" style="border-color:transparent;">
-              <label for="invPrd">Cantidad</label><br />
-              <input type="number" class="form-control"  id="invPrd" placeholder="Cantidad" name="invPrd" {{if readonly}} readonly {{endif readonly}} value="{{invPrd}}"/>
-              {{if error_invPrd}}
-              {{foreach error_invPrd}}
-              <div class="error">{{this}}</div>
-              {{endfor error_invPrd}}
-              {{endif error_invPrd}}
+            <div class="form-group col-md-6 col-sm-12" style="border-color:transparent;">
+              <label for="invPrdEst">Estado</label><br />
+              <select name="invPrdEst" id="invPrdEst" {{if readonly}} readonly disabled {{endif readonly}} class="form-control">
+                {{foreach invPrdEstArr}}
+                <option value="{{value}}" {{selected}}>{{text}}</option>
+                {{endfor invPrdEstArr}}
+              </select>
             </div>
           </div>
 
           <div class="form-group" style="border-color:transparent;">
-            <label for="invPrdEst">Estado</label><br />
-            <select name="invPrdEst" id="invPrdEst" {{if readonly}} readonly disabled {{endif readonly}} class="form-control col-md-6">
-              {{foreach invPrdEstArr}}
-              <option value="{{value}}" {{selected}}>{{text}}</option>
-              {{endfor invPrdEstArr}}
-            </select>
+            
           </div>
 
           <div class="form-group" style="border-color:transparent;">

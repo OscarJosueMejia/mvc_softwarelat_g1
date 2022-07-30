@@ -1,6 +1,6 @@
 <?php
       
-      namespace Dao\Mnt;
+      namespace Dao\Admin;
       
       use Dao\Table;
       
@@ -23,7 +23,6 @@ invPrdName
 invPrdDsc
 invPrdCat
 invPrdEst
-invPrd
 invPrdPrice
 invPrdImg
 

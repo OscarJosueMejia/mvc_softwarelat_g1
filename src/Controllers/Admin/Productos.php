@@ -2,7 +2,7 @@
 namespace Controllers\Admin;
 
 use Controllers\PublicController;
-use Dao\Mnt\Productos as DaoProductos;
+use Dao\Admin\Productos as DaoProductos;
 use Views\Renderer;
 
 class Productos extends PublicController
@@ -53,7 +53,7 @@ class Productos extends PublicController
         $viewData["CanDelete"] = true;
         $viewData["CanView"] = true;
         
-        Renderer::render('productos/productos', $viewData);
+        Renderer::render('admin/productos', $viewData);
     }
 }
 ?>

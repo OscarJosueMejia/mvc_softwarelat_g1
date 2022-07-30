@@ -2,6 +2,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
+<!DOCTYPE html>
 <html lang="es">
 
   <head>
@@ -25,15 +26,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <style>
       .gridjs-pages>button { color: #6b7280; }
       .error { color: red; }
+      .content { padding: 1rem !important; }
+      @media (min-width: 576px) { #containerForm {
+        width: 100%;
+      } }
+      @media (min-width: 768px) { #containerForm {
+        width: 40%;
+      } }
     </style>
 
   </head>
 
   <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper d-flex flex-column min-vh-100">
 
       <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light ">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -127,7 +135,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.control-sidebar -->
 
       <!-- Main Footer -->
-      <footer class="main-footer">
+      <footer class="main-footer mt-auto">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
           ICONOS DE REDES

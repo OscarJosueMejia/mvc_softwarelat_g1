@@ -52,15 +52,17 @@
            */
           public static function insert(
             $catnom,
+            $catdesc,
             $catest
           ) {
               $sqlstr = "INSERT INTO `categorias`
-      (`catnom`,`catest`)
+      (`catnom`, `catdesc`)
       VALUES
-      (:catnom,:catest);
+      (:catnom, :catdesc);
       ";
               $sqlParams = [
-                  "catnom" => $catnom, "catest" => $catest
+                  "catnom" => $catnom, 
+                  "catdesc" => $catdesc
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
@@ -70,13 +72,15 @@
           public static function update(
             $catid,
             $catnom,
+            $catdesc,
             $catest
           ) {
-              $sqlstr = "UPDATE `categorias` set   `catnom`=:catnom, `catest`=:catest
+              $sqlstr = "UPDATE `categorias` set   `catnom`=:catnom, `catdesc`=:catdesc, `catest`=:catest
               where `catid` =:catid;";
               $sqlParams = [
                 "catid" => $catid,
                 "catnom" => $catnom,
+                "catdesc" => $catdesc,
                 "catest" => $catest
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
@@ -91,9 +95,11 @@
            */
           public static function delete($catid)
           {
-              $sqlstr = "DELETE from `categorias` where catid=:catid;";
+              $sqlstr = "UPDATE `categorias` set  `catest`=:catest
+              where `catid` =:catid;";
               $sqlParams = [
-                  "catid" => $catid
+                "catid" => $catid,
+                "catest" => "INA"
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }

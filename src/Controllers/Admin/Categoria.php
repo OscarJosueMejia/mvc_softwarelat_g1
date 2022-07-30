@@ -65,6 +65,7 @@
         $this->viewData["crsf_token"] = "";
         $this->viewData["catid"] = "";
         $this->viewData["catnom"] = "";
+        $this->viewData["catdesc"] = "";
         $this->viewData["catest"] = "";
         $this->viewData["catestArr"] = array();
 
@@ -74,6 +75,7 @@
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
         $this->viewData["showBtn"] = true;
+        $this->viewData["viewState"] = false;
 
         $this->arrModeDesc = array(
             "INS"=>"Nueva Categoria",
@@ -130,10 +132,13 @@
         }
 
         if (Validators::IsEmpty($this->viewData["catnom"])) {
-            $this->viewData["error_catnom"][] = "El catnom es requerido";
+            $this->viewData["error_catnom"][] = "El Nombre de Categoría es requerido";
             $hasErrors = true;
         }
-
+        if (Validators::IsEmpty($this->viewData["catdesc"])) {
+            $this->viewData["error_catdesc"][] = "La Descripción de Categoría es requerida";
+            $hasErrors = true;
+        }
         error_log(json_encode($this->viewData));
         // Ahora procedemos con las modificaciones al registro
         if (!$hasErrors) {
@@ -142,12 +147,13 @@
             case "INS":
                 $result = Categorias::insert(
                     $this->viewData["catnom"],
-            $this->viewData["catest"]
+                    $this->viewData["catdesc"],
+                    $this->viewData["catest"]
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
                             "index.php?page=admin_Categorias",
-                            "Categoria Guardada Satisfactoriamente!",
+                            "Categoria Guardada Satisfactoriamente.",
                             "Operación Ejecutada Correctamente",
                             false
                         );
@@ -157,14 +163,15 @@
                 $result = Categorias::update(
                   $this->viewData["catid"],
                 $this->viewData["catnom"],
+                $this->viewData["catdesc"],
                 $this->viewData["catest"]
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=admin_Categorias",
-                        "Categoria Actualizada Satisfactoriamente",
+                        "Categoria Actualizada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
-                        true
+                        false
                     );
                 }
                 break;
@@ -175,7 +182,7 @@
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=admin_Categorias",
-                        "Categoria Eliminada Satisfactoriamente",
+                        "Categoria Eliminada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
                     );
@@ -190,6 +197,7 @@
         if ($this->viewData["mode"] === "INS") {
             $this->viewData["mode_desc"]  = $this->arrModeDesc["INS"];
             $this->viewData["btnEnviarText"] = "Guardar Nuevo";
+            $this->viewData["viewState"] = false;
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
@@ -208,13 +216,16 @@
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;
+                $this->viewData["viewState"] = true;
             }
             if ($this->viewData["mode"] === "DEL") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["btnEnviarText"] = "Eliminar";
+                $this->viewData["viewState"] = false;
             }
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
+                $this->viewData["viewState"] = true;
             }
         }
         $this->viewData["crsf_token"] = md5(getdate()[0] . $this->name);

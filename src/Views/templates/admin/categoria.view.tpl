@@ -3,8 +3,8 @@
   <h2 class="pt-5 mb-4 d-flex align-items-center justify-content-center">{{mode_desc}}</h2>
   <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-      <div style="width:50%">
-        <form action="index.php?page=admin_Categoria" method="post"
+      <div id="containerForm">
+        <form id="form" action="index.php?page=admin_Categoria" method="post"
           style="border-radius:1rem; padding:1rem; font-size:1.1rem">
           <input type="hidden" name="mode" value="{{mode}}" />
           <input type="hidden" name="crsf_token" value="{{crsf_token}}" />
@@ -22,6 +22,17 @@
           </div>
 
           <div class="form-group" style="border-color:transparent;">
+            <label for="catdesc">Descripción Categoría</label>
+            <textarea class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="catdesc" name="catdesc" placeholder="Descripción" />{{catdesc}}</textarea>
+            {{if error_catdesc}}
+            {{foreach error_catdesc}}
+            <div class="error">{{this}}</div>
+            {{endfor error_catdesc}}
+            {{endif error_catdesc}}
+          </div>
+          
+          {{if viewState}}
+            <div class="form-group" style="border-color:transparent;">
             <label for="catest">Estado</label><br />
             <select name="catest" id="catest" {{if readonly}} readonly disabled {{endif readonly}}
               class="form-control col-md-6">
@@ -30,13 +41,14 @@
               {{endfor catestArr}}
             </select>
           </div>
+          {{endif viewState}}
 
           <hr className="mt-5" />
           <br />
 
           <div class="d-flex align-items-center justify-content-center">
             {{if showBtn}}
-            <button name="btnEnviar" class="btn btn-warning" type="submit">{{btnEnviarText}}</button>
+            <button name="btnEnviar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#confirm-submit">{{btnEnviarText}}</button>
             &nbsp;&nbsp;&nbsp;
             {{endif showBtn}}
             <button class="btn btn-danger" name="btnCancelar" id="btnCancelar">Cancelar</button>
@@ -47,31 +59,27 @@
     </div>
 
   </div><!-- /.container-fluid -->
-  <!-- Button trigger modal -->
-  <button style="display: none;" id="modalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-    Launch static backdrop modal
-  </button>
+  
+  <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b>Confirmación de Operación</b>
+            </div>
+            <img class="mt-3" style="margin: auto; width:50px" src="https://i.ibb.co/6Bz2x2r/question.png" alt="question" border="0">
+            <div class="modal-body">
+                ¿Está seguro de ejecutar esta operación?
 
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" name="btnCancelar" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">No</button>
+                <button type="button" name="btnEnviar" id="btnEnviar" class="btn btn-success success">Sí</button>
+            </div>
         </div>
-        <div class="modal-body">
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+ 
 </div>
 <!-- /.content -->
 <script>
@@ -81,4 +89,7 @@
       window.location.href = "index.php?page=admin_Categorias";
     });
   });
+  $('#btnEnviar').click(function(){
+    $('#form').submit();
+});
 </script>

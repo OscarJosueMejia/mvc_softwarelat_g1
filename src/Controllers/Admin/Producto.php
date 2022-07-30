@@ -18,7 +18,7 @@
       use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
-      use Dao\Mnt\Productos;
+      use Dao\Admin\Productos;
 
       /**
        * Producto
@@ -33,7 +33,7 @@
     {
       private $viewData = array();
       private $arrModeDesc = array();
-      //private $arrEstados = array(); Descomentar en caso que la tabla tenga estados
+      private $arrEstados = array();
 
       /**
        * Runs the controller
@@ -54,7 +54,7 @@
         }
         // Ejecutar Siempre
         $this->processView();
-        Renderer::render("productos/Producto", $this->viewData);
+        Renderer::render("admin/producto", $this->viewData);
     }
 
     private function init()
@@ -110,7 +110,9 @@
                 error_log("Error: (Producto) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
                     "index.php?page=productos_Productos",
-                    "No se puede procesar su solicitud!"
+                    "No se puede procesar su solicitud!",
+                    "Error en la operación Ejecutada",
+                    true
                 );
             }
         }
@@ -132,7 +134,9 @@
         ) {
             \Utilities\Site::redirectToWithMsg(
                 "index.php?page=productos_Productos",
-                "ERROR: Algo inesperado sucedió con la petición Intente de nuevo."
+                "ERROR: Algo inesperado sucedió con la petición Intente de nuevo.",
+                "Error en la operación Ejecutada",
+                true
             );
         }
 
@@ -140,43 +144,34 @@
             $this->viewData["error_invPrdName"][]
              = "El invPrdName es requerido";
             $hasErrors = true;
-            }
+        }
 
-            if (Validators::IsEmpty($this->viewData["invPrdDsc"])) {
+        if (Validators::IsEmpty($this->viewData["invPrdDsc"])) {
             $this->viewData["error_invPrdDsc"][]
              = "El invPrdDsc es requerido";
             $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdCat"])) {
+        }
+    
+        if (Validators::IsEmpty($this->viewData["invPrdCat"])) {
             $this->viewData["error_invPrdCat"][]
              = "El invPrdCat es requerido";
             $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdEst"])) {
-            $this->viewData["error_invPrdEst"][]
-             = "El invPrdEst es requerido";
-            $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrd"])) {
+        }
+        if (Validators::IsEmpty($this->viewData["invPrd"])) {
             $this->viewData["error_invPrd"][]
              = "El invPrd es requerido";
             $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdPrice"])) {
+        }
+        if (Validators::IsEmpty($this->viewData["invPrdPrice"])) {
             $this->viewData["error_invPrdPrice"][]
              = "El invPrdPrice es requerido";
             $hasErrors = true;
-            }
-
-            if (Validators::IsEmpty($this->viewData["invPrdImg"])) {
+        }
+        if (Validators::IsEmpty($this->viewData["invPrdImg"])) {
             $this->viewData["error_invPrdImg"][]
              = "El invPrdImg es requerido";
             $hasErrors = true;
-    }
+        }
 
 
 
@@ -199,7 +194,9 @@
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
                             "index.php?page=productos_Productos",
-                            "Producto Guardado Satisfactoriamente!"
+                            "Producto Guardado Satisfactoriamente.",
+                            "Operación Ejecutada Correctamente",
+                            false
                         );
                 }
                 break;
@@ -217,7 +214,9 @@
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=productos_Productos",
-                        "Producto Actualizado Satisfactoriamente"
+                        "Producto Actualizado Satisfactoriamente.",
+                        "Operación Ejecutada Correctamente",
+                        false
                     );
                 }
                 break;
@@ -228,7 +227,9 @@
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=productos_Productos",
-                        "Producto Eliminado Satisfactoriamente"
+                        "Producto Eliminado Satisfactoriamente",
+                        "Operación Ejecutada Correctamente",
+                        false
                     );
                 }
                 break;
