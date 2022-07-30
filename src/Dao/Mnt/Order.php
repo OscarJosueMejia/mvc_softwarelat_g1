@@ -153,6 +153,27 @@ class Order extends Table
     }
 
     /**
+     * Unset products keys
+     *
+     * @param [type] $invPrdId Product ID
+     * @param [type] $quantity Product Quantity of Keys
+     * @return void
+     */
+    public static function disableKey($invClvId) {
+        
+        $sqlstr = "UPDATE `claves_detalle` SET 
+        `invClvEst`=:invClvEst 
+        where `invClvId`=:invClvId;";
+        
+        $sqlParams = [
+            "invClvEst" => "VEN",
+            "invClvId" => $invClvId,
+        ];
+
+        return self::executeNonQuery($sqlstr, $sqlParams);
+    }
+
+    /**
      * Insert Payment Data
      *
      * @param [type] $orderId Order Code
@@ -179,6 +200,6 @@ class Order extends Table
 
         return self::executeNonQuery($sqlstr, $sqlParams);
     }
-
+    
     
 }

@@ -43,12 +43,18 @@ class CartItems extends PublicController
                 DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
             }
         }
-
-        $viewData["ShoppingSession"] = $ShoppingSession;
-        $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
-        $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
-        $viewData["ItemsCount"] = count($viewData["CartItems"]);
         
+        if (!empty(DaoCart::getShoppingSession($devUser))) {
+            $viewData["ShoppingSession"] = $ShoppingSession;
+            $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
+            $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
+            $viewData["ItemsCount"] = count($viewData["CartItems"]);
+            $viewData["existentItems"] = true;
+        }else{
+            $viewData["ItemsCount"] = 0;
+            $viewData["SubTotal"] = 0;
+        }
+
         
         // error_log(json_encode($viewData));
       

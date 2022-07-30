@@ -41,6 +41,23 @@ class Cart extends Table
     }
 
     /**
+     * Get Cart Items Count By Shopping Session Code
+     *
+     * @param int $shopSessionId Código de la Sesión de Compra
+     *
+     * @return int
+     */
+    public static function getCartCount($shopSessionId){
+
+        $sqlstr = "SELECT count(*) as CountItems from cart_item where shopSessionId=:shopSessionId;";
+        $sqlParams = array("shopSessionId" => $shopSessionId);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["CountItems"];
+    }
+
+    
+
+    /**
      * Create Shopping Session
      *
      * @param [type] $usercod Current User Code
@@ -138,6 +155,44 @@ class Cart extends Table
         );
 
         return self::executeNonQuery($sqlstr, $sqlParams);
+    }
+
+    /**
+     * Delete All Cart Items in Shop Session
+     *
+     * @param [type] $cartItemId Cart Item to delete
+     * @return void
+     */
+    public static function deleteAllCartItems($shopSessionId)
+    {
+        try {
+            $sqlstr = "DELETE from `cart_item` where `shopSessionId` =:shopSessionId;";
+            $sqlParams = array(
+                "shopSessionId" => $shopSessionId
+            );
+            return self::executeNonQuery($sqlstr, $sqlParams);
+        } catch (\Throwable $th) {
+            error_log($th);
+        }
+    }
+
+    /**
+     * Delete All Cart Items in Shop Session
+     *
+     * @param [type] $cartItemId Cart Item to delete
+     * @return void
+     */
+    public static function deleteShoppingSession($shopSessionId)
+    {
+        try {
+            $sqlstr = "DELETE from `shopping_session` where `shopSessionId` =:shopSessionId;";
+            $sqlParams = array(
+                "shopSessionId" => $shopSessionId
+            );
+            return self::executeNonQuery($sqlstr, $sqlParams);
+        } catch (\Throwable $th) {
+            error_log($th);
+        }
     }
 
 

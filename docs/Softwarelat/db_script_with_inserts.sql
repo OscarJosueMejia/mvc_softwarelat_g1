@@ -156,6 +156,7 @@ CREATE TABLE `claves_detalle` (
 
 CREATE TABLE `order_details` (
   `orderId` bigint(13) NOT NULL AUTO_INCREMENT,
+  `orderCode` varchar(20) NOT NULL,
   `usercod` bigint(13) NOT NULL,
   `total` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,

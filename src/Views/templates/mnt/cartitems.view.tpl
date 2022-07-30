@@ -19,27 +19,27 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-row">
+                            <div class="d-flex flex-row align-items-center">
 
                                 <div class="d-flex flex-row align-items-center mr-5">
-                                    <form class="d-flex flex-row align-items-center"
+                                    <form class="d-flex flex-row align-items-center" style="margin-bottom: -0.2rem;"
                                         action="index.php?page=mnt_cartItems" method="post">
                                         <input type="hidden" id="cartItemId" name="cartItemId" value="{{cartItemId}}">
                                         <input type="hidden" id="invPrdId" name="invPrdId" value="{{invPrdId}}">
                                         <input type="hidden" id="quantity" name="quantity" value="{{quantity}}">
 
                                         <button class="mx-3"
-                                            style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:3rem;"
+                                            style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:2.4rem; width:2.4rem"
                                             type="submit" id="increaseQty" name="increaseQty">
                                             <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
                                                 width="15px">
                                         </button>
                                         <div class="d-flex justify-content-center p-3"
-                                            style="background-color:#f7f4f4; width:5rem; border-radius:5px; font-size: 1.3rem; ">
+                                            style="background-color:#f7f4f4; width:5rem; border-radius:5px; font-size: 1.3rem;">
                                             {{quantity}}
                                         </div>
                                         <button class="mx-3"
-                                            style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:3rem;"
+                                            style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:2.4rem; width:2.4rem"
                                             type="submit" id="decreaseQty" name="decreaseQty">
                                             <img src="https://cdn-icons-png.flaticon.com/512/659/659883.png"
                                                 width="15px">
@@ -55,7 +55,7 @@
                                         <input type="hidden" id="cartItemId" name="cartItemId" value="{{cartItemId}}">
 
                                         <button type="submit" id="deleteItem" name="deleteItem"
-                                            style="background-color:#fb9090; border:none; border-radius:10px; margin-top:0.4rem">
+                                            style="background-color:#fb9090; border:none; border-radius:10px; margin-top:0.7rem; height:2.6rem; width:2.6rem">
                                             <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
                                                 width="25px">
                                         </button>
@@ -76,11 +76,14 @@
                 <h5>SubTotal: {{SubTotal}}</h5>
             </div>
             <div class="text-center mt-5">
+                {{if existentItems}}
                 <form action="index.php?page=checkout_checkout" method="post">
-                    <button style="background-color: #ffc43c; border:none; border-radius:50px; width: 20rem">
+                    <button style="background-color: #ffc43c; border:none; border-radius:50px; width: 20rem;
+                        height:2.7rem">
                         <img src="https://logodownload.org/wp-content/uploads/2014/10/paypal-logo.png" width="110px">
                     </button>
                 </form>
+                {{endif existentItems}}
             </div>
         </div>
     </div>

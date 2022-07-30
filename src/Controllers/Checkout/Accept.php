@@ -9,66 +9,70 @@ use Controllers\PublicController;
 class Accept extends PublicController{
     public function run():void
     {
-        // $dataview = array();
-        // $devUser = 1;
+        $dataview = array();
+        $devUser = 1;
 
-        // $token = $_GET["token"] ?: "";
-        // $session_token = $_SESSION["orderid"] ?: "";
+        $token = $_GET["token"] ?: "";
+        $session_token = $_SESSION["orderid"] ?: "";
 
-        // if ($token !== "" && $token == $session_token) {
+        if ($token !== "" && $token == $session_token) {
 
-        //     $result = \Utilities\Paypal\PayPalCapture::captureOrder($session_token);
+            $result = \Utilities\Paypal\PayPalCapture::captureOrder($session_token);
             
-        //     //Orden Aceptada, Pago Realizado.
-        //     $ShoppingSession = DaoCart::getShoppingSession($devUser);
-        //     $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
-        //     $CartSubTotal = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
+            //Orden Aceptada, Pago Realizado.
+            $ShoppingSession = DaoCart::getShoppingSession($devUser);
+            $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
+            $CartSubTotal = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
 
-        //     try {
-        //         //Crear Orden
-        //         DaoOrder::createOrder($devUser, $CartSubTotal);
-        //         $LastOrder = DaoOrder::getLastOrder($devUser)["LastOrder"];
+            try {
+                //Crear Orden
+                DaoOrder::createOrder($devUser, $CartSubTotal);
+                $LastOrder = DaoOrder::getLastOrder($devUser)["LastOrder"];
                 
-        //         //Insertar cada Producto en la Orden
-        //         foreach ($CartItems as $CartItem) {
-        //             $ProductKeys = DaoOrder::getProductKeys(intval($CartItem["invPrdId"]), intval($CartItem["quantity"]));
+                //Insertar cada Producto en la Orden
+                foreach ($CartItems as $CartItem) {
+                    $ProductKeys = DaoOrder::getProductKeys(intval($CartItem["invPrdId"]), intval($CartItem["quantity"]));
                     
-        //             //Asignar una clave disponible por cada cantidad de producto.
-        //             for ($i=0; $i < intval($CartItem["quantity"]); $i++) { 
-        //                 DaoOrder::insertOrderItem($LastOrder, intval($CartItem["invPrdId"]), $ProductKeys[$i]["invClvId"]);
-        //             }
-        //         }
+                    //Asignar una clave disponible por cada cantidad de producto.
+                    for ($i=0; $i < intval($CartItem["quantity"]); $i++) { 
+                        DaoOrder::insertOrderItem($LastOrder, intval($CartItem["invPrdId"]), $ProductKeys[$i]["invClvId"]);
+                        DaoOrder::disableKey($ProductKeys[$i]["invClvId"]);
+                    }
+                }
 
-        //         DaoOrder::insertPaymentData($LastOrder, $CartSubTotal, "PAYPAL", json_encode($result), "COM");
+                //Registro de Datos de Pago
+                DaoOrder::insertPaymentData($LastOrder, $CartSubTotal, "PayPal", json_encode($result), "COM");
                 
-        //         //Eliminar del Carrito y Destruir la Session de Compra.
+                //Eliminar del Carrito y Destruir la Session de Compra.
+                DaoCart::deleteAllCartItems($ShoppingSession["shopSessionId"]);
+                DaoCart::deleteShoppingSession($ShoppingSession["shopSessionId"]);
+
+                //Datos que van hacia la vista
+                $dataview["OrderDetails"] = DaoOrder::getOrderById($LastOrder);
+                $dataview["OrderItems"] = DaoOrder::getOrderItems($LastOrder);
+        
+                $orderJSON = DaoOrder::getOrderById($LastOrder)[0]["orderJSON"];
+                $mainPPData = json_decode($orderJSON, true)["result"]["purchase_units"][0];
+                $secondaryPPData = json_decode($orderJSON, true)["result"]["payer"];
                 
+                $dataview["referenceId"] = $mainPPData["reference_id"];
+                $dataview["customer_name"] = $mainPPData["shipping"]["name"]["full_name"];
+                $dataview["address_line"] = $mainPPData["shipping"]["address"]["address_line_1"];
+                $dataview["admin_area"] = $mainPPData["shipping"]["address"]["admin_area_1"];
+                $dataview["postal_code"] = $mainPPData["shipping"]["address"]["postal_code"];
+                $dataview["country_code"] = $mainPPData["shipping"]["address"]["country_code"];
+                $dataview["email_address"] =$secondaryPPData["email_address"];
 
-        //     } catch (\Throwable $th) {
-        //         error_log($th);
-        //         echo $th;
-        //     }
+            } catch (\Throwable $th) {
+                error_log($th);
+                echo $th;
+            }
 
-        //     $dataview["orderjson"] = json_encode($result, JSON_PRETTY_PRINT);
-        // } else {
-
-        //     $dataview["orderjson"] = "No Order Available!!!";
-        // }
-        
-        $dataview["OrderDetails"] = DaoOrder::getOrderById(1);
-        $dataview["OrderItems"] = DaoOrder::getOrderItems(1);
-
-        $orderJSON = DaoOrder::getOrderById(1)[0]["orderJSON"];
-        $mainPPData = json_decode($orderJSON, true)["result"]["purchase_units"][0];
-        $secondaryPPData = json_decode($orderJSON, true)["result"]["payer"];
-        
-        $dataview["referenceId"] = $mainPPData["reference_id"];
-        $dataview["customer_name"] = $mainPPData["shipping"]["name"]["full_name"];
-        $dataview["address_line"] = $mainPPData["shipping"]["address"]["address_line_1"];
-        $dataview["admin_area"] = $mainPPData["shipping"]["address"]["admin_area_1"];
-        $dataview["postal_code"] = $mainPPData["shipping"]["address"]["postal_code"];
-        $dataview["country_code"] = $mainPPData["shipping"]["address"]["country_code"];
-        $dataview["email_address"] =$secondaryPPData["email_address"];
+            $dataview["orderjson"] = json_encode($result, JSON_PRETTY_PRINT);
+        } else {
+            $dataview["orderjson"] = "No Order Available!!!";
+        }
+    
 
         \Views\Renderer::render("paypal/accept", $dataview);
     }

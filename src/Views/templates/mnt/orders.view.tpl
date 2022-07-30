@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Compras</h1>
+                <h1 class="m-0">Historial de Compras</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -18,7 +18,7 @@
             <thead>
                 <th>Orden ID</th>
                 <th>Fecha</th>
-                <th>Total</th>
+                <th>Precio Total</th>
                 <th>Acción</th>
             </thead>
             <tbody>
@@ -26,9 +26,9 @@
                 <tr>
                     <td>{{orderId}}</td>
                     <td>{{created_at}}</td>
-                    <td>{{total}}</td>
+                    <td>Lps. {{total}}</td>
                     <td>
-                        <a id="update" href="index.php?page=admin_producto&mode=UPD&id=1" role="button">
+                        <a id="update" href="index.php?page=mnt_order&mode=DSP&id=1" role="button">
                             <i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
