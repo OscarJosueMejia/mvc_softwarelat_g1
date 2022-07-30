@@ -5,6 +5,7 @@ namespace Controllers\Mnt;
 use Controllers\PublicController;
 use Dao\Dao;
 use Dao\Mnt\Cart as DaoCart;
+use Dao\Mnt\Order as DaoOrder;
 use Views\Renderer;
 
 class CartItems extends PublicController
@@ -13,7 +14,6 @@ class CartItems extends PublicController
     {
         $viewData = array();
         $devUser = 1;
-
         $ShoppingSession = DaoCart::getShoppingSession($devUser);
 
         if($this->isPostBack()){

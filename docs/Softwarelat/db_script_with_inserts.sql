@@ -158,7 +158,6 @@ CREATE TABLE `order_details` (
   `orderId` bigint(13) NOT NULL AUTO_INCREMENT,
   `usercod` bigint(13) NOT NULL,
   `total` decimal(10,2) DEFAULT NULL,
-  `paymentId` varchar(50) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `modified_at` date DEFAULT NULL,
 
@@ -175,7 +174,7 @@ CREATE TABLE `order_item` (
   `orderItemId` bigint(13) NOT NULL AUTO_INCREMENT,
   `orderId` bigint(13) NOT NULL,
   `invPrdId` bigint(13)  DEFAULT NULL,
-  `quantity` bigint(13) NOT NULL,
+  `invClvId` bigint(13)  DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `modified_at` date DEFAULT NULL,
 
@@ -190,6 +189,12 @@ CREATE TABLE `order_item` (
     constraint fk_orderitem_productos
     foreign key (invPrdId)
     references softwarelat_db.productos (invPrdId)
+    on delete no action
+    on update no action,
+    
+	constraint fk_orderitem_clavesproductos
+    foreign key (invClvId)
+    references softwarelat_db.claves_detalle (invClvId)
     on delete no action
     on update no action
 );
@@ -238,12 +243,13 @@ CREATE TABLE `payment_details` (
   `paymentId` bigint(13) NOT NULL AUTO_INCREMENT,
   `orderId` bigint(13) NOT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
-  `provider` varchar(50) DEFAULT NULL,
-  `status` char(3) DEFAULT NULL,
+  `providerName` varchar(50) DEFAULT NULL,
+  `payStatus` char(3) DEFAULT NULL,
+  `orderJSON` text NULL,
   `created_at` date DEFAULT NULL,
   `modified_at` date DEFAULT NULL,
 
-    primary key(`paymentId`),
+      primary key(`paymentId`),
 
     constraint fk_paymentdetails_orderdetails
     foreign key (orderId)
@@ -284,6 +290,9 @@ insert into cart_item values(2,2,1,1, now(),now());
 select * from shopping_session;
 select * from cart_item;
 
+select * from order_details where usercod = 1;
+select * from order_item a inner join order_details b on a.orderId = b.orderId where b.usercod = 1;
+
 select a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount from cart_item a inner join productos b on a.invPrdId = b.invPrdId;
 
 /*Retorna la cantidad de producto disponible para ofrecer*/
@@ -294,4 +303,14 @@ SELECT count(a.cartItemId) from cart_item a inner join shopping_session b on a.s
 
 /*Sumar los carritos de una shop session*/
 SELECT sum(b.invPrdPrice * a.quantity) from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId = 1;
+
+/*Extraer las claves*/
+SELECT invClvId from claves_detalle where invPrdId = 1 and invClvEst = "ACT" limit 1;
  
+ /*Detalles del Item de Orden*/
+ SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, b.invPrdDsc, b.invPrdPrice, c.invClvId, c.invClvSerial, c.invClvExp  
+ FROM order_item a 
+ inner join productos b on a.invPrdId = b.invPrdId 
+ inner join claves_detalle c on a.invClvId = c.invClvId where a.orderId = 1;
+ 
+SELECT * FROM order_details a inner join payment_details b on a.orderId = b.orderId where a.orderId = 1;

@@ -24,10 +24,12 @@ class Security {
             "userEmail" => $userEmail
         );
     }
+    
     public static function isLogged():bool
     {
         return isset($_SESSION["login"]) && $_SESSION["login"]["isLogged"];
     }
+
     public static function getUser()
     {
         if (isset($_SESSION["login"])) {

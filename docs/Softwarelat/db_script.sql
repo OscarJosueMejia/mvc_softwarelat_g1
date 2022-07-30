@@ -238,8 +238,8 @@ CREATE TABLE `payment_details` (
   `paymentId` bigint(13) NOT NULL AUTO_INCREMENT,
   `orderId` bigint(13) NOT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
-  `provider` varchar(50) DEFAULT NULL,
-  `status` char(3) DEFAULT NULL,
+  `providerName` varchar(50) DEFAULT NULL,
+  `payStatus` char(3) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `modified_at` date DEFAULT NULL,
 

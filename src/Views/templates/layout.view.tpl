@@ -38,6 +38,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="nav-item d-none d-sm-inline-block">
           <a href="index.php?page=mnt_cartItems" class="nav-link">Carrito</a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="index.php?page=mnt_orders" class="nav-link">Mis Compras</a>
+        </li>
       </ul>
 
       <!-- Right navbar links -->
