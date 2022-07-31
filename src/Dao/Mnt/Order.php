@@ -72,7 +72,7 @@ class Order extends Table
     public static function getOrderItems($orderId){
 
         $sqlstr = "SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, 
-        b.invPrdDsc, b.invPrdPrice, c.invClvId, c.invClvSerial, c.invClvExp 
+        b.invPrdDsc, b.invPrdPrice, b.invPrdPriceISV, c.invClvId, c.invClvSerial, c.invClvExp 
         FROM order_item a inner join productos b on a.invPrdId = b.invPrdId 
         inner join claves_detalle c on a.invClvId = c.invClvId where a.orderId =:orderId";
 

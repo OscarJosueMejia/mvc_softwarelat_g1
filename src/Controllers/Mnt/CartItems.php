@@ -73,19 +73,22 @@ class CartItems extends PublicController
         if (!empty(DaoCart::getShoppingSession($devUser))) {
             $viewData["ShoppingSession"] = $ShoppingSession;
             $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
-            $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
+            $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_subtotal"];
+            $viewData["Total"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
             $viewData["ItemsCount"] = DaoCart::getCartAllItems(intval($ShoppingSession["shopSessionId"]));
             $viewData["existentItems"] = true;
            
 
             $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
             if ($lpsInUsdValue != false) {
-                $viewData["DollarsTotal"] = round($lpsInUsdValue * doubleval($viewData["SubTotal"]),2);
+                $viewData["DollarsTotal"] = round($lpsInUsdValue * doubleval($viewData["Total"]),2);
             }
             
         }else{
             $viewData["ItemsCount"] = 0;
             $viewData["SubTotal"] = 0;
+            $viewData["Total"] = 0;
+            $viewData["DollarsTotal"] = 0;
         }
 
         if ($cartErrors) {

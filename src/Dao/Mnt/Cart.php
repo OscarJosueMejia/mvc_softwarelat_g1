@@ -31,7 +31,7 @@ class Cart extends Table
     public static function getCartItems($shopSessionId){
 
         $sqlstr = "SELECT a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdPriceISV,
-        b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount 
+        b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amountNoISV, (b.invPrdPriceISV * a.quantity) as amount  
         from cart_item a inner join productos b on a.invPrdId = b.invPrdId 
         where shopSessionId=:shopSessionId;";
 
@@ -248,7 +248,7 @@ class Cart extends Table
      * @return void
      */
     public static function getCartTotal($shopSessionId){
-        $sqlstr = "SELECT sum(b.invPrdPrice * a.quantity) as session_total from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId =:shopSessionId;";
+        $sqlstr = "SELECT sum(b.invPrdPriceISV * a.quantity) as session_total, sum(b.invPrdPrice * a.quantity) as session_subtotal from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId =:shopSessionId;";
         $sqlParams = array("shopSessionId" => $shopSessionId);
 
         return self::obtenerUnRegistro($sqlstr, $sqlParams);

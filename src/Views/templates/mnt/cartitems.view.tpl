@@ -67,6 +67,10 @@
                 </div>
                 {{endfor CartItems}}
             </div>
+            {{if existentItems}}
+            <small style="font-size: 1.2rem;"> <i>El precio de cada producto tiene I.S.V. incluidos.</i></small>
+            {{endif existentItems}}
+
         </div>
 
 
@@ -75,7 +79,9 @@
             <div class="mt-4">
                 <h5><strong>Cantidad:</strong> {{ItemsCount}} artículos</h5>
                 <h5><strong>SubTotal:</strong> Lps. {{SubTotal}}</h5>
-                <h5><strong>SubTotal:</strong> ${{DollarsTotal}}</h5>
+                <hr class="mt-5">
+                <h5 class="mt-4"><strong>Total (ISV Incluidos):</strong> Lps. {{Total}}</h5>
+                <h5><strong>Total USD:</strong> ${{DollarsTotal}}</h5>
             </div>
             <div class="text-center mt-5">
                 {{if existentItems}}

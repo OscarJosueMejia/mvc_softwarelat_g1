@@ -20,7 +20,7 @@
                         <td>{{invPrdName}}</td>
                         <td>{{invClvSerial}}</td>
                         <td>1</td>
-                        <td>Lps. {{invPrdPrice}}</td>
+                        <td>Lps. {{invPrdPriceISV}}</td>
                         <td>{{invClvExp}}</td>
                     </tr>
                     {{endfor OrderItems}}
