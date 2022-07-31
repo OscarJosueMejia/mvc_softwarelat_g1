@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\Mnt;
+namespace Controllers\Orders;
 
 use Controllers\PublicController;
 use Dao\Dao;
@@ -17,7 +17,7 @@ class Orders extends PublicController
         $viewData["Orders"] = DaoOrder::getOrders($devUser);
         // error_log(json_encode($viewData));
       
-        Renderer::render('mnt/orders', $viewData);
+        Renderer::render('orders/orders', $viewData);
     }
 }
 

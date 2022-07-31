@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\Mnt;
+namespace Controllers\Orders;
 
 use Dao\Mnt\Order as DaoOrder;
 
@@ -30,9 +30,9 @@ class Order extends PublicController{
                 $dataview["postal_code"] = $mainPPData["shipping"]["address"]["postal_code"];
                 $dataview["country_code"] = $mainPPData["shipping"]["address"]["country_code"];
                 $dataview["email_address"] =$secondaryPPData["email_address"];            
-                \Views\Renderer::render("mnt/order", $dataview);
+                \Views\Renderer::render("orders/order", $dataview);
             }else{
-                \Utilities\Site::redirectTo("index.php?page=mnt_orders");
+                \Utilities\Site::redirectTo("index.php?page=orders_orders");
             }
         }
     }

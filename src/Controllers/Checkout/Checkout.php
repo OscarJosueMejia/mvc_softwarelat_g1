@@ -38,7 +38,7 @@ class Checkout extends PublicController{
             \Utilities\Site::redirectTo($response[0]->href);
             die();
         }else{
-            \Utilities\Site::redirectTo("index.php?page=mnt_cartItems");
+            \Utilities\Site::redirectTo("index.php?page=orders_cartItems");
             die();
         }
 

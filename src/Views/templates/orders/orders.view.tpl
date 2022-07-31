@@ -28,7 +28,7 @@
                     <td>{{created_at}}</td>
                     <td>Lps. {{total}}</td>
                     <td>
-                        <a id="update" href="index.php?page=mnt_order&mode=DSP&id=1" role="button">
+                        <a id="update" href="index.php?page=orders_order&mode=DSP&id=1" role="button">
                             <i class="fas fa-eye"></i></a>
                     </td>
                 </tr>

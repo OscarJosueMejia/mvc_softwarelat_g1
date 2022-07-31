@@ -52,10 +52,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a href="index.php?page=admin_productos" class="nav-link">Productos</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=mnt_cartItems" class="nav-link">Carrito</a>
+          <a href="index.php?page=orders_cartItems" class="nav-link">Carrito</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=mnt_orders" class="nav-link">Mis Compras</a>
+          <a href="index.php?page=orders_orders" class="nav-link">Mis Compras</a>
         </li>
       </ul>
 

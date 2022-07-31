@@ -23,7 +23,7 @@
 
                                 <div class="d-flex flex-row align-items-center mr-5">
                                     <form class="d-flex flex-row align-items-center" style="margin-bottom: -0.2rem;"
-                                        action="index.php?page=mnt_cartItems" method="post">
+                                        action="index.php?page=orders_cartItems" method="post">
                                         <input type="hidden" id="cartItemId" name="cartItemId" value="{{cartItemId}}">
                                         <input type="hidden" id="invPrdId" name="invPrdId" value="{{invPrdId}}">
                                         <input type="hidden" id="quantity" name="quantity" value="{{quantity}}">
@@ -51,7 +51,7 @@
                                     Lps. {{amount}}
                                 </div>
                                 <div>
-                                    <form action="index.php?page=mnt_cartItems" method="post">
+                                    <form action="index.php?page=orders_cartItems" method="post">
                                         <input type="hidden" id="cartItemId" name="cartItemId" value="{{cartItemId}}">
 
                                         <button type="submit" id="deleteItem" name="deleteItem"
@@ -86,7 +86,7 @@
             </div>
             <div class="text-center mt-5">
                 {{if existentItems}}
-                <form action="index.php?page=mnt_cartItems" method="post">
+                <form action="index.php?page=orders_cartItems" method="post">
                     <button style="background-color: #ffc43c; border:none; border-radius:50px; width: 20rem;
                         height:2.7rem" id="goPayPal" name="goPayPal">
                         <img src="https://logodownload.org/wp-content/uploads/2014/10/paypal-logo.png" width="110px">

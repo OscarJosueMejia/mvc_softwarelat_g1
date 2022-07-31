@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers\Mnt;
+namespace Controllers\Orders;
 
 use Controllers\PublicController;
 use Dao\Dao;
@@ -101,7 +101,7 @@ class CartItems extends PublicController
 
 
         // error_log(json_encode($viewData));
-        Renderer::render('mnt/cartitems', $viewData);
+        Renderer::render('orders/cartitems', $viewData);
     }
 }
 
