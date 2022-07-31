@@ -16,12 +16,11 @@
       // Sección de imports
       // ---------------------------------------------------------------
       use Controllers\PublicController;
-      use Dao\Admin\ClavesDetalles as DaoClavesDetalles;
       use Dao\Admin\Productos as DaoProductos;
       use Views\Renderer;
       
       /**
-       * ClavesDetalles
+       * ClavesProductos
        *
        * @category Public
        * @package  Controllers\Admin;
@@ -29,7 +28,7 @@
        * @license  MIT http://
        * @link     http://
        */
-      class ClavesDetalles extends PublicController
+      class ClavesProductos extends PublicController
       {
           /**
            * Runs the controller
@@ -41,14 +40,13 @@
               // code
               $viewData = array();
               $viewData["Productos"] = DaoProductos::getAll();
-              $viewData["ClavesDetalles"] = DaoClavesDetalles::getAll();
               $viewData["CanInsert"] = true;
               $viewData["CanUpdate"] = true;
               $viewData["CanDelete"] = true;
               $viewData["CanView"] = true;
               error_log(json_encode($viewData));
 
-              Renderer::render("admin/ClavesDetalles", $viewData);
+              Renderer::render("admin/ClavesProductos", $viewData);
           }
       }
 
