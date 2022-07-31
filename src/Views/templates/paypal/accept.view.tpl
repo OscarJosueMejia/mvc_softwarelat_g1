@@ -15,21 +15,23 @@
                 <table class="table table-striped" style="font-size: 1.2rem;">
                     <tr>
                         <th>Producto</th>
+                        <th>Categoría</th>
                         <th>Clave de Producto</th>
                         <th>Límite de Activación</th>
                         <th>Precio Unitario</th>
-                        <th>Fecha de Expiración</th>
                     </tr>
                     {{foreach OrderItems}}
                     <tr>
                         <td>{{invPrdName}}</td>
+                        <td>{{catnom}}</td>
                         <td>{{invClvSerial}}</td>
                         <td>1</td>
                         <td>Lps. {{invPrdPriceISV}}</td>
-                        <td>{{invClvExp}}</td>
                     </tr>
                     {{endfor OrderItems}}
                 </table>
+                <small style="font-size: 1rem;"> <i>El precio de cada producto tiene I.S.V. incluidos.</i></small>
+
             </div>
         </div>
         <hr>

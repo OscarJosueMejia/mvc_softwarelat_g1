@@ -10,12 +10,12 @@
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="mx-3">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/807/807292.png"
-                                        class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                    <img src="{{invPrdImg}}" class="img-fluid rounded-3" alt="Shopping item"
+                                        style="width: 65px;">
                                 </div>
                                 <div class="ml-3 ms-3">
                                     <h5 style="font-size: 1.4rem;">{{invPrdName}}</h5>
-                                    <p class="small mb-0" style="font-size: 1.1rem;">{{invPrdDsc}}</p>
+                                    <p class="small mb-0" style="font-size: 1.1rem;">{{catnom}}</p>
                                 </div>
                             </div>
 

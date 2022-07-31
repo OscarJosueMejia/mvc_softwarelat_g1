@@ -267,18 +267,18 @@ insert into categorias values(1,'Ejemplo1','ACT');
 insert into usuario values(1,null,'usuario1','examplepass',null,null,null,'ACT',null,null,'ADM');
 insert into usuario values(2,null,'usuario2','examplepass',null,null,null,'ACT',null,null,'ADM');
 
-insert into productos values(1,'Product1','DescProduct1',1,'ACT',805,700,null);
+insert into productos values(1,'Product1','DescProduct1',1,'ACT',805,700,"https://cdn-icons-png.flaticon.com/512/807/807292.png");
 insert into claves_detalle values(1,1,'serialexample1-1','2022-08-28','ACT');
 insert into claves_detalle values(2,1,'serialexample1-2','2022-08-28','ACT');
 insert into claves_detalle values(3,1,'serialexample1-3','2022-08-28','ACT');
 insert into claves_detalle values(10,1,'serialexample1-4','2022-08-28','ACT');
 
-insert into productos values(2,'Product2','DescProduct2',1,'ACT',402.5,350,null);
+insert into productos values(2,'Product2','DescProduct2',1,'ACT',402.5,350,"https://cdn-icons-png.flaticon.com/512/807/807292.png");
 insert into claves_detalle values(4,2,'serialexample2-1','2022-08-28','ACT');
 insert into claves_detalle values(5,2,'serialexample2-2','2022-08-28','ACT');
 insert into claves_detalle values(6,2,'serialexample2-3','2022-08-28','ACT');
 
-insert into productos values(3,'Product3','DescProduct3',1,'ACT',1357, 1180,null);
+insert into productos values(3,'Product3','DescProduct3',1,'ACT',1357, 1180,"https://cdn-icons-png.flaticon.com/512/807/807292.png");
 insert into claves_detalle values(7,3,'serialexample3-1','2022-08-28','ACT');
 insert into claves_detalle values(8,3,'serialexample3-2','2022-08-28','ACT');
 insert into claves_detalle values(9,3,'serialexample3-3','2022-08-28','ACT');
@@ -330,10 +330,12 @@ SELECT sum(b.invPrdPrice * a.quantity) from cart_item a inner join productos b o
 SELECT * from claves_detalle where invPrdId = 1 and invClvEst = "ACT" and invClvExp >= now()  order by invClvExp asc limit 1;
  
  /*Detalles del Item de Orden*/
- SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, b.invPrdDsc, b.invPrdPrice, c.invClvId, c.invClvSerial, c.invClvExp  
+ SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, b.invPrdDsc, b.invPrdPrice, c.invClvId, c.invClvSerial, c.invClvExp, d.catnom
  FROM order_item a 
  inner join productos b on a.invPrdId = b.invPrdId 
- inner join claves_detalle c on a.invClvId = c.invClvId where a.orderId = 1;
+ inner join claves_detalle c on a.invClvId = c.invClvId 
+ inner join categorias d on b.invPrdCat = d.catid
+ where a.orderId = 1;
  
 SELECT * FROM order_details a inner join payment_details b on a.orderId = b.orderId where a.orderId = 1;
 
@@ -348,4 +350,4 @@ call DeleteShopSessionByTime();
 SELECT sum(b.invPrdPriceISV * a.quantity) as session_total, sum(b.invPrdPrice * a.quantity) as session_subtotal from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId =1;
 
 
-SELECT created_at, DATE_ADD(created_at, INTERVAL 2 DAY) from shopping_session;
+SELECT * FROM orders

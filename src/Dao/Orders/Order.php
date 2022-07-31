@@ -21,6 +21,17 @@ class Order extends Table
     }
 
     /**
+     * Get Order List [ADMIN MODE]
+     *
+     * @return array
+     */
+    public static function getOrdersAdm(){
+        $sqlstr = "SELECT * FROM order_details a inner join payment_details b on a.orderId = b.orderId;";
+
+        return self::obtenerRegistros($sqlstr, []);
+    }
+
+    /**
      * Get general Order Count
      *
      * @param int $usercod Código del Usuario Actual
@@ -72,9 +83,11 @@ class Order extends Table
     public static function getOrderItems($orderId){
 
         $sqlstr = "SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, 
-        b.invPrdDsc, b.invPrdPrice, b.invPrdPriceISV, c.invClvId, c.invClvSerial, c.invClvExp 
+        b.invPrdDsc, b.invPrdPrice, b.invPrdPriceISV, c.invClvId, c.invClvSerial, c.invClvExp, d.catnom 
         FROM order_item a inner join productos b on a.invPrdId = b.invPrdId 
-        inner join claves_detalle c on a.invClvId = c.invClvId where a.orderId =:orderId";
+        inner join claves_detalle c on a.invClvId = c.invClvId 
+        inner join categorias d on b.invPrdCat = d.catid
+        where a.orderId =:orderId";
 
         $sqlParams = array("orderId" => $orderId);
 

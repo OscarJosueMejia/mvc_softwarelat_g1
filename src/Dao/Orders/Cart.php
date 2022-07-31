@@ -31,8 +31,8 @@ class Cart extends Table
     public static function getCartItems($shopSessionId){
 
         $sqlstr = "SELECT a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdPriceISV,
-        b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amountNoISV, (b.invPrdPriceISV * a.quantity) as amount  
-        from cart_item a inner join productos b on a.invPrdId = b.invPrdId 
+        b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amountNoISV, (b.invPrdPriceISV * a.quantity) as amount, c.catnom  
+        from cart_item a inner join productos b on a.invPrdId = b.invPrdId inner join categorias c on b.invPrdCat = c.catid
         where shopSessionId=:shopSessionId;";
 
         $sqlParams = array("shopSessionId" => $shopSessionId);

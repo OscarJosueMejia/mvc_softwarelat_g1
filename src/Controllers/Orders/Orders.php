@@ -14,9 +14,13 @@ class Orders extends PublicController
         $viewData = array();
         $devUser = 1;
 
-        $viewData["Orders"] = DaoOrder::getOrders($devUser);
-        // error_log(json_encode($viewData));
-      
+        // (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "ADM"))
+        if(\Utilities\Security::isInRol($devUser, "ADM")){
+            $viewData["Orders"] = DaoOrder::getOrdersAdm();
+        }else{
+            $viewData["Orders"] = DaoOrder::getOrders($devUser);
+        }
+        
         Renderer::render('orders/orders', $viewData);
     }
 }
