@@ -68,7 +68,6 @@
         $this->viewData["invPrdId"] = "";
         $this->viewData["invPrdName"] = "";
         $this->viewData["invPrdDsc"] = "";
-        $this->viewData["invPrd"] = "";
         $this->viewData["invPrdPrice"] = "";
         $this->viewData["invPrdImg"] = "";
 
@@ -182,7 +181,6 @@
                     $this->viewData["invPrdDsc"],
                     $this->viewData["invPrdCat"],
                     $this->viewData["invPrdEst"],
-                    $this->viewData["invPrd"],
                     $this->viewData["invPrdPrice"],
                     $this->viewData["invPrdImg"]
                 );
@@ -202,7 +200,6 @@
                   $this->viewData["invPrdDsc"],
                   $this->viewData["invPrdCat"],
                   $this->viewData["invPrdEst"],
-                  $this->viewData["invPrd"],
                   $this->viewData["invPrdPrice"],
                   $this->viewData["invPrdImg"]
                 );

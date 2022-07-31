@@ -38,11 +38,13 @@
               $sqlstr = "SELECT pr.invPrdId,
               pr.invPrdName,
               pr.invPrdDsc,
-              pr.invPrdCat,
+              cat.catnom as invPrdCat,
               pr.invPrdEst,
               pr.invPrdPriceISV,
               pr.invPrdPrice,
               pr.invPrdImg, COUNT(cd.invPrdId) as stock FROM softwarelat_db.productos pr
+				      inner join softwarelat_db.categorias cat
+                ON pr.invPrdCat = cat.catid
                 left join (SELECT * FROM softwarelat_db.claves_detalle WHERE invClvEst = 'ACT'  AND invClvExp > now()) as cd
                 ON pr.invPrdId = cd.invPrdId
                 GROUP BY pr.invPrdId;";
@@ -96,8 +98,8 @@
                 "invPrdDsc" => $invPrdDsc,
                 "invPrdCat" => $invPrdCat,
                 "invPrdEst" => $invPrdEst,
-                "invPrdPriceISV" => doubleval($invPrdPrice),
-                "invPrdPrice" => doubleval($invPrdPrice) - (doubleval($invPrdPrice)*0.15),
+                "invPrdPriceISV" => floatval($invPrdPrice),
+                "invPrdPrice" => floatval($invPrdPrice) - (floatval($invPrdPrice)*0.15),
                 "invPrdImg" => $invPrdImg
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
@@ -111,7 +113,6 @@
             $invPrdDsc,
             $invPrdCat,
             $invPrdEst,
-            $invPrdPriceISV,
             $invPrdPrice,
             $invPrdImg
           ) {
