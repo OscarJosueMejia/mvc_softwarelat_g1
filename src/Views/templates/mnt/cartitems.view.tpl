@@ -79,6 +79,7 @@
             <div class="mt-4">
                 <h5><strong>Cantidad:</strong> {{ItemsCount}} artículos</h5>
                 <h5><strong>SubTotal:</strong> Lps. {{SubTotal}}</h5>
+                <h5><strong>Impuestos:</strong> Lps. {{ISV}}</h5>
                 <hr class="mt-5">
                 <h5 class="mt-4"><strong>Total (ISV Incluidos):</strong> Lps. {{Total}}</h5>
                 <h5><strong>Total USD:</strong> ${{DollarsTotal}}</h5>

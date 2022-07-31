@@ -27,7 +27,7 @@ class Checkout extends PublicController{
                 $PayPalOrder->addItem($CartItem["invPrdName"], 
                 $CartItem["invPrdDsc"],
                 $CartItem["invPrdId"],
-                round(doubleval($CartItem["invPrdPrice"]) * $lpsInUsdValue, 2), 
+                round(doubleval($CartItem["invPrdPriceISV"]) * $lpsInUsdValue, 2), 
                 0,  
                 $CartItem["quantity"], 
                 "DIGITAL_GOODS");

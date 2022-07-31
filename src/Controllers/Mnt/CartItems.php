@@ -74,11 +74,11 @@ class CartItems extends PublicController
             $viewData["ShoppingSession"] = $ShoppingSession;
             $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
             $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_subtotal"];
+            $viewData["ISV"] = round(doubleval($viewData["SubTotal"]) * 0.15,2);
             $viewData["Total"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
             $viewData["ItemsCount"] = DaoCart::getCartAllItems(intval($ShoppingSession["shopSessionId"]));
             $viewData["existentItems"] = true;
            
-
             $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
             if ($lpsInUsdValue != false) {
                 $viewData["DollarsTotal"] = round($lpsInUsdValue * doubleval($viewData["Total"]),2);
@@ -87,6 +87,7 @@ class CartItems extends PublicController
         }else{
             $viewData["ItemsCount"] = 0;
             $viewData["SubTotal"] = 0;
+            $viewData["ISV"] = 0;
             $viewData["Total"] = 0;
             $viewData["DollarsTotal"] = 0;
         }
