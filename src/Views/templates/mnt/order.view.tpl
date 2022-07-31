@@ -29,7 +29,7 @@
         </div>
         <hr>
         <div class="d-flex justify-content-center flex-row flex-wrap mt-4">
-            <div class="mx-5 mt-4 p-3" style="background-color: #e8e9ec; border-radius:5px">
+            <div class="mx-5 mt-4 px-5 py-4" style="background-color: #e8e9ec; border-radius:5px">
                 <h3>Detalles de la Orden</h3>
                 <div class="ml-1 mt-3">
                     {{foreach OrderDetails}}
@@ -37,12 +37,13 @@
                     <h5><strong>Fecha:</strong> {{created_at}}</h5>
                     <h5><strong>Método de Pago:</strong> {{providerName}}</h5>
                     <h5><strong>Estado del Pago:</strong> {{payStatus}}</h5>
-                    <h5><strong>Total a Pagar:</strong> Lps. {{total}}</h5>
+                    <h5><strong>Total:</strong> Lps. {{total}}</h5>
+                    <h5><strong>Total USD:</strong> ${{totalUSD}}</h5>
                     {{endfor OrderDetails}}
 
                 </div>
             </div>
-            <div class="mx-5 mt-4 p-3" style="background-color: #e8e9ec; border-radius:5px">
+            <div class="mx-5 mt-4 px-5 py-4" style="background-color: #e8e9ec; border-radius:5px">
                 <h3>Detalles de Facturación</h3>
                 <div class="ml-1 mt-3">
                     <h5><strong>Referencia:</strong> {{referenceId}}</h5>

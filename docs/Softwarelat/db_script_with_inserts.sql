@@ -125,6 +125,7 @@ CREATE TABLE `productos` (
   `invPrdDsc` mediumtext DEFAULT NULL,
   `invPrdCat` bigint(8) DEFAULT NULL,
   `invPrdEst` char(3) DEFAULT NULL,
+  `invPrdPriceISV` decimal(10,2) DEFAULT NULL,
   `invPrdPrice` decimal(10,2) DEFAULT NULL,
   `invPrdImg` varchar(256) DEFAULT NULL,
 
@@ -159,6 +160,7 @@ CREATE TABLE `order_details` (
   `orderCode` varchar(20) NOT NULL,
   `usercod` bigint(13) NOT NULL,
   `total` decimal(10,2) DEFAULT NULL,
+  `totalUSD` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `modified_at` date DEFAULT NULL,
 
@@ -265,18 +267,18 @@ insert into categorias values(1,'Ejemplo1','ACT');
 insert into usuario values(1,null,'usuario1','examplepass',null,null,null,'ACT',null,null,'ADM');
 insert into usuario values(2,null,'usuario2','examplepass',null,null,null,'ACT',null,null,'ADM');
 
-insert into productos values(1,'Product1','DescProduct1',1,'ACT',750,null);
+insert into productos values(1,'Product1','DescProduct1',1,'ACT',700,750,null);
 insert into claves_detalle values(1,1,'serialexample1-1','2022-08-28','ACT');
 insert into claves_detalle values(2,1,'serialexample1-2','2022-08-28','ACT');
 insert into claves_detalle values(3,1,'serialexample1-3','2022-08-28','ACT');
 insert into claves_detalle values(10,1,'serialexample1-4','2022-08-28','ACT');
 
-insert into productos values(2,'Product2','DescProduct2',1,'ACT',400,null);
+insert into productos values(2,'Product2','DescProduct2',1,'ACT',350,400,null);
 insert into claves_detalle values(4,2,'serialexample2-1','2022-08-28','ACT');
 insert into claves_detalle values(5,2,'serialexample2-2','2022-08-28','ACT');
 insert into claves_detalle values(6,2,'serialexample2-3','2022-08-28','ACT');
 
-insert into productos values(3,'Product3','DescProduct3',1,'ACT',1240,null);
+insert into productos values(3,'Product3','DescProduct3',1,'ACT',1180, 1240,null);
 insert into claves_detalle values(7,3,'serialexample3-1','2022-08-28','ACT');
 insert into claves_detalle values(8,3,'serialexample3-2','2022-08-28','ACT');
 insert into claves_detalle values(9,3,'serialexample3-3','2022-08-28','ACT');

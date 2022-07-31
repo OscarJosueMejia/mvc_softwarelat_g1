@@ -25,8 +25,16 @@ class Accept extends PublicController{
             $CartSubTotal = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
 
             try {
+                //Convert from Lps -> USD
+                $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
+                $USDTotal = 0;
+
+                if ($lpsInUsdValue != false) {
+                    $USDTotal = round(doubleval($CartSubTotal) * $lpsInUsdValue,2); 
+                }
+
                 //Crear Orden
-                DaoOrder::createOrder($devUser, DaoOrder::getOrderUtils()["NextOrderCode"], $CartSubTotal);
+                DaoOrder::createOrder($devUser, DaoOrder::getOrderUtils()["NextOrderCode"], $CartSubTotal, $USDTotal);
                 $LastOrder = DaoOrder::getLastOrder($devUser)["LastOrder"];
                 
                 //Insertar cada Producto en la Orden

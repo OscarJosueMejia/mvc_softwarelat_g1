@@ -6,28 +6,6 @@ use Dao\Table;
 
 class Order extends Table
 {
-
-    /*
-    order_details
-    `orderId` bigint(13) NOT NULL AUTO_INCREMENT,
-    `usercod` bigint(13) NOT NULL,
-    `total` decimal(10,2) DEFAULT NULL,
-    `paymentId` varchar(50) DEFAULT NULL,
-    `created_at` date DEFAULT NULL,
-    `modified_at` date DEFAULT NULL,
-    */
-
-    /*
-    order_item
-    `orderItemId` bigint(13) NOT NULL AUTO_INCREMENT,
-    `orderId` bigint(13) NOT NULL,
-    `invPrdId` bigint(13)  DEFAULT NULL,
-    `invClvId` bigint(13)  DEFAULT NULL,
-    `quantity` bigint(13) NOT NULL,
-    `created_at` date DEFAULT NULL,
-    `modified_at` date DEFAULT NULL,
-    */
-
     /**
      * Get Order List by Current User
      *
@@ -110,14 +88,15 @@ class Order extends Table
      * @param [int] $total Total amount to pay
      * @return void
      */
-    public static function createOrder($usercod, $orderCode, $total) {
+    public static function createOrder($usercod, $orderCode, $total, $totalUSD) {
         $sqlstr = "INSERT INTO `order_details`
-        (`usercod`, `orderCode`, `total`, `created_at`) VALUES (:usercod, :orderCode ,:total, :created_at);";
+        (`usercod`, `orderCode`, `total`, `totalUSD` , `created_at`) VALUES (:usercod, :orderCode , :total, :totalUSD, :created_at);";
         
         $sqlParams = [
             "usercod" => $usercod,
             "orderCode" => $orderCode,
             "total" => $total,
+            "totalUSD" => $totalUSD,
             "created_at" => date('y/m/d h:i:s',time()),
         ];
         return self::executeNonQuery($sqlstr, $sqlParams);
@@ -229,6 +208,4 @@ class Order extends Table
 
         return self::executeNonQuery($sqlstr, $sqlParams);
     }
-    
-    
 }

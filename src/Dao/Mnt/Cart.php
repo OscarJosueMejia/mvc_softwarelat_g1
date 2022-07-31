@@ -30,7 +30,7 @@ class Cart extends Table
      */
     public static function getCartItems($shopSessionId){
 
-        $sqlstr = "SELECT a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, 
+        $sqlstr = "SELECT a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdPriceISV,
         b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount 
         from cart_item a inner join productos b on a.invPrdId = b.invPrdId 
         where shopSessionId=:shopSessionId;";
@@ -50,6 +50,21 @@ class Cart extends Table
     public static function getCartCount($shopSessionId){
 
         $sqlstr = "SELECT count(*) as CountItems from cart_item where shopSessionId=:shopSessionId;";
+        $sqlParams = array("shopSessionId" => $shopSessionId);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["CountItems"];
+    }
+
+    /**
+     * Get Cart Items Count By Shopping Session Code
+     *
+     * @param int $shopSessionId Código de la Sesión de Compra
+     *
+     * @return int
+     */
+    public static function getCartAllItems($shopSessionId){
+
+        $sqlstr = "SELECT sum(quantity) as CountItems from cart_item  where shopSessionId =:shopSessionId;";
         $sqlParams = array("shopSessionId" => $shopSessionId);
 
         return self::obtenerUnRegistro($sqlstr, $sqlParams)["CountItems"];

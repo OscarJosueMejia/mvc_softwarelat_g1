@@ -13,9 +13,10 @@ class CartItems extends PublicController
     public function run():void
     {
         $viewData = array();
-        $devUser = \Utilities\Security::getUserId();
-        // $devUser = 2;
+        // $devUser = \Utilities\Security::getUserId();
+        $devUser = 1;
     
+
         $ShoppingSession = DaoCart::getShoppingSession($devUser);
         $cartErrors = false;
         $viewData["ErrorDescription"] = "";
@@ -73,8 +74,14 @@ class CartItems extends PublicController
             $viewData["ShoppingSession"] = $ShoppingSession;
             $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
             $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
-            $viewData["ItemsCount"] = count($viewData["CartItems"]);
+            $viewData["ItemsCount"] = DaoCart::getCartAllItems(intval($ShoppingSession["shopSessionId"]));
             $viewData["existentItems"] = true;
+           
+
+            $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
+            if ($lpsInUsdValue != false) {
+                $viewData["DollarsTotal"] = round($lpsInUsdValue * doubleval($viewData["SubTotal"]),2);
+            }
             
         }else{
             $viewData["ItemsCount"] = 0;
@@ -87,7 +94,6 @@ class CartItems extends PublicController
                                             $('#errorModal').modal('show');
                                         });</script>";
         }
-
 
 
         // error_log(json_encode($viewData));

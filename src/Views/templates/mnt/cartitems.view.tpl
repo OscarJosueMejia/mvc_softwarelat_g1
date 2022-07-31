@@ -1,4 +1,4 @@
-<h1 class="text-center pt-4">Carrito ({{ItemsCount}})</h1>
+<h2 class="text-center pt-4">Carrito ({{ItemsCount}})</h2>
 <section>
 
     <div class="d-flex flex-wrap justify-content-center">
@@ -75,6 +75,7 @@
             <div class="mt-4">
                 <h5><strong>Cantidad:</strong> {{ItemsCount}} artículos</h5>
                 <h5><strong>SubTotal:</strong> Lps. {{SubTotal}}</h5>
+                <h5><strong>SubTotal:</strong> ${{DollarsTotal}}</h5>
             </div>
             <div class="text-center mt-5">
                 {{if existentItems}}
