@@ -1,6 +1,6 @@
 <?php
 
-namespace Dao\Mnt;
+namespace Dao\Orders;
 
 use Dao\Table;
 
@@ -106,6 +106,23 @@ class Cart extends Table
             "modified_at" => date('y/m/d h:i:s',time()),
         ];
 
+        return self::executeNonQuery($sqlstr, $sqlParams);
+    }
+
+    /**
+     * Add 2 days more to Shopping Session
+     *
+     * @param [type] $usercod Current User Code
+     * @return void
+     */
+    public static function extendShopSession($usercod) {
+        $sqlstr = "UPDATE `shopping_session` SET 
+        `modified_at`= DATE_ADD(`modified_at`, INTERVAL 2 DAY) 
+        where `usercod`=:usercod;";
+        
+        $sqlParams = [
+            "usercod" => $usercod ,
+        ];
         return self::executeNonQuery($sqlstr, $sqlParams);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Controllers\Orders;
 
-use Dao\Mnt\Order as DaoOrder;
+use Dao\Orders\Order as DaoOrder;
 
 use Controllers\PublicController;
 

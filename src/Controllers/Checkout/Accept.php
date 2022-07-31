@@ -2,8 +2,8 @@
 
 namespace Controllers\Checkout;
 
-use Dao\Mnt\Order as DaoOrder;
-use Dao\Mnt\Cart as DaoCart;
+use Dao\Orders\Order as DaoOrder;
+use Dao\Orders\Cart as DaoCart;
 
 use Controllers\PublicController;
 class Accept extends PublicController{
@@ -13,6 +13,7 @@ class Accept extends PublicController{
         $devUser = 1;
 
         $token = $_GET["token"] ?: "";
+        
         $session_token = $_SESSION["orderid"] ?: "";
 
         if ($token !== "" && $token == $session_token) {

@@ -3,9 +3,8 @@
 namespace Controllers\Orders;
 
 use Controllers\PublicController;
-use Dao\Dao;
-use Dao\Mnt\Cart as DaoCart;
-use Dao\Mnt\Order as DaoOrder;
+use Dao\Orders\Cart as DaoCart;
+use Dao\Orders\Order as DaoOrder;
 use Views\Renderer;
 
 class CartItems extends PublicController
@@ -21,11 +20,15 @@ class CartItems extends PublicController
         $cartErrors = false;
         $viewData["ErrorDescription"] = "";
 
+        try {
+            DaoCart::deleteSessionsByTime();
+        } catch (\Throwable $th) {
+            error_log($th);
+        }
 
         if($this->isPostBack()){
             /* Sumar 1 a la cantidad de producto seleccionado SOLO SI ESTA DISPONIBLE */
             if(isset($_POST['increaseQty'])){
-                DaoCart::deleteSessionsByTime();
                 if ( DaoCart::getProductCountAvailable(intval($_POST["invPrdId"]))["disponibles_venta"] >= 1) {
                     DaoCart::updateCartItem(intval($ShoppingSession["shopSessionId"]), intval($_POST["cartItemId"]), intval($_POST["quantity"])+1);
                     DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);

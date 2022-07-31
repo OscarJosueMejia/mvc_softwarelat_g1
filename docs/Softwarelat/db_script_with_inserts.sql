@@ -296,9 +296,9 @@ CREATE PROCEDURE DeleteShopSessionByTime ()
 	BEGIN
 		DELETE a
         FROM cart_item a 
-        inner join shopping_session b on a.shopSessionId = b.shopSessionId where datediff(now(), b.created_at) > 3;
+        inner join shopping_session b on a.shopSessionId = b.shopSessionId where datediff(now(), b.modified_at) > 3;
         
-        DELETE FROM shopping_session where datediff(now(), created_at) > 3;
+        DELETE FROM shopping_session where datediff(now(), modified_at) > 3;
 	END //
 DELIMITER ;
 
@@ -346,3 +346,6 @@ call DeleteShopSessionByTime();
 
 
 SELECT sum(b.invPrdPriceISV * a.quantity) as session_total, sum(b.invPrdPrice * a.quantity) as session_subtotal from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId =1;
+
+
+SELECT created_at, DATE_ADD(created_at, INTERVAL 2 DAY) from shopping_session;

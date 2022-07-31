@@ -4,7 +4,7 @@ namespace Controllers\Orders;
 
 use Controllers\PublicController;
 use Dao\Dao;
-use Dao\Mnt\Order as DaoOrder;
+use Dao\Orders\Order as DaoOrder;
 use Views\Renderer;
 
 class Orders extends PublicController
