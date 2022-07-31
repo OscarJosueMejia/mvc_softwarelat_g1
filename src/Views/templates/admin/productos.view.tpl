@@ -37,7 +37,7 @@
                         {{endifnot ~CanView}}
                     </td>
                     <td>{{invPrdCat}}</td>
-                    <td>5</td>
+                    <td>{{stock}}</td>
                     <td>L. {{invPrdPrice}}</td>
 
                     <td>

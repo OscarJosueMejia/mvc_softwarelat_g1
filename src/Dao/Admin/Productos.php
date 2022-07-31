@@ -19,12 +19,13 @@
           /*
           Tabla a generar:
           invPrdId
-invPrdName
-invPrdDsc
-invPrdCat
-invPrdEst
-invPrdPrice
-invPrdImg
+          invPrdName
+          invPrdDsc
+          invPrdCat
+          invPrdEst
+          invPrdPriceISV
+          invPrdPrice
+          invPrdImg
 
           */
           /**
@@ -34,7 +35,17 @@ invPrdImg
            */
           public static function getAll()
           {
-              $sqlstr = "Select * from productos;";
+              $sqlstr = "SELECT pr.invPrdId,
+              pr.invPrdName,
+              pr.invPrdDsc,
+              pr.invPrdCat,
+              pr.invPrdEst,
+              pr.invPrdPriceISV,
+              pr.invPrdPrice,
+              pr.invPrdImg, COUNT(cd.invPrdId) as stock FROM softwarelat_db.productos pr
+                left join (SELECT * FROM softwarelat_db.claves_detalle WHERE invClvEst = 'ACT'  AND invClvExp > now()) as cd
+                ON pr.invPrdId = cd.invPrdId
+                GROUP BY pr.invPrdId;";
               return self::obtenerRegistros($sqlstr, array());
           }
       
@@ -57,38 +68,37 @@ invPrdImg
            */
           public static function insert(
             $invPrdName,
-$invPrdDsc,
-$invPrdCat,
-$invPrdEst,
-$invPrd,
-$invPrdPrice,
-$invPrdImg
+            $invPrdDsc,
+            $invPrdCat,
+            $invPrdEst,
+            $invPrdPrice,
+            $invPrdImg
           ) {
               $sqlstr = "INSERT INTO `productos`
-      (`invPrdName`,
-`invPrdDsc`,
-`invPrdCat`,
-`invPrdEst`,
-`invPrd`,
-`invPrdPrice`,
-`invPrdImg`)
-      VALUES
-      (:invPrdName,
-:invPrdDsc,
-:invPrdCat,
-:invPrdEst,
-:invPrd,
-:invPrdPrice,
-:invPrdImg);
-      ";
+            (`invPrdName`,
+            `invPrdDsc`,
+            `invPrdCat`,
+            `invPrdEst`,
+            `invPrdPriceISV`,
+            `invPrdPrice`,
+            `invPrdImg`)
+            VALUES
+            (:invPrdName,
+            :invPrdDsc,
+            :invPrdCat,
+            :invPrdEst,
+            :invPrdPriceISV,
+            :invPrdPrice,
+            :invPrdImg);
+            ";
               $sqlParams = [
-                  "invPrdName" => $invPrdName,
-"invPrdDsc" => $invPrdDsc,
-"invPrdCat" => $invPrdCat,
-"invPrdEst" => $invPrdEst,
-"invPrd" => $invPrd,
-"invPrdPrice" => $invPrdPrice,
-"invPrdImg" => $invPrdImg
+                "invPrdName" => $invPrdName,
+                "invPrdDsc" => $invPrdDsc,
+                "invPrdCat" => $invPrdCat,
+                "invPrdEst" => $invPrdEst,
+                "invPrdPriceISV" => doubleval($invPrdPrice),
+                "invPrdPrice" => doubleval($invPrdPrice) - (doubleval($invPrdPrice)*0.15),
+                "invPrdImg" => $invPrdImg
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
@@ -97,32 +107,32 @@ $invPrdImg
            */
           public static function update(
             $invPrdId,
-$invPrdName,
-$invPrdDsc,
-$invPrdCat,
-$invPrdEst,
-$invPrd,
-$invPrdPrice,
-$invPrdImg
+            $invPrdName,
+            $invPrdDsc,
+            $invPrdCat,
+            $invPrdEst,
+            $invPrdPriceISV,
+            $invPrdPrice,
+            $invPrdImg
           ) {
               $sqlstr = "UPDATE `productos` set 
-      `invPrdName`=:invPrdName,
-`invPrdDsc`=:invPrdDsc,
-`invPrdCat`=:invPrdCat,
-`invPrdEst`=:invPrdEst,
-`invPrd`=:invPrd,
-`invPrdPrice`=:invPrdPrice,
-`invPrdImg`=:invPrdImg
-      where `invPrdId` =:invPrdId;";
+            `invPrdName`=:invPrdName,
+            `invPrdDsc`=:invPrdDsc,
+            `invPrdCat`=:invPrdCat,
+            `invPrdEst`=:invPrdEst,
+            `invPrdPriceISV`=:invPrdPriceISV,
+            `invPrdPrice`=:invPrdPrice,
+            `invPrdImg`=:invPrdImg
+            where `invPrdId` =:invPrdId;";
               $sqlParams = [
                 "invPrdId" => $invPrdId,
-"invPrdName" => $invPrdName,
-"invPrdDsc" => $invPrdDsc,
-"invPrdCat" => $invPrdCat,
-"invPrdEst" => $invPrdEst,
-"invPrd" => $invPrd,
-"invPrdPrice" => $invPrdPrice,
-"invPrdImg" => $invPrdImg
+                "invPrdName" => $invPrdName,
+                "invPrdDsc" => $invPrdDsc,
+                "invPrdCat" => $invPrdCat,
+                "invPrdEst" => $invPrdEst,
+                "invPrdPriceISV" => doubleval($invPrdPrice),
+                "invPrdPrice" => doubleval($invPrdPrice) - (doubleval($invPrdPrice)*0.15),
+                "invPrdImg" => $invPrdImg
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
@@ -136,13 +146,14 @@ $invPrdImg
            */
           public static function delete($invPrdId)
           {
-              $sqlstr = "DELETE from `productos` where invPrdId=:invPrdId;";
+              $sqlstr = "UPDATE `productos` SET `invPrdEst`=:invPrdEst where `invPrdId`=:invPrdId;";
               $sqlParams = array(
-                  "invPrdId" => $invPrdId
+                  "invPrdId" => $invPrdId,
+                  "invPrdEst" => $invPrdEst
               );
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
       
       }
       
-      ?>
+?>

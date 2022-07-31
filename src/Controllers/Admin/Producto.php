@@ -19,6 +19,7 @@
       use Views\Renderer;
       use Utilities\Validators;
       use Dao\Admin\Productos;
+      use Dao\Admin\Categorias as DaoCategorias;
 
       /**
        * Producto
@@ -34,6 +35,7 @@
       private $viewData = array();
       private $arrModeDesc = array();
       private $arrEstados = array();
+      private $arrCategorias = array();
 
       /**
        * Runs the controller
@@ -72,8 +74,6 @@
 
         $this->viewData["error_invPrdName"] = array();
         $this->viewData["error_invPrdDsc"] = array();
-        $this->viewData["error_invPrdCat"] = array();
-        $this->viewData["error_invPrdEst"] = array();
         $this->viewData["error_invPrd"] = array();
         $this->viewData["error_invPrdPrice"] = array();
         $this->viewData["error_invPrdImg"] = array();
@@ -98,7 +98,13 @@
             array("value" => "ACT", "text" => "Activo"),
             array("value" => "INA", "text" => "Inactivo"),
         );
+
+        foreach (DaoCategorias::getAllActives() as $key) {
+            $this->arrCategorias[] = array("value" => $key["catid"], "text" => $key["catnom"]);
+        }
+
         $this->viewData["invPrdEstArr"] = $this->arrEstados;
+        $this->viewData["invPrdCatArr"] = $this->arrCategorias;
 
     }
 
@@ -109,7 +115,7 @@
             if (!isset($this->arrModeDesc[$this->viewData["mode"]])) {
                 error_log("Error: (Producto) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
-                    "index.php?page=productos_Productos",
+                    "index.php?page=admin_Productos",
                     "No se puede procesar su solicitud!",
                     "Error en la operación Ejecutada",
                     true
@@ -133,7 +139,7 @@
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {
             \Utilities\Site::redirectToWithMsg(
-                "index.php?page=productos_Productos",
+                "index.php?page=admin_Productos",
                 "ERROR: Algo inesperado sucedió con la petición Intente de nuevo.",
                 "Error en la operación Ejecutada",
                 true
@@ -149,17 +155,6 @@
         if (Validators::IsEmpty($this->viewData["invPrdDsc"])) {
             $this->viewData["error_invPrdDsc"][]
              = "El invPrdDsc es requerido";
-            $hasErrors = true;
-        }
-    
-        if (Validators::IsEmpty($this->viewData["invPrdCat"])) {
-            $this->viewData["error_invPrdCat"][]
-             = "El invPrdCat es requerido";
-            $hasErrors = true;
-        }
-        if (Validators::IsEmpty($this->viewData["invPrd"])) {
-            $this->viewData["error_invPrd"][]
-             = "El invPrd es requerido";
             $hasErrors = true;
         }
         if (Validators::IsEmpty($this->viewData["invPrdPrice"])) {
@@ -193,7 +188,7 @@
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
-                            "index.php?page=productos_Productos",
+                            "index.php?page=admin_Productos",
                             "Producto Guardado Satisfactoriamente.",
                             "Operación Ejecutada Correctamente",
                             false
@@ -213,7 +208,7 @@
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Productos",
+                        "index.php?page=admin_Productos",
                         "Producto Actualizado Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
@@ -226,7 +221,7 @@
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=productos_Productos",
+                        "index.php?page=admin_Productos",
                         "Producto Eliminado Satisfactoriamente",
                         "Operación Ejecutada Correctamente",
                         false
@@ -256,6 +251,14 @@
                     "value",
                     $this->viewData["invPrdEst"]
                 );
+            $this->viewData["invPrdCatArr"]
+            = \Utilities\ArrUtils::objectArrToOptionsArray(
+                $this->arrCategorias,
+                "value",
+                "text",
+                "value",
+                $this->viewData["invPrdCat"]
+            );
 
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonly"] = true;

@@ -32,6 +32,17 @@
               $sqlstr = "Select * from categorias;";
               return self::obtenerRegistros($sqlstr, array());
           }
+
+          /**
+           * Obtiene todos los registros de Categorias Activos
+           *
+           * @return array
+           */
+          public static function getAllActives()
+          {
+              $sqlstr = "Select * from categorias where catest='ACT';";
+              return self::obtenerRegistros($sqlstr, array());
+          }
       
           /**
            * Get Categorias By Id
@@ -56,10 +67,10 @@
             $catest
           ) {
               $sqlstr = "INSERT INTO `categorias`
-      (`catnom`, `catdesc`)
-      VALUES
-      (:catnom, :catdesc);
-      ";
+              (`catnom`, `catdesc`)
+              VALUES
+              (:catnom, :catdesc);
+              ";
               $sqlParams = [
                   "catnom" => $catnom, 
                   "catdesc" => $catdesc
