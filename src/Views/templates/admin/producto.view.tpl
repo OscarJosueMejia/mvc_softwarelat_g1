@@ -30,7 +30,7 @@
 
           <div class="form-group" style="border-color:transparent;">
             <label for="invPrdDsc">Descripción Producto</label>
-            <textarea class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="invPrdDsc" name="invPrdDsc" placeholder="Descripción" value="{{invPrdDsc}}" /></textarea>
+            <textarea class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="invPrdDsc" name="invPrdDsc" placeholder="Descripción"/>{{invPrdDsc}}</textarea>
             {{if error_invPrdDsc}}
             {{foreach error_invPrdDsc}}
             <div class="error">{{this}}</div>
@@ -38,7 +38,7 @@
             {{endif error_invPrdDsc}}
           </div>
 
-           <div class="form-group" style="border-color:transparent;">
+          <div class="form-group" style="border-color:transparent;">
               <label for="invPrdCat"> Categoría</label><br />
               <select name="invPrdCat" id="invPrdCat" {{if readonly}} readonly disabled {{endif readonly}} class="form-control col-md-12">
                 {{foreach invPrdCatArr}}
@@ -123,7 +123,7 @@
 <!-- /.content -->
 <script>
   document.addEventListener("DOMContentLoaded", function(){ document.getElementById("btnCancelar").addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation();
-  window.location.href = "index.php?page=productos_Productos"; }); });
+  window.location.href = "index.php?page=admin_Productos"; }); });
   $('#btnEnviar').click(function(){
       $('#form').submit();
   });
