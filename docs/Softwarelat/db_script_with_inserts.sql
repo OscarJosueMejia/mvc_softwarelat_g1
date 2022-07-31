@@ -221,7 +221,7 @@ CREATE TABLE `cart_item` (
   `cartItemId` bigint(13) NOT NULL AUTO_INCREMENT,
   `shopSessionId` bigint(13) NOT NULL,
   `invPrdId` bigint(13) NOT NULL,
-  `quantity` bigint(13) NOT NULL,
+  `quantity` bigint(13) NOT NULL DEFAULT 0,
   `created_at` datetime DEFAULT NULL,
   `modified_at` datetime DEFAULT NULL,
 
@@ -288,8 +288,23 @@ insert into cart_item values(3,1,2,1, now(),now());
 insert into shopping_session values(2,2,0,now(),now());
 insert into cart_item values(2,2,1,1, now(),now());
 
+/*Verificar si existen Sesiones de Compra con un tiempo mayor a 3 dias*/
+DELIMITER //
+CREATE PROCEDURE DeleteShopSessionByTime ()
+	BEGIN
+		DELETE a
+        FROM cart_item a 
+        inner join shopping_session b on a.shopSessionId = b.shopSessionId where datediff(now(), b.created_at) > 3;
+        
+        DELETE FROM shopping_session where datediff(now(), created_at) > 3;
+	END //
+DELIMITER ;
+
+
 select * from shopping_session;
 select * from cart_item;
+
+select * from claves_detalle;
 
 select * from order_details where usercod = 1;
 select * from order_item a inner join order_details b on a.orderId = b.orderId where b.usercod = 1;
@@ -297,7 +312,11 @@ select * from order_item a inner join order_details b on a.orderId = b.orderId w
 select a.cartItemId, a.shopSessionId, a.invPrdId, b.invPrdName, b.invPrdPrice, b.invPrdDsc, b.invPrdCat, b.invPrdEst, b.invPrdImg, a.quantity, (b.invPrdPrice * a.quantity) as amount from cart_item a inner join productos b on a.invPrdId = b.invPrdId;
 
 /*Retorna la cantidad de producto disponible para ofrecer*/
-SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId = 1) as disponibles_venta from claves_detalle where invPrdId = 1 and invClvEst = "ACT";
+SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId = 1) as disponibles_venta from claves_detalle where invPrdId = 1 and invClvEst = "ACT" and invClvExp >= now();
+
+/*Verificar que el producto este disponible*/
+SELECT count(*) - (SELECT ifnull(sum(quantity),0) from cart_item where invPrdId = 2 and shopSessionId <> 1) as disponibles_venta from claves_detalle where invPrdId = 2 and invClvEst = "ACT" and datediff(invClvExp,now()) > 1 ;
+
 
 /*Verifica si el producto ya esta en el carrito del usuario*/
 SELECT count(a.cartItemId) from cart_item a inner join shopping_session b on a.shopSessionId = b.shopSessionId where invPrdId = 1 and usercod = 1;
@@ -306,7 +325,7 @@ SELECT count(a.cartItemId) from cart_item a inner join shopping_session b on a.s
 SELECT sum(b.invPrdPrice * a.quantity) from cart_item a inner join productos b on a.invPrdId = b.invPrdId where shopSessionId = 1;
 
 /*Extraer las claves*/
-SELECT invClvId from claves_detalle where invPrdId = 1 and invClvEst = "ACT" limit 1;
+SELECT * from claves_detalle where invPrdId = 1 and invClvEst = "ACT" and invClvExp >= now()  order by invClvExp asc limit 1;
  
  /*Detalles del Item de Orden*/
  SELECT a.orderItemId, a.orderId, a.invPrdId, b.invPrdName, b.invPrdDsc, b.invPrdPrice, c.invClvId, c.invClvSerial, c.invClvExp  
@@ -315,3 +334,10 @@ SELECT invClvId from claves_detalle where invPrdId = 1 and invClvEst = "ACT" lim
  inner join claves_detalle c on a.invClvId = c.invClvId where a.orderId = 1;
  
 SELECT * FROM order_details a inner join payment_details b on a.orderId = b.orderId where a.orderId = 1;
+
+/*Delete Cart Items where */
+SELECT * FROM shopping_session WHERE datediff(now(), created_at) > 3;
+SELECT * FROM cart_item;
+
+
+call DeleteShopSessionByTime();

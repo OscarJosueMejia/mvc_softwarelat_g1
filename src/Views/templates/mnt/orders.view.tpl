@@ -16,7 +16,7 @@
         <label for="grid">Orden a buscar</label>
         <table id="grid">
             <thead>
-                <th>Orden ID</th>
+                <th># Referencia</th>
                 <th>Fecha</th>
                 <th>Precio Total</th>
                 <th>Acción</th>
@@ -24,7 +24,7 @@
             <tbody>
                 {{foreach Orders}}
                 <tr>
-                    <td>{{orderId}}</td>
+                    <td>{{orderCode}}</td>
                     <td>{{created_at}}</td>
                     <td>Lps. {{total}}</td>
                     <td>

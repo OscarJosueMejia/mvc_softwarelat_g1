@@ -33,7 +33,7 @@
                 <h3>Detalles de la Orden</h3>
                 <div class="ml-1 mt-3">
                     {{foreach OrderDetails}}
-                    <h5><strong># de Orden:</strong> {{orderId}}</h5>
+                    <h5><strong>Referencia:</strong> {{orderCode}}</h5>
                     <h5><strong>Fecha:</strong> {{created_at}}</h5>
                     <h5><strong>Método de Pago:</strong> {{providerName}}</h5>
                     <h5><strong>Estado del Pago:</strong> {{payStatus}}</h5>

@@ -26,7 +26,7 @@ class Accept extends PublicController{
 
             try {
                 //Crear Orden
-                DaoOrder::createOrder($devUser, $CartSubTotal);
+                DaoOrder::createOrder($devUser, DaoOrder::getOrderUtils()["NextOrderCode"], $CartSubTotal);
                 $LastOrder = DaoOrder::getLastOrder($devUser)["LastOrder"];
                 
                 //Insertar cada Producto en la Orden

@@ -203,10 +203,27 @@ class Cart extends Table
      * @return void
      */
     public static function getProductCountAvailable($invPrdId){
-        $sqlstr = "SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId =:invPrdId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT';";
+        $sqlstr = "SELECT count(*) - (SELECT sum(quantity) from cart_item where invPrdId =:invPrdId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' and invClvExp >= now();";
         $sqlParams = array("invPrdId" => $invPrdId);
 
         return self::obtenerUnRegistro($sqlstr, $sqlParams);
+    }
+
+    /**
+     * Returns the amount of product that can be purchased 
+     *
+     * @param [type] $invPrdId Product to find
+     * @return void
+     */
+    public static function secondCheckProducts($invPrdId, $shopSessionId){
+        
+        $sqlstr = "SELECT count(*) - (SELECT ifnull(sum(quantity),0) from cart_item where invPrdId =:invPrdId and shopSessionId <> :shopSessionId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' and datediff(invClvExp, now()) > 1;";
+        $sqlParams = array(
+            "invPrdId" => $invPrdId,
+            "shopSessionId" => $shopSessionId
+        );
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["disponibles_venta"];
     }
 
      /**
@@ -220,6 +237,16 @@ class Cart extends Table
         $sqlParams = array("shopSessionId" => $shopSessionId);
 
         return self::obtenerUnRegistro($sqlstr, $sqlParams);
+    }
+
+    /**
+     * Calls DB Procedure to delete shopping session greater than 3 days.
+     *
+     * @return void
+     */
+    public static function deleteSessionsByTime(){
+        $sqlstr = "call DeleteShopSessionByTime();";
+        return self::executeNonQuery($sqlstr, []);
     }
 
     /**

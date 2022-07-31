@@ -13,17 +13,24 @@ class CartItems extends PublicController
     public function run():void
     {
         $viewData = array();
-        $devUser = 1;
+        $devUser = \Utilities\Security::getUserId();
+        // $devUser = 2;
+    
         $ShoppingSession = DaoCart::getShoppingSession($devUser);
+        $cartErrors = false;
+        $viewData["ErrorDescription"] = "";
+
 
         if($this->isPostBack()){
             /* Sumar 1 a la cantidad de producto seleccionado SOLO SI ESTA DISPONIBLE */
             if(isset($_POST['increaseQty'])){
+                DaoCart::deleteSessionsByTime();
                 if ( DaoCart::getProductCountAvailable(intval($_POST["invPrdId"]))["disponibles_venta"] >= 1) {
                     DaoCart::updateCartItem(intval($ShoppingSession["shopSessionId"]), intval($_POST["cartItemId"]), intval($_POST["quantity"])+1);
                     DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
                 }else{
-                    echo "Ya no existe producto en stock";
+                    $cartErrors = true;
+                    $viewData["ErrorDescription"] = "No hay suficiente inventario de producto.";
                 }
             }
 
@@ -33,7 +40,8 @@ class CartItems extends PublicController
                     DaoCart::updateCartItem(intval($ShoppingSession["shopSessionId"]), intval($_POST["cartItemId"]), intval($_POST["quantity"])-1);
                     DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
                 }else{
-                    echo "La cantidad no puede ser 0"; 
+                    $cartErrors = true;
+                    $viewData["ErrorDescription"] = "La Cantidad de Producto no puede ser 0.";
                 }
             }
 
@@ -41,6 +49,23 @@ class CartItems extends PublicController
             if (isset($_POST['deleteItem'])) {
                 DaoCart::deleteCartItem(intval($_POST["cartItemId"]));
                 DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
+            }
+
+            /* Revisar si no hay cambios en el stock*/
+            if (isset($_POST['goPayPal'])) {
+
+                $SelectedProducts = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
+                
+                foreach ($SelectedProducts as $CartItem) {
+                    $AvailableQuantity = DaoCart::secondCheckProducts($CartItem["invPrdId"],$ShoppingSession["shopSessionId"]); 
+                    if ($AvailableQuantity < $CartItem["quantity"]) {
+                        $cartErrors = true;
+                        $viewData["ErrorDescription"] .= "-<strong>".$CartItem["invPrdName"] . "</strong> Excede la cantidad en stock. Cantidad máxima que se puede seleccionar: <strong>".$AvailableQuantity." items.</strong><br><br>"; 
+                    }
+                }
+                if (!$cartErrors) {
+                    \Utilities\Site::redirectTo("index.php?page=checkout_checkout");
+                }
             }
         }
         
@@ -50,14 +75,22 @@ class CartItems extends PublicController
             $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
             $viewData["ItemsCount"] = count($viewData["CartItems"]);
             $viewData["existentItems"] = true;
+            
         }else{
             $viewData["ItemsCount"] = 0;
             $viewData["SubTotal"] = 0;
         }
 
-        
+        if ($cartErrors) {
+            $viewData["ErrorTrigger"] = "<script type='text/javascript'>
+                                        $(document).ready(function () {
+                                            $('#errorModal').modal('show');
+                                        });</script>";
+        }
+
+
+
         // error_log(json_encode($viewData));
-      
         Renderer::render('mnt/cartitems', $viewData);
     }
 }

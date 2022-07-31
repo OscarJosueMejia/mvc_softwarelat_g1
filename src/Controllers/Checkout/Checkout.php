@@ -10,33 +10,31 @@ class Checkout extends PublicController{
     {
         $viewData = array();
         $devUser = 1;
+       $ShoppingSession = DaoCart::getShoppingSession($devUser);
+        $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
 
-        if ($this->isPostBack()) {
-
-            $ShoppingSession = DaoCart::getShoppingSession($devUser);
-            $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
-
-            $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
-                "test".(time() - 10000000),
-                "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_error",
-                "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_accept"
-            );
-            
-            foreach ($CartItems as $CartItem) {
-                $PayPalOrder->addItem($CartItem["invPrdName"], 
-                $CartItem["invPrdDsc"],
-                $CartItem["invPrdId"],
-                $CartItem["invPrdPrice"], 
-                0,  
-                $CartItem["quantity"], 
-                "DIGITAL_GOODS");
-            }
-
-            $response = $PayPalOrder->createOrder();
-            $_SESSION["orderid"] = $response[1]->result->id;
-            \Utilities\Site::redirectTo($response[0]->href);
-            die();
+        $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
+            "test".(time() - 10000000),
+            "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_error",
+            "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_accept"
+        );
+        
+        foreach ($CartItems as $CartItem) {
+            $PayPalOrder->addItem($CartItem["invPrdName"], 
+            $CartItem["invPrdDsc"],
+            $CartItem["invPrdId"],
+            $CartItem["invPrdPrice"], 
+            0,  
+            $CartItem["quantity"], 
+            "DIGITAL_GOODS");
         }
+
+        $response = $PayPalOrder->createOrder();
+        $_SESSION["orderid"] = $response[1]->result->id;
+        \Utilities\Site::redirectTo($response[0]->href);
+        die();
+ 
+        
 
         \Views\Renderer::render("paypal/checkout", $viewData);
     }

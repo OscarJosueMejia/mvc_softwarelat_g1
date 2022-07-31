@@ -43,6 +43,34 @@ class Order extends Table
     }
 
     /**
+     * Get general Order Count
+     *
+     * @param int $usercod Código del Usuario Actual
+     *
+     * @return array
+     */
+    public static function getOrderUtils(){
+        $base_code = "SFTLT-";
+        $digits_count = 6;
+        $finalData = array();
+
+        $sqlstr = "SELECT count(*) as OrderFullCount from order_details;";
+
+        $lastValue = self::obtenerUnRegistro($sqlstr, [])["OrderFullCount"] + 1;
+        $lastValueLength = strlen((string)$lastValue);
+
+        for ($i=0; $i < $digits_count - $lastValueLength ; $i++) { 
+            $base_code .= "0";
+        }
+        $base_code .= (string)$lastValue;
+        
+        $finalData["OrderFullCount"] = $lastValue;
+        $finalData["NextOrderCode"] = $base_code;
+        
+        return $finalData;
+    }
+
+    /**
      * Get Order Details by Order Code
      *
      * @param int $orderId Código de la Orden
@@ -82,13 +110,14 @@ class Order extends Table
      * @param [int] $total Total amount to pay
      * @return void
      */
-    public static function createOrder($usercod, $total) {
+    public static function createOrder($usercod, $orderCode, $total) {
         $sqlstr = "INSERT INTO `order_details`
-        (`usercod`, `total`, `created_at`) VALUES (:usercod, :total, :created_at);";
+        (`usercod`, `orderCode`, `total`, `created_at`) VALUES (:usercod, :orderCode ,:total, :created_at);";
         
         $sqlParams = [
-            "usercod" => $usercod ,
-            "total" => $total ,
+            "usercod" => $usercod,
+            "orderCode" => $orderCode,
+            "total" => $total,
             "created_at" => date('y/m/d h:i:s',time()),
         ];
         return self::executeNonQuery($sqlstr, $sqlParams);
@@ -142,7 +171,7 @@ class Order extends Table
      * @return void
      */
     public static function getProductKeys($invPrdId, $quantity) {
-        $sqlstr = "SELECT invClvId from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' limit :quantity;";
+        $sqlstr = "SELECT invClvId from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' and invClvExp >= now() order by invClvExp asc limit :quantity;";
         
         $sqlParams = [
             "invPrdId" => $invPrdId,

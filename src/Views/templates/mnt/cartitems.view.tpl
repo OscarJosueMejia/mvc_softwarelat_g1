@@ -69,22 +69,46 @@
             </div>
         </div>
 
-        <div class="mr-5 p-3 shadow-sm mt-4" style="background-color: white; border-radius:5px">
-            <h3 class="text-center mt-2">Resumen de Compra</h3>
+
+        <div class="mr-5 px-4 py-3 shadow-sm mt-4" style="background-color: white; border-radius:5px">
+            <h4 class="text-center mt-2">Resumen de Compra</h4>
             <div class="mt-4">
-                <h5>Cantidad: {{ItemsCount}} artículos</h5>
-                <h5>SubTotal: {{SubTotal}}</h5>
+                <h5><strong>Cantidad:</strong> {{ItemsCount}} artículos</h5>
+                <h5><strong>SubTotal:</strong> Lps. {{SubTotal}}</h5>
             </div>
             <div class="text-center mt-5">
                 {{if existentItems}}
-                <form action="index.php?page=checkout_checkout" method="post">
+                <form action="index.php?page=mnt_cartItems" method="post">
                     <button style="background-color: #ffc43c; border:none; border-radius:50px; width: 20rem;
-                        height:2.7rem">
+                        height:2.7rem" id="goPayPal" name="goPayPal">
                         <img src="https://logodownload.org/wp-content/uploads/2014/10/paypal-logo.png" width="110px">
                     </button>
                 </form>
                 {{endif existentItems}}
             </div>
         </div>
+
     </div>
+
+    <!-- Modal -->
+    <div id="errorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="color: red;">¡Lo sentimos!</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 1.2rem;"> {{ErrorDescription}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </section>
+{{ErrorTrigger}}
