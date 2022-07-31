@@ -57,7 +57,7 @@
               $sqlParams = array("catid" => $catid);
               return self::obtenerUnRegistro($sqlstr, $sqlParams);
           }
-      
+
           /**
            * Insert into Categorias
            */
@@ -72,7 +72,7 @@
               (:catnom, :catdesc);
               ";
               $sqlParams = [
-                  "catnom" => $catnom, 
+                  "catnom" => $catnom,
                   "catdesc" => $catdesc
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
@@ -96,7 +96,6 @@
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
-      
           /**
            * Undocumented function
            *
@@ -114,7 +113,7 @@
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
-      
+
       }
-      
-      ?>
+
+?>

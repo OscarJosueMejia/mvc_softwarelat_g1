@@ -2,7 +2,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<!DOCTYPE html>
+
 <html lang="es">
 
   <head>
@@ -24,15 +24,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
 
     <style>
-      .gridjs-pages>button { color: #6b7280; }
-      .error { color: red; }
-      .content { padding: 1rem !important; }
-      @media (min-width: 576px) { #containerForm {
-        width: 100%;
-      } }
-      @media (min-width: 768px) { #containerForm {
-        width: 40%;
-      } }
+      .gridjs-pages>button { color: #6b7280; } .error { color: red; } .content { padding: 1rem !important; } @media (min-width: 576px) { #containerForm { width: 100%; } } @media
+      (min-width: 768px) { #containerForm { width: 40%; } }
     </style>
 
   </head>
@@ -41,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper d-flex flex-column min-vh-100">
 
       <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light ">
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -107,7 +100,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="index.php?page=admin_categorias" class="nav-link">
                   <i class="nav-icon fas fa-tags"></i>
                   <p>
-                   &nbsp;&nbsp;&nbsp;Categorías
+                    &nbsp;&nbsp;&nbsp;Categorías
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.php?page=admin_ClavesDetalles" class="nav-link">
+                  <i class="fas fa-key"></i>
+                  <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Claves
                   </p>
                 </a>
               </li>
