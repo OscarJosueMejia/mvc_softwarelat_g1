@@ -8,6 +8,7 @@ use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Validators;
 use Dao\Admin\Roles;
+use Dao\Admin\Funciones as DaoFunciones;
 
 class Rol extends PublicController{
 
@@ -81,13 +82,19 @@ class Rol extends PublicController{
             $this->viewData["rolescod"] = $_GET["id"];
             $tmpArray = Roles::getById($this->viewData["rolescod"]);
             \Utilities\ArrUtils::mergeFullArrayTo($tmpArray, $this->viewData);
+        
         }
+
     }
 
     private function procesarPost()
     {
         $hasErrors = false;
         \Utilities\ArrUtils::mergeArrayTo($_POST, $this->viewData);
+
+
+        
+
         if (isset($_SESSION[$this->name . "crsf_token"])
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {

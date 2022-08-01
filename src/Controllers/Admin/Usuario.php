@@ -8,6 +8,7 @@ use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Validators;
 use Dao\Admin\Usuarios as Usuarios;
+use Dao\Admin\Roles as Roles;
 use Sec\Exception;
 
 /**
@@ -97,11 +98,13 @@ class Usuario extends PublicController
             array("value" => "INA", "text" => "Inactivo"),
         );
 
-        $this->arrTipoUsuario = array(
-            array("value" => "PBL", "text" => "Público"),
-            array("value" => "ADM", "text" => "Administrador"),
-            array("value" => "AUD", "text" => "Auditor")
-        );
+        $roles = Roles::getAll();
+        foreach ($roles as $rol) {
+            if ($rol["rolesest"]==="ACT") {
+                array_push($this->arrTipoUsuario, array("value" => $rol["rolescod"], "text" => $rol["rolesdsc"]));
+            }
+        }
+
 
         $this->viewData["userestArr"] = $this->arrEstados;
         $this->viewData["usertipoArr"] = $this->arrTipoUsuario;
@@ -176,6 +179,16 @@ class Usuario extends PublicController
                     $this->viewData["userest"],
                     $this->viewData["usertipo"]
                 );
+
+                if (!Usuarios::isUsuarioInRol($this->viewData["usercod"], $this->viewData["usertipo"], 'ACT')){
+                    if (Usuarios::isUsuarioInRol($this->viewData["usercod"], $this->viewData["usertipo"], 'INA')) {
+                        Usuarios::activateUsuarioRol($this->viewData["usercod"], $this->viewData["usertipo"]);
+                    }else{
+                        Usuarios::insertUsuarioRol($this->viewData["usercod"], $this->viewData["usertipo"]);
+                    }
+                    Usuarios::disableOthersUsuarioRol($this->viewData["usercod"], $this->viewData["usertipo"]);
+                }
+
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=admin_Usuarios",
@@ -218,6 +231,12 @@ class Usuario extends PublicController
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
                 $this->viewData["readonlyEmail"] = true;
+            }
+
+            if ($this->viewData["mode"] === "DSP") {
+                $this->viewData["readonlyEmail"] = true;
+                $this->viewData["readonly"] = true;
+                $this->viewData["showBtn"] = false;
             }
         }
 
