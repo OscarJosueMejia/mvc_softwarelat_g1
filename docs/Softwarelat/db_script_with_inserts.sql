@@ -127,7 +127,7 @@ CREATE TABLE `productos` (
   `invPrdEst` char(3) DEFAULT NULL,
   `invPrdPriceISV` decimal(10,2) DEFAULT NULL,
   `invPrdPrice` decimal(10,2) DEFAULT NULL,
-  `invPrdImg` varchar(256) DEFAULT NULL,
+  `invPrdImg` longtext DEFAULT NULL,
 
     PRIMARY KEY (`invPrdId`),
 
