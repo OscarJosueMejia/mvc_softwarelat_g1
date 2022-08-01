@@ -14,14 +14,23 @@ class Accept extends PrivateController{
 
         $CurrentUser = \Utilities\Security::getUserId();
 
-        $token = $_GET["token"] ?: "";
+        // $token = $_GET["token"] ?: "";
         
         // $session_token = $_SESSION["orderid"] ?: "";
         $session_token = DaoOrder::getOrderToken($CurrentUser);
 
         if (intval($session_token["TokensCount"]) == 1) {
-            if ($token !== "" && $token == $session_token["orderToken"]) {
-                $result = \Utilities\Paypal\PayPalCapture::captureOrder($session_token["orderToken"]);
+            // if ($token !== "" && $token == $session_token["orderToken"]) {
+            if ($session_token["orderToken"] != null) {
+
+                try {
+                    $result = \Utilities\Paypal\PayPalCapture::captureOrder($session_token["orderToken"]);
+                } catch (\Throwable $th) {
+                    error_log($th);
+                    DaoOrder::deleteOrderToken($CurrentUser);
+                    \Utilities\Site::redirectToWithMsg("index.php","No se pudo capturar la Orden. Inténtelo de Nuevo.", "Lo sentimos!", true);
+                    die();
+                }
                 
                 //Orden Aceptada, Pago Realizado.
                 $ShoppingSession = DaoCart::getShoppingSession($CurrentUser);
