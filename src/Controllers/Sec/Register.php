@@ -33,6 +33,7 @@ class Register extends PublicController
             if (!$this->hasErrors) {
                 try{
                     if (\Dao\Security\Security::newUsuario($this->txtEmail, $this->txtPswd)) {
+                        \Dao\Admin\Usuarios::insertUsuarioRol(\Dao\Security\Security::getUsuarioByEmail($this->txtEmail)["usercod"],"PBL");
                         \Utilities\Site::redirectToWithMsg("index.php?page=sec_login", "¡Usuario Registrado Satisfactoriamente!", "Usuario Registrado", false);
                     }
                 } catch (Throwable $ex){
@@ -44,4 +45,5 @@ class Register extends PublicController
         \Views\Renderer::render("security/sigin", $viewData);
     }
 }
+//$Eck&*re1e
 ?>
