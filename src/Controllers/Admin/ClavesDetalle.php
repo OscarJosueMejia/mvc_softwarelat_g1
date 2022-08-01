@@ -15,25 +15,26 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
+      use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
-      use Dao\Admin\Categorias;
+      use Dao\Admin\ClavesDetalles;
+      use Dao\Admin\Productos;
 
       /**
-       * Categoria
+       * ClavesDetalle
        *
        * @category Public
        * @package  Controllers\Admin;
-       * @author   
+       * @author
        * @license  MIT http://
        * @link     http://
        */
-    class Categoria extends \Controllers\PrivateController
+    class ClavesDetalle extends \Controllers\PrivateController
     {
       private $viewData = array();
       private $arrModeDesc = array();
       private $arrEstados = array();
-
       /**
        * Runs the controller
        *
@@ -53,7 +54,7 @@
         }
         // Ejecutar Siempre
         $this->processView();
-        Renderer::render("admin/categoria", $this->viewData);
+        Renderer::render("admin/ClavesDetalle", $this->viewData);
     }
 
     private function init()
@@ -62,34 +63,37 @@
         $this->viewData["mode"] = "";
         $this->viewData["mode_desc"] = "";
         $this->viewData["crsf_token"] = "";
-        $this->viewData["catid"] = "";
-        $this->viewData["catnom"] = "";
-        $this->viewData["catdesc"] = "";
-        $this->viewData["catest"] = "";
-        $this->viewData["catestArr"] = array();
+        $this->viewData["invClvId"] = "";
+        $this->viewData["invPrdId"] = "";
+        $this->viewData["invClvSerial"] = "";
+        $this->viewData["invClvExp"] = "";
+        $this->viewData["invClvEst"] = "";
 
-        $this->viewData["error_catnom"] = array();
-        $this->viewData["error_catest"] = array();
+        $this->viewData["error_invPrdId"] = array();
+        $this->viewData["error_invClvSerial"] = array();
+        $this->viewData["error_invClvExp"] = array();
+
+
+        $this->viewData["invClvEst"] = "";
+        $this->viewData["invClvEstArr"] = array();
 
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
         $this->viewData["showBtn"] = true;
-        $this->viewData["viewState"] = false;
 
         $this->arrModeDesc = array(
-            "INS"=>"Nueva Categoria",
+            "INS"=>"Nueva Clave",
             "UPD"=>"Editando %s %s",
             "DSP"=>"Detalle de %s %s",
             "DEL"=>"Eliminado %s %s"
         );
 
-         $this->arrEstados = array(
-             array("value" => "ACT", "text" => "Activo"),
-             array("value" => "INA", "text" => "Inactivo"),
-         );
+        $this->arrEstados = array(
+            array("value" => "ACT", "text" => "Activo"),
+            array("value" => "INA", "text" => "Inactivo"),
+        );
 
-         $this->viewData["catestArr"] = $this->arrEstados;
-
+        $this->viewData["invClvEstArr"] = $this->arrEstados;
     }
 
     private function procesarGet()
@@ -97,9 +101,9 @@
         if (isset($_GET["mode"])) {
             $this->viewData["mode"] = $_GET["mode"];
             if (!isset($this->arrModeDesc[$this->viewData["mode"]])) {
-                error_log("Error: (Categoria) Mode solicitado no existe.");
+                error_log("Error: (ClavesDetalle) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
-                    "index.php?page=admin_Categorias",
+                    "index.php?page=admin_ClavesDetalles",
                     "No se puede procesar su solicitud!",
                     "Error en la operación Ejecutada",
                     true
@@ -107,10 +111,10 @@
             }
         }
         if ($this->viewData["mode"] !== "INS" && isset($_GET["id"])) {
-            $this->viewData["catid"] = intval($_GET["id"]);
-            $tmpCategorias = Categorias::getById($this->viewData["catid"]);
-            error_log(json_encode($tmpCategorias));
-            \Utilities\ArrUtils::mergeFullArrayTo($tmpCategorias, $this->viewData);
+            $this->viewData["invClvId"] = intval($_GET["id"]);
+            $tmpClavesDetalles = ClavesDetalles::getById($this->viewData["invClvId"]);
+            error_log(json_encode($tmpClavesDetalles));
+            \Utilities\ArrUtils::mergeFullArrayTo($tmpClavesDetalles, $this->viewData);
         }
     }
     private function procesarPost()
@@ -123,65 +127,74 @@
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {
             \Utilities\Site::redirectToWithMsg(
-                "index.php?page=admin_Categorias",
+                "index.php?page=admin_ClavesDetalles",
                 "ERROR: Algo inesperado sucedió con la petición Intente de nuevo.",
                 "Error en la operación Ejecutada",
                 true
             );
         }
 
-        if (Validators::IsEmpty($this->viewData["catnom"])) {
-            $this->viewData["error_catnom"][] = "El Nombre de Categoría es requerido";
-            $hasErrors = true;
+        if (Validators::IsEmpty($this->viewData["invPrdId"])) {
+        $this->viewData["error_invPrdId"][] = "El invPrdId es requerido";
+        $hasErrors = true;
         }
-        if (Validators::IsEmpty($this->viewData["catdesc"])) {
-            $this->viewData["error_catdesc"][] = "La Descripción de Categoría es requerida";
-            $hasErrors = true;
+        
+        if (Validators::IsEmpty($this->viewData["invClvSerial"])) {
+        $this->viewData["error_invClvSerial"][]= "El invClvSerial es requerido";
+        $hasErrors = true;
         }
+        
+        if (Validators::IsEmpty($this->viewData["invClvExp"])) {
+        $this->viewData["error_invClvExp"][] = "El invClvExp es requerido";
+        $hasErrors = true;
+        }
+
         error_log(json_encode($this->viewData));
         // Ahora procedemos con las modificaciones al registro
         if (!$hasErrors) {
             $result = null;
             switch($this->viewData["mode"]) {
             case "INS":
-                $result = Categorias::insert(
-                    $this->viewData["catnom"],
-                    $this->viewData["catdesc"],
-                    $this->viewData["catest"]
+                $result = ClavesDetalles::insert(
+                    $this->viewData["invPrdId"],
+                    $this->viewData["invClvSerial"],
+                    $this->viewData["invClvExp"],
+                    $this->viewData["invClvEst"]
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
-                            "index.php?page=admin_Categorias",
-                            "Categoria Guardada Satisfactoriamente.",
+                            "index.php?page=admin_ClavesDetalles",
+                            "Clave Guardada Satisfactoriamente!",
                             "Operación Ejecutada Correctamente",
                             false
                         );
                 }
                 break;
             case "UPD":
-                $result = Categorias::update(
-                  $this->viewData["catid"],
-                $this->viewData["catnom"],
-                $this->viewData["catdesc"],
-                $this->viewData["catest"]
+                $result = ClavesDetalles::update(
+                  $this->viewData["invClvId"],
+                  $this->viewData["invPrdId"],
+                  $this->viewData["invClvSerial"],
+                  $this->viewData["invClvExp"],
+                  $this->viewData["invClvEst"]
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=admin_Categorias",
-                        "Categoria Actualizada Satisfactoriamente.",
+                        "index.php?page=admin_ClavesDetalles",
+                        "Clave Actualizada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
                     );
                 }
                 break;
             case "DEL":
-                $result = Categorias::delete(
-                    intval($this->viewData["catid"])
+                $result = ClavesDetalles::delete(
+                    intval($this->viewData["invClvId"])
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=admin_Categorias",
-                        "Categoria Eliminada Satisfactoriamente.",
+                        "index.php?page=admin_ClavesDetalles",
+                        "Clave Eliminada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
                     );
@@ -200,18 +213,18 @@
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
-                $this->viewData["catid"],
-                $this->viewData["catnom"]
+                $this->viewData["invClvId"],
+                $this->viewData["invPrdId"]
             );
-          $this->viewData["catestArr"]
-              = \Utilities\ArrUtils::objectArrToOptionsArray(
-                  $this->arrEstados,
-                  "value",
-                  "text",
-                  "value",
-                  $this->viewData["catest"]
-              );
-            
+            $this->viewData["invClvEstArr"]
+                = \Utilities\ArrUtils::objectArrToOptionsArray(
+                    $this->arrEstados,
+                    "value",
+                    "text",
+                    "value",
+                    $this->viewData["invClvEst"]
+                );
+
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;

@@ -1,6 +1,6 @@
 <?php
       
-      namespace Dao\Mnt;
+      namespace Dao\Admin;
       
       use Dao\Table;
       
@@ -19,13 +19,13 @@
           /*
           Tabla a generar:
           invPrdId
-invPrdName
-invPrdDsc
-invPrdCat
-invPrdEst
-invPrd
-invPrdPrice
-invPrdImg
+          invPrdName
+          invPrdDsc
+          invPrdCat
+          invPrdEst
+          invPrdPriceISV
+          invPrdPrice
+          invPrdImg
 
           */
           /**
@@ -35,12 +35,74 @@ invPrdImg
            */
           public static function getAll()
           {
-              $sqlstr = "Select * from productos;";
+              $sqlstr = "SELECT pr.invPrdId,
+              pr.invPrdName,
+              pr.invPrdDsc,
+              cat.catnom as invPrdCat,
+              pr.invPrdEst,
+              pr.invPrdPriceISV,
+              pr.invPrdPrice,
+              pr.invPrdEst,
+              pr.invPrdImg, COUNT(cd.invPrdId) as stock FROM softwarelat_db.productos pr
+				      inner join softwarelat_db.categorias cat
+                ON pr.invPrdCat = cat.catid
+                left join (SELECT * FROM softwarelat_db.claves_detalle WHERE invClvEst = 'ACT'  AND invClvExp > now()) as cd
+                ON pr.invPrdId = cd.invPrdId
+                GROUP BY pr.invPrdId;";
+              return self::obtenerRegistros($sqlstr, array());
+          }
+
+          /**
+           * Obtiene todos los registros de Productos para el filtro de productos destacados
+           *
+           * @return array
+           */
+          public static function getAllFeatureProducts()
+          {
+              $sqlstr = "SELECT pr.invPrdId, pr.invPrdName, ca.catnom, pr.invPrdPriceISV, pr.invPrdImg, count(oi.invPrdId) as CantidadVendida 
+              from order_item oi right join productos pr 
+              on oi.invPrdId = pr.invPrdId 
+              inner join categorias ca on ca.catid = pr.invPrdCat
+              group by pr.invPrdId order by CantidadVendida desc LIMIT 12;";
               return self::obtenerRegistros($sqlstr, array());
           }
       
           /**
-           * Get Productos By Id
+           * Get Productos By Id for detail
+           *
+           * @param int $invPrdId Codigo del Productos
+           *
+           * @return array
+           */
+          public static function getByIdForDetail(int $invPrdId)
+          {
+              $sqlstr = "SELECT pr.invPrdId, pr.invPrdName, pr.invPrdDsc, ca.catnom, pr.invPrdPriceISV, pr.invPrdImg 
+              from productos pr 
+              inner join categorias ca on ca.catid = pr.invPrdCat
+              WHERE pr.invPrdId=:invPrdId;";
+              $sqlParams = array("invPrdId" => $invPrdId);
+              return self::obtenerUnRegistro($sqlstr, $sqlParams);
+          }
+
+          /**
+           * Get Stock By Id Of Product for detail
+           *
+           * @param int $invPrdId Codigo del Productos
+           *
+           * @return array
+           */
+          public static function getStockByIdForDetail(int $invPrdId)
+          {
+              $sqlstr = "SELECT count(*) - (SELECT ifnull(sum(quantity), 0) from cart_item 
+              where invPrdId =:invPrdId) as disponibles_venta 
+              from claves_detalle 
+              where invPrdId =:invPrdId and invClvEst = 'ACT' and invClvExp >= now();";
+              $sqlParams = array("invPrdId" => $invPrdId);
+              return self::obtenerUnRegistro($sqlstr, $sqlParams);
+          }
+
+          /**
+           * Get Productos By Id for Detail
            *
            * @param int $invPrdId Codigo del Productos
            *
@@ -58,38 +120,37 @@ invPrdImg
            */
           public static function insert(
             $invPrdName,
-$invPrdDsc,
-$invPrdCat,
-$invPrdEst,
-$invPrd,
-$invPrdPrice,
-$invPrdImg
+            $invPrdDsc,
+            $invPrdCat,
+            $invPrdEst,
+            $invPrdPriceISV,
+            $invPrdImg
           ) {
               $sqlstr = "INSERT INTO `productos`
-      (`invPrdName`,
-`invPrdDsc`,
-`invPrdCat`,
-`invPrdEst`,
-`invPrd`,
-`invPrdPrice`,
-`invPrdImg`)
-      VALUES
-      (:invPrdName,
-:invPrdDsc,
-:invPrdCat,
-:invPrdEst,
-:invPrd,
-:invPrdPrice,
-:invPrdImg);
-      ";
+            (`invPrdName`,
+            `invPrdDsc`,
+            `invPrdCat`,
+            `invPrdEst`,
+            `invPrdPriceISV`,
+            `invPrdPrice`,
+            `invPrdImg`)
+            VALUES
+            (:invPrdName,
+            :invPrdDsc,
+            :invPrdCat,
+            :invPrdEst,
+            :invPrdPriceISV,
+            :invPrdPrice,
+            :invPrdImg);
+            ";
               $sqlParams = [
-                  "invPrdName" => $invPrdName,
-"invPrdDsc" => $invPrdDsc,
-"invPrdCat" => $invPrdCat,
-"invPrdEst" => $invPrdEst,
-"invPrd" => $invPrd,
-"invPrdPrice" => $invPrdPrice,
-"invPrdImg" => $invPrdImg
+                "invPrdName" => $invPrdName,
+                "invPrdDsc" => $invPrdDsc,
+                "invPrdCat" => $invPrdCat,
+                "invPrdEst" => "ACT",
+                "invPrdPriceISV" => floatval($invPrdPriceISV),
+                "invPrdPrice" => floatval($invPrdPriceISV) - (floatval($invPrdPriceISV)*0.15),
+                "invPrdImg" => $invPrdImg
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
@@ -98,32 +159,31 @@ $invPrdImg
            */
           public static function update(
             $invPrdId,
-$invPrdName,
-$invPrdDsc,
-$invPrdCat,
-$invPrdEst,
-$invPrd,
-$invPrdPrice,
-$invPrdImg
+            $invPrdName,
+            $invPrdDsc,
+            $invPrdCat,
+            $invPrdEst,
+            $invPrdPriceISV,
+            $invPrdImg
           ) {
               $sqlstr = "UPDATE `productos` set 
-      `invPrdName`=:invPrdName,
-`invPrdDsc`=:invPrdDsc,
-`invPrdCat`=:invPrdCat,
-`invPrdEst`=:invPrdEst,
-`invPrd`=:invPrd,
-`invPrdPrice`=:invPrdPrice,
-`invPrdImg`=:invPrdImg
-      where `invPrdId` =:invPrdId;";
+            `invPrdName`=:invPrdName,
+            `invPrdDsc`=:invPrdDsc,
+            `invPrdCat`=:invPrdCat,
+            `invPrdEst`=:invPrdEst,
+            `invPrdPriceISV`=:invPrdPriceISV,
+            `invPrdPrice`=:invPrdPrice,
+            `invPrdImg`=:invPrdImg
+            where `invPrdId` =:invPrdId;";
               $sqlParams = [
                 "invPrdId" => $invPrdId,
-"invPrdName" => $invPrdName,
-"invPrdDsc" => $invPrdDsc,
-"invPrdCat" => $invPrdCat,
-"invPrdEst" => $invPrdEst,
-"invPrd" => $invPrd,
-"invPrdPrice" => $invPrdPrice,
-"invPrdImg" => $invPrdImg
+                "invPrdName" => $invPrdName,
+                "invPrdDsc" => $invPrdDsc,
+                "invPrdCat" => $invPrdCat,
+                "invPrdEst" => $invPrdEst,
+                "invPrdPriceISV" => doubleval($invPrdPriceISV),
+                "invPrdPrice" => doubleval($invPrdPriceISV) - (doubleval($invPrdPriceISV)*0.15),
+                "invPrdImg" => $invPrdImg
               ];
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
@@ -137,13 +197,14 @@ $invPrdImg
            */
           public static function delete($invPrdId)
           {
-              $sqlstr = "DELETE from `productos` where invPrdId=:invPrdId;";
+              $sqlstr = "UPDATE `productos` SET `invPrdEst`=:invPrdEst where `invPrdId`=:invPrdId;";
               $sqlParams = array(
-                  "invPrdId" => $invPrdId
+                  "invPrdId" => $invPrdId,
+                  "invPrdEst" => "INA"
               );
               return self::executeNonQuery($sqlstr, $sqlParams);
           }
       
       }
       
-      ?>
+?>

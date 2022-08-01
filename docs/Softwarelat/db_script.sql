@@ -114,6 +114,7 @@ ALTER TABLE `bitacora` CHANGE `bitprograma` `bitprograma` VARCHAR(255) CHARACTER
 CREATE TABLE `categorias` (
   `catid` BIGINT(8) NOT NULL AUTO_INCREMENT,
   `catnom` VARCHAR(45) NULL,
+  `catndesc` VARCHAR(150) NULL,
   `catest` CHAR(3) NULL DEFAULT 'ACT',
   PRIMARY KEY (`catid`));
   
@@ -125,8 +126,9 @@ CREATE TABLE `productos` (
   `invPrdDsc` mediumtext DEFAULT NULL,
   `invPrdCat` bigint(8) DEFAULT NULL,
   `invPrdEst` char(3) DEFAULT NULL,
+  `invPrdPriceISV` decimal(10,2) DEFAULT NULL,
   `invPrdPrice` decimal(10,2) DEFAULT NULL,
-  `invPrdImg` varchar(256) DEFAULT NULL,
+  `invPrdImg` longtext DEFAULT NULL,
 
     PRIMARY KEY (`invPrdId`),
 
@@ -251,4 +253,7 @@ CREATE TABLE `payment_details` (
     on delete no action
     on update no action
 );
+
+SET NAMES utf8mb4; 
+ALTER DATABASE softwarelat_db CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
  

@@ -21,6 +21,7 @@
                 <th>Categoría</th>
                 <th>Stock</th>
                 <th>Precio</th>
+                <th>Estado</th>
                 <th>Acción</th>
             </thead>
             <tbody>
@@ -37,8 +38,9 @@
                         {{endifnot ~CanView}}
                     </td>
                     <td>{{invPrdCat}}</td>
-                    <td>5</td>
-                    <td>L. {{invPrdPrice}}</td>
+                    <td>{{stock}}</td>
+                    <td>L. {{invPrdPriceISV}}</td>
+                    <td>{{invPrdEst}}</td>
 
                     <td>
                         {{if ~CanUpdate}}
