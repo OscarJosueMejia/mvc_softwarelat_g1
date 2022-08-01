@@ -260,6 +260,22 @@ CREATE TABLE `payment_details` (
     on delete no action
     on update no action
 );
+
+CREATE TABLE `paypal_tokens` (
+  `tokenId` bigint(13) NOT NULL AUTO_INCREMENT,
+  `usercod` bigint(13) NOT NULL,
+  `orderToken` varchar(100) NOT NULL,
+  `created_at` date DEFAULT NULL,
+
+	primary key(`tokenId`),
+
+    constraint fk_paypaltoken_usuario
+    foreign key (usercod)
+    references softwarelat_db.usuario (usercod)
+    on delete no action
+    on update no action
+);
+ 
  
 
 insert into categorias values(1,'Ejemplo1','ACT');

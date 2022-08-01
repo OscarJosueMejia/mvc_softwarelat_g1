@@ -221,4 +221,60 @@ class Order extends Table
 
         return self::executeNonQuery($sqlstr, $sqlParams);
     }
+
+    /**
+     * Insert PayPal Order Token Temporaly
+     *
+     * @param [type] $usercod Current User Id
+     * @param [type] $orderToken Order Token
+     * @return void
+     */
+    public static function saveOrderToken($usercod, $orderToken) {
+        
+        $sqlstr = "INSERT INTO `paypal_tokens`
+        (`usercod`, `orderToken` ,`created_at`) 
+        VALUES (:usercod, :orderToken, :created_at);";
+        
+        $sqlParams = [
+            "usercod" => $usercod,
+            "orderToken" => $orderToken,
+            "created_at" => date('y/m/d h:i:s',time()),
+        ];
+
+        return self::executeNonQuery($sqlstr, $sqlParams);
+    }
+
+    /**
+     * Get PayPal Order Token Temporaly
+     *
+     * @param [type] $usercod Current User Id
+     * @param [type] $orderToken Order Token
+     * @return void
+     */
+    public static function getOrderToken($usercod) {
+        
+        $sqlstr = " SELECT count(orderToken) as TokensCount, orderToken FROM paypal_tokens where usercod =:usercod;";
+
+        $sqlParams = array("usercod" => $usercod);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams);
+    }
+
+
+    /**
+     * Delete PayPal Order Token
+     *
+     * @param [type] $usercod Current User Id
+     * @param [type] $orderToken Order Token
+     * @return void
+     */
+    public static function deleteOrderToken($usercod) {
+        $sqlstr = "DELETE FROM `paypal_tokens` where `usercod`=:usercod;";
+
+        $sqlParams = [
+            "usercod" => $usercod,
+        ];
+
+        return self::executeNonQuery($sqlstr, $sqlParams);
+    }
 }

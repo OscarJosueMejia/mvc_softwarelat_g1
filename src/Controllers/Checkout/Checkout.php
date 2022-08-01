@@ -4,6 +4,7 @@ namespace Controllers\Checkout;
 
 use Controllers\PrivateController;
 use Dao\Orders\Cart as DaoCart;
+use Dao\Orders\Order as DaoOrder;
 
 class Checkout extends PrivateController{
     public function run():void
@@ -39,12 +40,15 @@ class Checkout extends PrivateController{
                 $response = $PayPalOrder->createOrder();
                 
                 $order_id = $response[1]->result->id;
+                $result = DaoOrder::saveOrderToken($CurrentUser, $order_id);
+                // $_SESSION["orderid"] = $order_id;
+                // setcookie("orderid", $response[1]->result->id, time()+3600);
                 
-                
-                $_SESSION["orderid"] = $order_id;
-                setcookie("orderid", $response[1]->result->id, time()+3600);
-    
-                \Utilities\Site::redirectTo($response[0]->href);
+                if ($result) {
+                    \Utilities\Site::redirectTo($response[0]->href);
+                }else{
+                    \Utilities\Site::redirectTo("index.php?page=orders_cartItems");
+                }
 
                 die();
             }else{
