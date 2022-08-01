@@ -60,7 +60,12 @@ class Login extends \Controllers\PublicController
                                 \Utilities\Context::getContextByKey("redirto")
                             );
                         } else {
-                            \Utilities\Site::redirectTo("index.php");
+
+                            if (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "ADM")) {
+                                \Utilities\Site::redirectTo("index.php?page=admin_usuarios");
+                            }else{
+                                \Utilities\Site::redirectTo("index.php");
+                            }
                         }
                     }
                 } else {

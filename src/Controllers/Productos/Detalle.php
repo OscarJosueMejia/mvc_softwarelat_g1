@@ -50,7 +50,7 @@ class Detalle extends PublicController
 
                 $viewData["Productos"] = DaoProductos::getAllFeatureProducts();
             }else{
-              \Utilities\Site::redirectTo("index.php?page=index");
+              \Utilities\Site::redirectTo("index.php?page=orders_cartItems");
             }
         }
 
