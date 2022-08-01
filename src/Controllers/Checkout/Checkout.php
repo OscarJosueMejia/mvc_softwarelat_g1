@@ -40,10 +40,12 @@ class Checkout extends PublicController{
                 
                 $order_id = $response[1]->result->id;
                 
+                
                 $_SESSION["orderid"] = $order_id;
                 setcookie("orderid", $response[1]->result->id, time()+3600);
     
                 \Utilities\Site::redirectTo($response[0]->href);
+
                 die();
             }else{
                 \Utilities\Site::redirectTo("index.php?page=orders_cartItems");

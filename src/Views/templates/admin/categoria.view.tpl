@@ -48,7 +48,8 @@
 
   </div><!-- /.container-fluid -->
   <!-- Button trigger modal -->
-  <button style="display: none;" id="modalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  <button style="display: none;" id="modalButton" type="button" class="btn btn-primary" data-toggle="modal"
+    data-target="#staticBackdrop">
     Launch static backdrop modal
   </button>
 
@@ -64,7 +65,7 @@
           </button>
         </div>
         <div class="modal-body">
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

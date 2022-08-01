@@ -14,7 +14,9 @@ class CartItems extends PublicController
         $viewData = array();
         // $devUser = \Utilities\Security::getUserId();
         $devUser = 1;
-    
+
+        //  echo $_SESSION["text"];
+        
 
         $ShoppingSession = DaoCart::getShoppingSession($devUser);
         $cartErrors = false;
