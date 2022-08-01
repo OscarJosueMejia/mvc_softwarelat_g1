@@ -2,23 +2,19 @@
 
 namespace Controllers\Orders;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Orders\Cart as DaoCart;
 use Dao\Orders\Order as DaoOrder;
 use Views\Renderer;
 
-class CartItems extends PublicController
+class CartItems extends PrivateController
 {
     public function run():void
     {
         $viewData = array();
-        // $devUser = \Utilities\Security::getUserId();
-        $devUser = 1;
-
-        //  echo $_SESSION["text"];
+        $CurrentUser = \Utilities\Security::getUserId();
         
-
-        $ShoppingSession = DaoCart::getShoppingSession($devUser);
+        $ShoppingSession = DaoCart::getShoppingSession($CurrentUser);
         $cartErrors = false;
         $viewData["ErrorDescription"] = "";
 
@@ -33,7 +29,7 @@ class CartItems extends PublicController
             if(isset($_POST['increaseQty'])){
                 if ( DaoCart::getProductCountAvailable(intval($_POST["invPrdId"]))["disponibles_venta"] >= 1) {
                     DaoCart::updateCartItem(intval($ShoppingSession["shopSessionId"]), intval($_POST["cartItemId"]), intval($_POST["quantity"])+1);
-                    DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
+                    DaoCart::updateShopSession($CurrentUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
                 }else{
                     $cartErrors = true;
                     $viewData["ErrorDescription"] = "No hay suficiente inventario de producto.";
@@ -44,7 +40,7 @@ class CartItems extends PublicController
             if (isset($_POST['decreaseQty'])) {
                 if (intval($_POST["quantity"])-1 > 0) {
                     DaoCart::updateCartItem(intval($ShoppingSession["shopSessionId"]), intval($_POST["cartItemId"]), intval($_POST["quantity"])-1);
-                    DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
+                    DaoCart::updateShopSession($CurrentUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
                 }else{
                     $cartErrors = true;
                     $viewData["ErrorDescription"] = "La Cantidad de Producto no puede ser 0.";
@@ -54,7 +50,7 @@ class CartItems extends PublicController
             /* Eliminar el Producto de la Sesion de Compra*/
             if (isset($_POST['deleteItem'])) {
                 DaoCart::deleteCartItem(intval($_POST["cartItemId"]));
-                DaoCart::updateShopSession($devUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
+                DaoCart::updateShopSession($CurrentUser, DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"]);
             }
 
             /* Revisar si no hay cambios en el stock*/
@@ -75,7 +71,7 @@ class CartItems extends PublicController
             }
         }
         
-        if (!empty(DaoCart::getShoppingSession($devUser))) {
+        if (!empty(DaoCart::getShoppingSession($CurrentUser))) {
             $viewData["ShoppingSession"] = $ShoppingSession;
             $viewData["CartItems"] = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
             $viewData["SubTotal"] = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_subtotal"];

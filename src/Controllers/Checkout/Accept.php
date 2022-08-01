@@ -2,15 +2,16 @@
 
 namespace Controllers\Checkout;
 
+use Controllers\PrivateController;
 use Dao\Orders\Order as DaoOrder;
 use Dao\Orders\Cart as DaoCart;
 
-use Controllers\PublicController;
-class Accept extends PublicController{
+
+class Accept extends PrivateController{
     public function run():void
     {
         $dataview = array();
-        $devUser = 1;
+        $CurrentUser = \Utilities\Security::getUserId();
 
         $token = $_GET["token"] ?: "";
         
@@ -21,7 +22,7 @@ class Accept extends PublicController{
             $result = \Utilities\Paypal\PayPalCapture::captureOrder($session_token);
             
             //Orden Aceptada, Pago Realizado.
-            $ShoppingSession = DaoCart::getShoppingSession($devUser);
+            $ShoppingSession = DaoCart::getShoppingSession($CurrentUser);
             $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
             $CartSubTotal = DaoCart::getCartTotal(intval($ShoppingSession["shopSessionId"]))["session_total"];
 
@@ -35,8 +36,8 @@ class Accept extends PublicController{
                 }
 
                 //Crear Orden
-                DaoOrder::createOrder($devUser, DaoOrder::getOrderUtils()["NextOrderCode"], $CartSubTotal, $USDTotal);
-                $LastOrder = DaoOrder::getLastOrder($devUser)["LastOrder"];
+                DaoOrder::createOrder($CurrentUser, DaoOrder::getOrderUtils()["NextOrderCode"], $CartSubTotal, $USDTotal);
+                $LastOrder = DaoOrder::getLastOrder($CurrentUser)["LastOrder"];
                 
                 //Insertar cada Producto en la Orden
                 foreach ($CartItems as $CartItem) {

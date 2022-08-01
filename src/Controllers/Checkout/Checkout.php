@@ -1,21 +1,21 @@
 <?php
 
 namespace Controllers\Checkout;
+
+use Controllers\PrivateController;
 use Dao\Orders\Cart as DaoCart;
 
-use Controllers\PublicController;
-
-class Checkout extends PublicController{
+class Checkout extends PrivateController{
     public function run():void
     {
         $viewData = array();
-        $devUser = 1;
+        $CurrentUser = \Utilities\Security::getUserId();
         
-        if (!empty(DaoCart::getShoppingSession($devUser))) {
-            $ShoppingSession = DaoCart::getShoppingSession($devUser);
+        if (!empty(DaoCart::getShoppingSession($CurrentUser))) {
+            $ShoppingSession = DaoCart::getShoppingSession($CurrentUser);
             $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);
             
-            DaoCart::extendShopSession($devUser);
+            DaoCart::extendShopSession($CurrentUser);
             //Convert from Lps -> USD
             $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
     

@@ -2,23 +2,22 @@
 
 namespace Controllers\Orders;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Dao;
 use Dao\Orders\Order as DaoOrder;
 use Views\Renderer;
 
-class Orders extends PublicController
+class Orders extends PrivateController
 {
     public function run():void
     {
         $viewData = array();
-        $devUser = 1;
+        $CurrentUser = \Utilities\Security::getUserId();
 
-        // (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "ADM"))
-        if(\Utilities\Security::isInRol($devUser, "ADM")){
+        if(\Utilities\Security::isInRol($CurrentUser, "ADM")){
             $viewData["Orders"] = DaoOrder::getOrdersAdm();
         }else{
-            $viewData["Orders"] = DaoOrder::getOrders($devUser);
+            $viewData["Orders"] = DaoOrder::getOrders($CurrentUser);
         }
         
         Renderer::render('orders/orders', $viewData);

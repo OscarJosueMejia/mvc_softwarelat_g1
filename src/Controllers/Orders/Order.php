@@ -2,11 +2,11 @@
 
 namespace Controllers\Orders;
 
+use Controllers\PrivateController;
 use Dao\Orders\Order as DaoOrder;
 
-use Controllers\PublicController;
 
-class Order extends PublicController{
+class Order extends PrivateController{
 
     public function run():void
     {

@@ -66,6 +66,12 @@
           <li style="width: 150px;" class="nav-item">
             <a class="nav-link" href="about.html">Sobre Nosotros</a>
           </li>
+          <li style="width: 150px;" class="nav-item">
+            <a class="nav-link" href="index.php?page=orders_cartItems">Carrito</a>
+          </li>
+          <li style="width: 150px;" class="nav-item">
+            <a class="nav-link" href="index.php?page=orders_orders">Mis Compras</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">Contáctanos</a>
           </li>

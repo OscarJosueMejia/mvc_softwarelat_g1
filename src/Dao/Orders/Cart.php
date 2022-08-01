@@ -22,6 +22,34 @@ class Cart extends Table
     }
     
     /**
+     * Get Shopping Session ID By Current User Code
+     *
+     * @param int $usercod Código del Usuario Actual
+     *
+     * @return array
+     */
+    public static function getShoppingSessionId($usercod){
+        $sqlstr = "SELECT shopSessionId from shopping_session where usercod=:usercod;";
+        $sqlParams = array("usercod" => $usercod);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["shopSessionId"];
+    }
+    
+    /**
+     * Get Check if Current User Code has shopping Session enabled
+     *
+     * @param int $usercod Código del Usuario Actual
+     *
+     * @return array
+     */
+    public static function checkExistentShopSession($usercod){
+        $sqlstr = "SELECT count(*) as SessionCount from shopping_session where usercod=:usercod;";
+        $sqlParams = array("usercod" => $usercod);
+
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["SessionCount"] > 0;
+    }
+    
+    /**
      * Get Cart Items By Shopping Session Code
      *
      * @param int $shopSessionId Código de la Sesión de Compra
@@ -141,9 +169,9 @@ class Cart extends Table
         VALUES (:shopSessionId, :invPrdId, :quantity, :created_at);";
         
         $sqlParams = [
-            "shopSessionId" => $shopSessionId ,
-            "invPrdId" => $invPrdId ,
-            "quantity" => $quantity ,
+            "shopSessionId" => $shopSessionId,
+            "invPrdId" => $invPrdId,
+            "quantity" => $quantity,
             "created_at" => date('y/m/d h:i:s',time()),
         ];
 
@@ -289,15 +317,15 @@ class Cart extends Table
      * @return void
      */
     public static function checkIfProductIsOnCart($invPrdId, $usercod){
-        $sqlstr = "SELECT count(a.cartItemId) from cart_item a inner join shopping_session b 
-        on a.shopSessionId = b.shopSessionId where invPrdId =:invPrdId and usercod =:usercod;";
+        $sqlstr = "SELECT count(a.cartItemId) as CountExistent from cart_item a inner join shopping_session b 
+        on a.shopSessionId = b.shopSessionId where invPrdId =:invPrdId and usercod =:usercod limit 1;";
                    
         $sqlParams = [
             "invPrdId" => $invPrdId ,
             "usercod" => $usercod ,
         ];
 
-        return self::obtenerRegistros($sqlstr, $sqlParams);
+        return self::obtenerUnRegistro($sqlstr, $sqlParams)["CountExistent"] >= 1;
     }
     
 }
