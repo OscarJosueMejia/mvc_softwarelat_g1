@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Dao\Admin\Categorias as DaoCategorias;
       use Views\Renderer;
 
@@ -28,8 +27,21 @@
        * @license  MIT http://
        * @link     http://
        */
-      class Categorias extends PublicController
+      class Categorias extends \Controllers\PrivateController
       {
+
+            /**
+            * Constructor
+            */
+           public function __construct()
+           {
+               // $userInRole = \Utilities\Security::isInRol(
+               //     \Utilities\Security::getUserId(),
+               //     "ADMIN"
+               // );
+               parent::__construct();
+           }
+
           /**
            * Runs the controller
            *

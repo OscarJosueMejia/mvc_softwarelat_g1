@@ -2,6 +2,8 @@
 <script>
   tinymce.init({
       selector: '#invPrdDsc',
+      placeholder: 'Descripción',
+      readonly: {{if readonly}} true {{endif readonly}} {{ifnot readonly}} false {{endifnot readonly}},
       plugins: [
         'link', 'preview'
       ],
@@ -49,8 +51,8 @@
 
           <div class="form-row">
             <div class="form-group col-md-6 col-sm-12" style="border-color:transparent;">
-              <label for="invPrdPrice"> Precio</label><br />
-              <input type="number" class="form-control" id="invPrdPrice" placeholder="Precio" name="invPrdPrice" {{if readonly}} readonly {{endif readonly}} value="{{invPrdPrice}}"/>
+              <label for="invPrdPriceISV"> Precio</label><br />
+              <input type="number" class="form-control" id="invPrdPriceISV" placeholder="Precio" name="invPrdPriceISV" {{if readonly}} readonly {{endif readonly}} value="{{invPrdPriceISV}}"/>
                {{if error_invPrdPrice}}
                {{foreach error_invPrdPrice}}
                <div class="error">{{this}}</div>
@@ -58,6 +60,7 @@
                {{endif error_invPrdPrice}}
             </div>
 
+            {{if viewState}}
             <div class="form-group col-md-6 col-sm-12" style="border-color:transparent;">
               <label for="invPrdEst">Estado</label><br />
               <select name="invPrdEst" id="invPrdEst" {{if readonly}} readonly disabled {{endif readonly}} class="form-control">
@@ -66,15 +69,15 @@
                 {{endfor invPrdEstArr}}
               </select>
             </div>
+            {{endif viewState}}
           </div>
 
           <div class="form-group" style="border-color:transparent;">
-            
-          </div>
-
-          <div class="form-group" style="border-color:transparent;">
-            <label for="invPrdImg">Imagen</label>
-              <input class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="invPrdImg" name="invPrdImg" placeholder="Imagen" value="{{invPrdImg}}" />
+            <label for="fileUpload">Imagen</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="fileUpload" lang="es" accept="image/*" {{if readonly}} readonly disabled {{endif readonly}}>
+                <label class="custom-file-label" for="fileUpload">Seleccionar Archivo</label>
+              </div>
               {{if error_invPrdImg}}
               {{foreach error_invPrdImg}}
               <div class="error">{{this}}</div>
@@ -82,6 +85,13 @@
               {{endif error_invPrdImg}}
           </div>
 
+          <hr className="mt-5" />
+          <div id="image-wrapper">   
+            <input type="hidden" id="invPrdImg" name="invPrdImg" value="{{ifnot isInsert}} {{invPrdImg}} {{endifnot isInsert}}">    
+            <div id="image-holder">
+              <img id="imgPreview" class="img-fluid" src="{{if isInsert}}https://i.ibb.co/6yL0kYh/upload.png{{endif isInsert}} {{ifnot isInsert}} {{invPrdImg}} {{endifnot isInsert}}" alt="upload" border="0">
+            </div>
+          </div>
           <hr className="mt-5" />
           <br />
 
@@ -96,7 +106,7 @@
         </form>
       </div>
     </div>
-
+<input type="hidden" name="">
   </div><!-- /.container-fluid -->
 
   <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -124,7 +134,26 @@
 <script>
   document.addEventListener("DOMContentLoaded", function(){ document.getElementById("btnCancelar").addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation();
   window.location.href = "index.php?page=admin_Productos"; }); });
+  
   $('#btnEnviar').click(function(){
       $('#form').submit();
   });
+
+  $("#fileUpload").on('change', function () {
+
+        if (typeof (FileReader) != "undefined") {
+
+            var image_holder = $("#image-holder");
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#imgPreview").attr("src", e.target.result);
+                $("#invPrdImg").attr("value", e.target.result);
+            };
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else {
+            alert("This browser does not support FileReader.");
+        }
+    });
 </script>

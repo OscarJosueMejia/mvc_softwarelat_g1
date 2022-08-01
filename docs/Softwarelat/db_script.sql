@@ -128,7 +128,7 @@ CREATE TABLE `productos` (
   `invPrdEst` char(3) DEFAULT NULL,
   `invPrdPriceISV` decimal(10,2) DEFAULT NULL,
   `invPrdPrice` decimal(10,2) DEFAULT NULL,
-  `invPrdImg` varchar(256) DEFAULT NULL,
+  `invPrdImg` longtext DEFAULT NULL,
 
     PRIMARY KEY (`invPrdId`),
 
@@ -253,4 +253,7 @@ CREATE TABLE `payment_details` (
     on delete no action
     on update no action
 );
+
+SET NAMES utf8mb4; 
+ALTER DATABASE softwarelat_db CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
  

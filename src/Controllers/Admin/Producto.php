@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
       use Dao\Admin\Productos;
@@ -30,7 +29,7 @@
        * @license  MIT http://
        * @link     http://
        */
-    class Producto extends PublicController
+    class Producto extends \Controllers\PrivateController
     {
       private $viewData = array();
       private $arrModeDesc = array();
@@ -68,7 +67,7 @@
         $this->viewData["invPrdId"] = "";
         $this->viewData["invPrdName"] = "";
         $this->viewData["invPrdDsc"] = "";
-        $this->viewData["invPrdPrice"] = "";
+        $this->viewData["invPrdPriceISV"] = "";
         $this->viewData["invPrdImg"] = "";
 
         $this->viewData["error_invPrdName"] = array();
@@ -85,6 +84,8 @@
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
         $this->viewData["showBtn"] = true;
+        $this->viewData["viewState"] = false;
+        $this->viewData["isInsert"] = false;
 
         $this->arrModeDesc = array(
             "INS"=>"Nuevo Producto",
@@ -156,9 +157,9 @@
              = "El invPrdDsc es requerido";
             $hasErrors = true;
         }
-        if (Validators::IsEmpty($this->viewData["invPrdPrice"])) {
+        if (Validators::IsEmpty($this->viewData["invPrdPriceISV"])) {
             $this->viewData["error_invPrdPrice"][]
-             = "El invPrdPrice es requerido";
+             = "El invPrdPriceISV es requerido";
             $hasErrors = true;
         }
         if (Validators::IsEmpty($this->viewData["invPrdImg"])) {
@@ -181,7 +182,7 @@
                     $this->viewData["invPrdDsc"],
                     $this->viewData["invPrdCat"],
                     $this->viewData["invPrdEst"],
-                    $this->viewData["invPrdPrice"],
+                    $this->viewData["invPrdPriceISV"],
                     $this->viewData["invPrdImg"]
                 );
                 if ($result) {
@@ -200,7 +201,7 @@
                   $this->viewData["invPrdDsc"],
                   $this->viewData["invPrdCat"],
                   $this->viewData["invPrdEst"],
-                  $this->viewData["invPrdPrice"],
+                  $this->viewData["invPrdPriceISV"],
                   $this->viewData["invPrdImg"]
                 );
                 if ($result) {
@@ -234,6 +235,8 @@
         if ($this->viewData["mode"] === "INS") {
             $this->viewData["mode_desc"]  = $this->arrModeDesc["INS"];
             $this->viewData["btnEnviarText"] = "Guardar Nuevo";
+            $this->viewData["viewState"] = false;
+            $this->viewData["isInsert"] = true;
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
@@ -260,13 +263,16 @@
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;
+                $this->viewData["viewState"] = true;
             }
             if ($this->viewData["mode"] === "DEL") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["btnEnviarText"] = "Eliminar";
+                $this->viewData["viewState"] = false;
             }
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
+                $this->viewData["viewState"] = true;
             }
         }
         $this->viewData["crsf_token"] = md5(getdate()[0] . $this->name);

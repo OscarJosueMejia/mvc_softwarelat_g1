@@ -2,179 +2,154 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Softwarelat | Admin</title>
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  
+  <link rel="icon" href="/{{BASE_DIR}}/public/imgs/imagesPublic/favicon.png" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <title>Softwarelat Honduras</title>
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css" />
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css" />
 
-  <!-- jQuery -->
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/tooplate-main.css">
+  <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/owl.css">
+
   <script src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
-  <!-- JSGrid JS -->
-  <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.development.js"></script>
-  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
-
-  <style>
-    .gridjs-pages>button {
-      color: #6b7280;
-    }
-
-    .error {
-      color: red;
-    }
-
-    .content {
-      padding: 1rem !important;
-    }
-
-    @media (min-width: 576px) {
-      #containerForm {
-        width: 100%;
-      }
-    }
-
-    @media (min-width: 768px) {
-      #containerForm {
-        width: 40%;
-      }
-    }
-  </style>
 
 </head>
 
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper d-flex flex-column min-vh-100">
+<body>
 
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=index" class="nav-link">Inicio</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=admin_productos" class="nav-link">Productos</a>
-        </li>
-      </ul>
+  <!-- Pre Header -->
+  <div id="pre-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <span>Licencias de software, juegos, programas y soporte de TI.</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Mi Cuenta
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> &nbsp;&nbsp; Perfil</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-question"></i>&nbsp;&nbsp; Another Option</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Cerrar Sesión</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img id="img-header" style="width: 500px; height: auto;"
+          src="/{{BASE_DIR}}/public/imgs/imagesPublic/logo_transparent.png" alt=""></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Inicio
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="products.html">Productos</a>
+          </li>
+          <li style="width: 150px;" class="nav-item">
+            <a class="nav-link" href="about.html">Sobre Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contáctanos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.php?page=sec_login"><i style="font-size: x-large;" class="fas fa-user    "></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
-        <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-          class="brand-image img-circle elevation-3" style="opacity: .8" />
-        <span class="brand-text font-weight-light">Softwarelat Admin</span>
-      </a>
+  <div style="margin-top: 50px;">
+      {{{page_content}}}
+  </div>
 
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/user2-160x160.jpg"
-              class="img-circle elevation-2" alt="User Image" />
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Usuario</a>
+  <!-- Footer Starts Here -->
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="logo">
+            <img style="width: 200px; height: auto;" src="/{{BASE_DIR}}/public/imgs/imagesPublic/logo_transparent.png" alt="">
           </div>
         </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-              <a href="index.php?page=admin_productos" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>
-                  &nbsp;&nbsp;&nbsp;Productos
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="index.php?page=admin_categorias" class="nav-link">
-                <i class="nav-icon fas fa-tags"></i>
-                <p>
-                  &nbsp;&nbsp;&nbsp;Categorías
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="index.php?page=admin_ClavesProductos" class="nav-link">
-                <i class="fas fa-key"></i>
-                <p>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Claves
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+        <div class="col-md-12">
+          <div class="footer-menu">
+            <ul>
+              <li><a href="#">Inicio</a></li>
+              <li><a href="#">Ayuda</a></li>
+              <li><a href="#">Política de Privacidad</a></li>
+              <li><a href="#">¿Cómo Funciona?</a></li>
+              <li><a href="#">Contáctanos</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="social-icons">
+            <ul>
+              <li><a href="https://www.facebook.com/softwarelat" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="https://www.instagram.com/softwarelat_/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="https://api.whatsapp.com/send?phone=50498753532" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      {{{page_content}}}
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-      <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer mt-auto">
-      <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        ICONOS DE REDES
-      </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2022 <a href="">Softwarelat Honduras</a>.</strong>
-      Todos los derechos reservados.
-    </footer>
   </div>
-  <!-- ./wrapper -->
+  <!-- Footer Ends Here -->
 
-  <!-- REQUIRED SCRIPTS -->
 
-  <!-- Bootstrap 4 -->
-  <script src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+  <!-- Sub Footer Starts Here -->
+  <div class="sub-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="copyright-text">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sub Footer Ends Here -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+
+
+  <!-- Additional Scripts -->
+  <script src="/{{BASE_DIR}}/public/scripts/custom.js"></script>
+  <script src="/{{BASE_DIR}}/public/scripts/owl.js"></script>
+  <script src="/{{BASE_DIR}}/public/scripts/isotope.js"></script>
+  <script src="/{{BASE_DIR}}/public/scripts/flex-slider.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $("<p>Copyright &copy; "+ new Date().getFullYear() +" Softwarelat Honduras</p>").insertAfter(".copyright-text");
+    })
+  </script>
+
+
 </body>
 
 </html>
