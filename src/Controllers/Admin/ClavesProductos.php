@@ -5,31 +5,30 @@
        *
        * @category Controller
        * @package  Controllers\Admin
-       * @author
+       * @author   
        * @license  Comercial http://
        * @version  CVS:1.0.0
        * @link     http://url.com
        */
        namespace Controllers\Admin;
-
+      
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Dao\Admin\Categorias as DaoCategorias;
+      use Dao\Admin\Productos as DaoProductos;
       use Views\Renderer;
-
+      
       /**
-       * Categorias
+       * ClavesProductos
        *
        * @category Public
        * @package  Controllers\Admin;
-       * @author
+       * @author   
        * @license  MIT http://
        * @link     http://
        */
-      class Categorias extends \Controllers\PrivateController
+      class ClavesProductos extends \Controllers\PrivateController
       {
-
             /**
             * Constructor
             */
@@ -41,7 +40,6 @@
                // );
                parent::__construct();
            }
-
           /**
            * Runs the controller
            *
@@ -51,14 +49,15 @@
           {
               // code
               $viewData = array();
-              $viewData["Categorias"] = DaoCategorias::getAll();
+              $viewData["Productos"] = DaoProductos::getAll();
               $viewData["CanInsert"] = true;
               $viewData["CanUpdate"] = true;
               $viewData["CanDelete"] = true;
               $viewData["CanView"] = true;
               error_log(json_encode($viewData));
 
-              Renderer::render("admin/categorias", $viewData);
+              Renderer::render("admin/ClavesProductos", $viewData);
           }
       }
+
 ?>

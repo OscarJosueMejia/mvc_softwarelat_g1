@@ -10,6 +10,7 @@
  * @link     http://
  */
 namespace Controllers;
+use Dao\Admin\Productos as DaoProductos;
 
 /**
  * Index Controller
@@ -30,6 +31,7 @@ class Index extends PublicController
     public function run() :void
     {
         $viewData = array();
+        $viewData["Productos"] = DaoProductos::getAllFeatureProducts();
         \Views\Renderer::render("index", $viewData);
     }
 }
