@@ -66,9 +66,9 @@
           {{endif generalError}}
 
           <div class="d-flex align-items-center justify-content-center">
-            <button class="btn btn-warning" id="btnLogin" type="submit">Enviar correo</button>
+            <button id="btnLogin" type="submit">Enviar correo</button>
             &nbsp;&nbsp;&nbsp;
-            <button class="btn btn-danger" name="btnCancelar" id="btnCancelar">Cancelar</button>
+            <button name="btnCancelar" id="btnCancelar">Cancelar</button>
           </div>
 
           <hr className="mt-5" />
