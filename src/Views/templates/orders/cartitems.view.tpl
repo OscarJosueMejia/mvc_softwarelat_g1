@@ -30,8 +30,8 @@
 
                                         <button class="mx-3"
                                             style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:2.4rem; width:2.4rem"
-                                            type="submit" id="increaseQty" name="increaseQty">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
+                                            type="submit" id="decreaseQty" name="decreaseQty">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/659/659883.png"
                                                 width="15px">
                                         </button>
                                         <div class="d-flex justify-content-center p-3"
@@ -40,10 +40,11 @@
                                         </div>
                                         <button class="mx-3"
                                             style="border:none; border-radius: 10px; background-color:#f4f4f4; color:black; height:2.4rem; width:2.4rem"
-                                            type="submit" id="decreaseQty" name="decreaseQty">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/659/659883.png"
+                                            type="submit" id="increaseQty" name="increaseQty">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
                                                 width="15px">
                                         </button>
+
                                     </form>
                                 </div>
 

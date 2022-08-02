@@ -29,6 +29,11 @@
 
   <script src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 
+  <!-- JSGrid JS -->
+  <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.development.js"></script>
+  <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
+
 </head>
 
 <body>

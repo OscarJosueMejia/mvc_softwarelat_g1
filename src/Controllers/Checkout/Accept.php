@@ -84,6 +84,13 @@ class Accept extends PrivateController{
                     $dataview["postal_code"] = $mainPPData["shipping"]["address"]["postal_code"];
                     $dataview["country_code"] = $mainPPData["shipping"]["address"]["country_code"];
                     $dataview["email_address"] =$secondaryPPData["email_address"];
+
+                    // Send Email With Order
+                    $UserEmail = \Utilities\Security::getUser();
+                    \Utilities\EmailOrderSender::sendMail(
+                        $UserEmail["userEmail"],
+                        \Utilities\HtmlOrder\EmailGenerator::createOrderEmail(
+                            $dataview["OrderDetails"], $dataview["OrderItems"]));
     
                 } catch (\Throwable $th) {
                     error_log($th);
