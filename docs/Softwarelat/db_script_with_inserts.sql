@@ -276,6 +276,8 @@ CREATE TABLE `paypal_tokens` (
     on update no action
 );
  
+ INSERT INTO paypal_tokens values (2,2,"test1",now());
+
  
 
 insert into categorias values(1,'Ejemplo1','ACT');

@@ -38,33 +38,39 @@ class Detalle extends PublicController
 
 
         if ($this->isPostBack()) {
-            if (isset($_POST["btnComprar"]) && isset($_GET["id"])) {
-                $CurrentUser = \Utilities\Security::getUserId();
 
-                if (DaoCart::checkIfProductIsOnCart($_POST["invPrdId"],$CurrentUser)) {
-                    \Utilities\Site::redirectToWithMsg("index.php?page=orders_cartItems","El Producto ya esta registrado en su carrito de compra.", "¡Lo Sentimos!", true);
-                }else{
-                    $UserShopSession = "";
-                    try {
-                        if (DaoCart::getProductCountAvailable(intval($_POST["invPrdId"]))["disponibles_venta"] >= intval($_POST["txtCant"])) {
+            if (\Utilities\Security::isLogged()){
+                if (isset($_POST["btnComprar"]) && isset($_GET["id"])) {
+                    $CurrentUser = \Utilities\Security::getUserId();
+    
+                    if (DaoCart::checkIfProductIsOnCart($_POST["invPrdId"],$CurrentUser)) {
+                        \Utilities\Site::redirectToWithMsg("index.php?page=orders_cartItems","El Producto ya esta registrado en su carrito de compra.", "¡Lo Sentimos!", true);
+                    }else{
+                        $UserShopSession = "";
+                        try {
+                            if (DaoCart::getProductCountAvailable(intval($_POST["invPrdId"]))["disponibles_venta"] >= intval($_POST["txtCant"])) {
+                                
+                                if (!DaoCart::checkExistentShopSession($CurrentUser)) {
+                                    DaoCart::createShopSession($CurrentUser);
+                                }
+    
+                                $UserShopSession = DaoCart::getShoppingSessionId($CurrentUser);
                             
-                            if (!DaoCart::checkExistentShopSession($CurrentUser)) {
-                                DaoCart::createShopSession($CurrentUser);
+                                DaoCart::insertCartItem($UserShopSession, $_POST["invPrdId"],  $_POST["txtCant"]);
+                                DaoCart::updateShopSession($CurrentUser, DaoCart::getCartTotal($UserShopSession)["session_total"]);
+                            
+                                \Utilities\Site::redirectToWithMsg("index.php?page=orders_cartItems","Producto Agregado al Carrito de Compra.", "Operación Realizada Exitosamente", false);
+                            }else{
+                                \Utilities\Site::redirectToWithMsg("index.php","No hay Suficiente Stock del Producto Seleccionado.", "¡Lo Sentimos!", true);
                             }
-
-                            $UserShopSession = DaoCart::getShoppingSessionId($CurrentUser);
-                        
-                            DaoCart::insertCartItem($UserShopSession, $_POST["invPrdId"],  $_POST["txtCant"]);
-                            DaoCart::updateShopSession($CurrentUser, DaoCart::getCartTotal($UserShopSession)["session_total"]);
-                        
-                            \Utilities\Site::redirectToWithMsg("index.php?page=orders_cartItems","Producto Agregado al Carrito de Compra.", "Operación Realizada Exitosamente", false);
-                        }else{
-                            \Utilities\Site::redirectToWithMsg("index.php","No hay Suficiente Stock del Producto Seleccionado.", "¡Lo Sentimos!", true);
+                        } catch (\Throwable $th) {
+                            echo $th;
                         }
-                    } catch (\Throwable $th) {
-                        echo $th;
                     }
                 }
+            }else{
+                \Utilities\Site::redirectToWithMsg("index.php?page=sec_login","Inicie sesión con su cuenta para agregar productos al carrito.", "Iniciar Sesión", true);
+
             }
         }
 
