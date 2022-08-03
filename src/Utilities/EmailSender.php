@@ -38,7 +38,7 @@ class EmailSender {
         
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Password Change';
+            $mail->Subject = 'Cambio de Contraseña';
             $mail->Body    = '<h3 style="font-size:1.2rem;">This is your temporal Password Key, use it for change your Main Password</h3>
             <div style="text-align:center; font-weight:600; background-color:gainsboro; border-radius:10px;">'.$tmpPass.'</div>';
             $mail->AltBody = 'Recovery Password: '.$tmpPass;

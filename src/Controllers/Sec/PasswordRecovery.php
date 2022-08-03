@@ -53,10 +53,18 @@ class PasswordRecovery extends \Controllers\PublicController
                                     $dbUser["usertipo"],
                                 );
 
-                                if (!\Utilities\EmailSender::sendMail($dbUser["useremail"], $tempPass)) {
+                                $utilData = array();
+                                $utilData["tmpUser"] = $dbUser["username"];
+                                $utilData["tmpPass"] = $tempPass;
+
+                                if (!\Utilities\EmailOrderSender::sendMail(
+                                    $dbUser["useremail"],
+                                    \Utilities\HtmlOrder\EmailGenerator::createOrderEmail("", "", $utilData, 2),"Recuperar Cuenta")) {
+
                                     $this->generalError = "Error al Enviar el Correo de Recuperación";
                                     $this->intStep == 0;
                                 }
+
                             } catch (\Throwable $th) {
                                 echo "<br><br><br><br>";
                                 echo $th;

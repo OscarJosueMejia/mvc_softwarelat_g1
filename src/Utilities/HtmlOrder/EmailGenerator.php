@@ -3,8 +3,9 @@
 namespace Utilities\HtmlOrder;
 
 class EmailGenerator {
-    public static function createOrderEmail($OrderData, $ProductList)
+    public static function createOrderEmail($OrderData, $ProductList, $otherData, $mode)
     {
+        if ($mode == 1) {
             $htmlMail = '<div style="font-family:`Sans-Serif`; text-align: center; padding-top: 1rem; flex-direction: column; border-radius: 10px; background-color:#f4f4f4; padding-bottom: 10px; width:65%">
             <img style="text-align: center;" src="https://cemesablobstorage.blob.core.windows.net/blobsimg/logo_transparent.png" alt="" width="350px">
             <h2 style="font-size: 1.4rem; color:black; text-align: center; font-family: `Segoe UI`;">Detalles de la Compra</h2>';
@@ -42,10 +43,25 @@ class EmailGenerator {
             }
 
             $htmlMail .= '</div>';
+        
+            return $htmlMail ;
 
-           
+        }elseif($mode == 2){
 
-        return $htmlMail ;
+            return '<div style="font-family:`Sans-Serif`; text-align: center; padding-top: 1rem; flex-direction: column; border-radius: 10px; background-color:#f4f4f4; padding-bottom: 10px; width:45%">
+            <img style="text-align: center;" src="https://cemesablobstorage.blob.core.windows.net/blobsimg/logo_transparent.png" alt="" width="350px">
+            <h2 style="color:black; font-family: `Segoe UI`;">¡Hola '.$otherData["tmpUser"].'!</h2>
+            <div style="font-size:1.1rem">
+                <p style="color:black; margin-top: 2rem; font-family: `Segoe UI`;">Cambio de Contraseña en Softwarelat Honduras.</p>
+    
+                <div style="text-align: center; margin-top: 2rem; padding-left: 2rem; padding-right: 2rem;">
+                    <p style="text-align: center; color:black; font-family: `Segoe UI`;"><strong>Contraseña Temporal de Recuperación</strong> </p>
+                    <div style="background-color: white; padding: 0.5rem; border-radius: 10px; font-family: `Segoe UI`;">'.$otherData["tmpPass"].'</div>
+                </div>
+                <p style="margin-top: 3rem; color:black; font-family: `Segoe UI`;">Utiliza este código para cambiar tu contraseña.</p>
+            </div>
+            </div>';
+        }
     }
 }
 ?>
