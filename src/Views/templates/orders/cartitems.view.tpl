@@ -2,17 +2,16 @@
 <div class="container text-center">
     <div class="row mb-2 justify-content-center">
         <div class="mt-4">
-            <div class="d-flex align-items-center pt-2 mt-2">
+            <div class="d-flex align-items-center pt-3 mt-4">
+                <img class="mr-3"
+                    src="https://firebasestorage.googleapis.com/v0/b/servientregasbd.appspot.com/o/cartitem.png?alt=media&token=1b6f206a-e033-4481-bad1-9ad0b7b37979"
+                    width="60px">
                 <h1 class="text-center ">Carrito</h1>
-                <div class="ml-3 shadow-sm" style="margin-top:-0.4rem; font-size:1.9rem; display:flex; align-items:center; justify-content:center; background-color: #f4f4f4; border-radius:50px; width: 3rem;
-                    height:3rem;">
-
-                    {{ItemsCount}}
-                </div>
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
 </div>
+
 <!-- /.content-header -->
 <section>
 
