@@ -238,7 +238,7 @@ class Security extends \Dao\Table
 
     static public function removeFeatureFromRol($fncod, $rolescod)
     {
-        $sqldel = "UPDATE funciones_roles set roleuserest='INA'
+        $sqldel = "UPDATE funciones_roles set fnrolest='INA'
         where fncod=:fncod and rolescod=:rolescod;";
         return self::executeNonQuery(
             $sqldel,
