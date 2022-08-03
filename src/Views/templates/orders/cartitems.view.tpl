@@ -1,11 +1,26 @@
-<h2 class="text-center pt-4">Carrito ({{ItemsCount}})</h2>
+<!-- Content Header (Page header) -->
+<div class="container text-center">
+    <div class="row mb-2 justify-content-center">
+        <div class="mt-4">
+            <div class="d-flex align-items-center pt-2 mt-2">
+                <h1 class="text-center ">Carrito</h1>
+                <div class="ml-3 shadow-sm" style="margin-top:-0.4rem; font-size:1.9rem; display:flex; align-items:center; justify-content:center; background-color: #f4f4f4; border-radius:50px; width: 3rem;
+                    height:3rem;">
+
+                    {{ItemsCount}}
+                </div>
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>
+<!-- /.content-header -->
 <section>
 
     <div class="d-flex flex-wrap justify-content-center">
         <div class="card-body p-5" style="overflow-x:auto;">
             <div class="row flex-column">
                 {{foreach CartItems}}
-                <div class="card mb-3">
+                <div class="card mb-3" style="border-radius:15px; border-color:#f4f4f4; border-width:0.15rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
@@ -56,8 +71,8 @@
                                         <input type="hidden" id="cartItemId" name="cartItemId" value="{{cartItemId}}">
 
                                         <button type="submit" id="deleteItem" name="deleteItem"
-                                            style="background-color:#fb9090; border:none; border-radius:10px; margin-top:0.7rem; height:2.6rem; width:2.6rem">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png"
+                                            style="background-color:#fb9090; border:none; border-radius:10px; margin-top:0.1rem; height:2.6rem; width:2.6rem">
+                                            <img src="https://firebasestorage.googleapis.com/v0/b/servientregasbd.appspot.com/o/trashicon.png?alt=media&token=74e3e46e-3736-41a5-924f-9ff92c5bd9e1"
                                                 width="25px">
                                         </button>
                                     </form>
@@ -69,7 +84,8 @@
                 {{endfor CartItems}}
             </div>
             {{if existentItems}}
-            <small style="font-size: 1.2rem;"> <i>El precio de cada producto tiene I.S.V. incluidos.</i></small>
+            <small style="font-size: 1rem;"><strong><i>El precio de cada item tiene
+                        &nbsp;impuestos&nbsp;incluidos.</i></strong></small>
             {{endif existentItems}}
 
         </div>

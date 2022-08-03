@@ -119,6 +119,14 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="index.php?page=orders_orders" class="nav-link">
+                <i class="fas fa-history"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;Registro de Compras
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="index.php?page=admin_categorias" class="nav-link">
                 <i class="nav-icon fas fa-tags"></i>
                 <p>
