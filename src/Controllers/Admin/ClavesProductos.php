@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Dao\Admin\Productos as DaoProductos;
       use Views\Renderer;
       
@@ -28,8 +27,19 @@
        * @license  MIT http://
        * @link     http://
        */
-      class ClavesProductos extends PublicController
+      class ClavesProductos extends \Controllers\PrivateController
       {
+            /**
+            * Constructor
+            */
+           public function __construct()
+           {
+               // $userInRole = \Utilities\Security::isInRol(
+               //     \Utilities\Security::getUserId(),
+               //     "ADMIN"
+               // );
+               parent::__construct();
+           }
           /**
            * Runs the controller
            *

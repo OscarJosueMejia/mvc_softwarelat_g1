@@ -30,7 +30,7 @@
        * @license  MIT http://
        * @link     http://
        */
-    class ClavesDetalle extends PublicController
+    class ClavesDetalle extends \Controllers\PrivateController
     {
       private $viewData = array();
       private $arrModeDesc = array();

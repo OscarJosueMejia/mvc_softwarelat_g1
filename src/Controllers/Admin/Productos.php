@@ -1,12 +1,24 @@
 <?php
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Dao\Admin\Productos as DaoProductos;
 use Views\Renderer;
 
-class Productos extends PublicController
+class Productos extends \Controllers\PrivateController
 {
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // $userInRole = \Utilities\Security::isInRol(
+        //     \Utilities\Security::getUserId(),
+        //     "ADMIN"
+        // );
+        parent::__construct();
+    }
+
     public function run() :void
     {
         $viewData = array();

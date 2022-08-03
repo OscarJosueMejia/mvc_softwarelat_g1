@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
       use Dao\Admin\Categorias;
@@ -29,7 +28,7 @@
        * @license  MIT http://
        * @link     http://
        */
-    class Categoria extends PublicController
+    class Categoria extends \Controllers\PrivateController
     {
       private $viewData = array();
       private $arrModeDesc = array();
