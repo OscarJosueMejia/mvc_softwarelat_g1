@@ -114,6 +114,19 @@
               group by pr.invPrdId order by CantidadVendida desc LIMIT 12;";
               return self::obtenerRegistros($sqlstr, array());
           }
+
+          /**
+           * Obtiene la cuenta de ventas por mes para el dashboard
+           *
+           * @return array
+           */
+          public static function getSalesCountByMonth()
+          {
+              $sqlstr = "SELECT me.idmes, count(month(oi.created_at)) as cantVentas FROM softwarelat_db.meses ME
+              LEFT JOIN order_item oi ON me.idmes = month(oi.created_at) 
+              GROUP BY (me.idmes) ORDER by me.idmes ASC;";
+              return self::obtenerRegistros($sqlstr, array());
+          }
       
           /**
            * Get Productos By Id for detail
