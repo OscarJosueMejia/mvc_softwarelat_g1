@@ -263,7 +263,7 @@ class Cart extends Table
      * @return void
      */
     public static function getProductCountAvailable($invPrdId){
-        $sqlstr = "SELECT count(*) - (SELECT ifnull(sum(quantity),0) from cart_item where invPrdId =:invPrdId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' and invClvExp >= now();";
+        $sqlstr = "SELECT count(*) - (SELECT ifnull(sum(quantity),0) from cart_item where invPrdId =:invPrdId) as disponibles_venta from claves_detalle where invPrdId =:invPrdId and invClvEst = 'ACT' and datediff(invClvExp, now()) > 1;";
         $sqlParams = array("invPrdId" => $invPrdId);
 
         return self::obtenerUnRegistro($sqlstr, $sqlParams);

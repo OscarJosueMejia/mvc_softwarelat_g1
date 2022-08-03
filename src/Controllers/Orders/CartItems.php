@@ -18,6 +18,7 @@ class CartItems extends PrivateController
         $cartErrors = false;
         $viewData["ErrorDescription"] = "";
 
+        //Eliminar sesiones mayores a 3 Dias de modification.
         try {
             DaoCart::deleteSessionsByTime();
         } catch (\Throwable $th) {
