@@ -122,19 +122,27 @@ class Rol extends \Controllers\PrivateController {
 
             switch($this->viewData["mode"]) {
             case "INS":
-                $result = Roles::insert(
-                    $this->viewData["rolescod"],
-                    $this->viewData["rolesdsc"],
-                    $this->viewData["rolesest"],
-                );
+                try {
+                    $result = Roles::insert(
+                        $this->viewData["rolescod"],
+                        $this->viewData["rolesdsc"],
+                        $this->viewData["rolesest"],
+                    );
 
-                if ($result) {
+                    if ($result) {
                         \Utilities\Site::redirectToWithMsg(
                             "index.php?page=admin_roles",
                             "Rol Guardado Satisfactoriamente!", "Operación Exitosa", false
                         );
+                    }
+                    break;
+                } catch (\Throwable $th) {
+                    \Utilities\Site::redirectToWithMsg(
+                        "index.php?page=admin_roles",
+                        "No se pudo guardar el nuevo rol", "Error en la operación Ejecutada", true
+                    );
+                    break;
                 }
-                break;
 
             case "UPD":
                 $result = Roles::update(

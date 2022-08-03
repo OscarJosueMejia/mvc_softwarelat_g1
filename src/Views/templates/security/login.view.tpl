@@ -8,7 +8,7 @@
         <div>
           <h2 class="text-center">Inicio de Sesión</h2>
         </div>
-        <form action="index.php?page=sec_login" method="post"
+        <form action="index.php?page=sec_login{{if redirto}}&redirto={{redirto}}{{endif redirto}}" method="post"
           style="border-radius:1rem; padding:1rem; font-size:1.1rem">
           <input type="hidden" name="mode" value="{{mode}}" />
           <input type="hidden" name="crsf_token" value="{{crsf_token}}" />
@@ -18,7 +18,8 @@
             <div class="form-group" style="border-color:transparent;">
               <label style="font-size: medium;" for="txtEmail">Correo Electrónico</label>
               <div>
-                <input class="form-control" type="email" id="txtEmail" placeholder="Correo Electrónico..." name="txtEmail" value="{{txtEmail}}" />
+                <input class="form-control" type="email" id="txtEmail" placeholder="Correo Electrónico..."
+                  name="txtEmail" value="{{txtEmail}}" />
               </div>
               {{if errorEmail}}
               <div class="error">{{errorEmail}}</div>
@@ -28,7 +29,8 @@
             <div class="form-group" style="border-color:transparent;">
               <label style="font-size: medium;" for="txtPswd">Contraseña</label>
               <div>
-                <input class="form-control" type="password" id="txtPswd" name="txtPswd" placeholder="Contraseña..." value="{{txtPswd}}" />
+                <input class="form-control" type="password" id="txtPswd" name="txtPswd" placeholder="Contraseña..."
+                  value="{{txtPswd}}" />
               </div>
               {{if errorPswd}}
               <div class="error">{{errorPswd}}</div>
@@ -47,12 +49,13 @@
           </div>
           <br>
           <div class="main-button m-auto text-center">
-            <button class="main-button-btn" id="btnLogin" type="submit"> Iniciar sesión &nbsp; <i style="font-weight: 600;" class="fas fa-sign-in-alt"></i> </button>
+            <button class="main-button-btn" id="btnLogin" type="submit"> Iniciar sesión &nbsp; <i
+                style="font-weight: 600;" class="fas fa-sign-in-alt"></i> </button>
           </div>
           <br>
           <hr className="mt-5" />
           <div style="text-align: center;" class="reg-login">
-              <a style="font-size: 15px;" href="index.php?page=sec_register">¿No tienes una Cuenta? Crea una aquí</a>
+            <a style="font-size: 15px;" href="index.php?page=sec_register">¿No tienes una Cuenta? Crea una aquí</a>
           </div>
           <br />
         </form>

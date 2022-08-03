@@ -76,6 +76,6 @@
 
         columns: [{ name: "Acción", width: '95px', sort: false }],
     });
-    $(`<a style="float: right;width: 97px;" class="btn btn-primary" href="index.php?page=admin_categoria&mode=INS&id=0" role="button">AGREGAR</a>`).insertBefore(".gridjs-search");
+    $(`<a style="float: right;width: 97px;" class="btn btn-primary" href="index.php?page=admin_usuario&mode=INS" role="button">AGREGAR</a>`).insertBefore(".gridjs-search");
 
 </script>

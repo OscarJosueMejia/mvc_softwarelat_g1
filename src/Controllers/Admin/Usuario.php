@@ -9,6 +9,7 @@ use Utilities\Validators;
 use Dao\Admin\Usuarios as Usuarios;
 use Dao\Admin\Roles as Roles;
 use Sec\Exception;
+use Throwable;
 
 /**
  * Usuario
@@ -149,28 +150,47 @@ class Usuario extends \Controllers\PrivateController
             );
         }
 
-        // if (Validators::IsEmpty($this->viewData["useremail"]) || !Validators::IsValidEmail($this->viewData["useremail"])) {
-        // $this->viewData["error_useremail"][]
-        // = "Ingrese un Email válido";
-        // $hasErrors = true;
-        // }
+        if($this->viewData["mode"] == "INS"){
+            if (Validators::IsEmpty($this->viewData["useremail"]) || !Validators::IsValidEmail($this->viewData["useremail"])) {
+            $this->viewData["error_useremail"][]
+            = "Ingrese un Email válido";
+            $hasErrors = true;
+            }
 
-        // if (Validators::IsEmpty($this->viewData["username"])) {
-        // $this->viewData["error_username"][]
-        // = "El Nombre de Usuario es requerido";
-        // $hasErrors = true;
-        // }
+            if (Validators::IsEmpty($this->viewData["username"])) {
+            $this->viewData["error_username"][]
+            = "El Nombre de Usuario es requerido";
+            $hasErrors = true;
+            }
+    
+            if (Validators::IsEmpty($this->viewData["userpswd"]) || !Validators::IsValidPassword($this->viewData["userpswd"])) {
+            $this->viewData["error_userpswd"][]
+            = "Ingrese contraseña válida (al menos 8 caracteres, 1 número, 1 mayúscula, 1 símbolo especial)";
+            $hasErrors = true;
+            }
+        }
 
-        // if (Validators::IsEmpty($this->viewData["userpswd"]) || !Validators::IsValidPassword($this->viewData["userpswd"])) {
-        // $this->viewData["error_userpswd"][]
-        // = "Ingrese contraseña válida (al menos 8 caracteres, 1 número, 1 mayúscula, 1 símbolo especial)";
-        // $hasErrors = true;
-        // }
 
         // Ahora procedemos con las modificaciones al registro
         if (!$hasErrors) {
             $result = null;
             switch($this->viewData["mode"]) {
+
+            case "INS":
+                try{
+                    if (\Dao\Security\Security::newUsuario($this->viewData["useremail"], $this->viewData["userpswd"], $this->viewData["username"],$this->viewData["usertipo"])) {
+                        
+                        \Dao\Admin\Usuarios::insertUsuarioRol(\Dao\Security\Security::getUsuarioByEmail($this->viewData["useremail"])["usercod"],$this->viewData["usertipo"]);
+                        \Utilities\Site::redirectToWithMsg("index.php?page=admin_usuarios", "¡Usuario Registrado Satisfactoriamente!", "Usuario Registrado", false);
+                    }
+                } catch (Throwable $ex){
+                    echo $ex;
+                    \Utilities\Site::redirectToWithMsg(
+                        "index.php?page=admin_usuarios",
+                        "No se pudo guardar el nuevo usuario.", "Error en la operación Ejecutada", true
+                    );
+                }
+                break;
 
             case "UPD":
                 $result = Usuarios::updateUsuario(
@@ -204,6 +224,7 @@ class Usuario extends \Controllers\PrivateController
         if ($this->viewData["mode"] === "INS") {
             $this->viewData["mode_desc"]  = $this->arrModeDesc["INS"];
             $this->viewData["btnEnviarText"] = "Guardar Nuevo";
+            $this->viewData["isInsert"] = true;
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
@@ -230,12 +251,15 @@ class Usuario extends \Controllers\PrivateController
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
                 $this->viewData["readonlyEmail"] = true;
+                $this->viewData["isInsert"] = false;
             }
 
             if ($this->viewData["mode"] === "DSP") {
                 $this->viewData["readonlyEmail"] = true;
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;
+                $this->viewData["isInsert"] = false;
+
             }
         }
 

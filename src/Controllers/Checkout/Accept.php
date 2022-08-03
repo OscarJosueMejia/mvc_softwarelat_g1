@@ -90,7 +90,9 @@ class Accept extends PrivateController{
                     \Utilities\EmailOrderSender::sendMail(
                         $UserEmail["userEmail"],
                         \Utilities\HtmlOrder\EmailGenerator::createOrderEmail(
-                            $dataview["OrderDetails"], $dataview["OrderItems"]));
+                            $dataview["OrderDetails"], $dataview["OrderItems"], array(), 1),
+                            "Detalle de Compra"
+                        );
     
                 } catch (\Throwable $th) {
                     error_log($th);

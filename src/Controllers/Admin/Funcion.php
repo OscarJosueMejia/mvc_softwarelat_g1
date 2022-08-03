@@ -124,20 +124,30 @@ class Funcion extends \Controllers\PrivateController {
 
             switch($this->viewData["mode"]) {
             case "INS":
-                $result = Funciones::insert(
-                    $this->viewData["fncod"],
-                    $this->viewData["fndsc"],
-                    $this->viewData["fnest"],
-                    $this->viewData["fntyp"],
-                );
 
-                if ($result) {
+                try {
+                    $result = Funciones::insert(
+                        $this->viewData["fncod"],
+                        $this->viewData["fndsc"],
+                        $this->viewData["fnest"],
+                        $this->viewData["fntyp"],
+                    );
+    
+                    
+                    if ($result) {
+                        \Utilities\Site::redirectToWithMsg(
+                            "index.php?page=admin_funciones",
+                            "Función Guardada Satisfactoriamente!", "Operación Exitosa", false
+                        );
+                    }
+                    break;
+                } catch (\Throwable $th) {
                     \Utilities\Site::redirectToWithMsg(
                         "index.php?page=admin_funciones",
-                        "Función Guardada Satisfactoriamente!", "Operación Exitosa", false
+                        "No se pudo guardar la función.", "Error en la operación Ejecutada", true
                     );
+                    break;
                 }
-                break;
 
             case "UPD":
                 $result = Funciones::update(
