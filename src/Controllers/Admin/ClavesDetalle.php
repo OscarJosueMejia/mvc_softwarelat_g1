@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
       use Dao\Admin\ClavesDetalles;

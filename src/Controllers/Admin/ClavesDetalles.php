@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Dao\Admin\ClavesDetalles as DaoClavesDetalles;
       use Views\Renderer;
       
@@ -28,7 +27,7 @@
        * @license  MIT http://
        * @link     http://
        */
-      class ClavesDetalles extends PublicController
+      class ClavesDetalles extends \Controllers\PrivateController
       {
           /**
            * Runs the controller
