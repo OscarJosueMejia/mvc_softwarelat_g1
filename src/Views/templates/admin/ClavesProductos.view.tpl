@@ -27,7 +27,6 @@
         {{foreach Productos}}
         <tr>
           <td>{{invPrdId}}</td>
-
           <td>
             {{invPrdName}}
           </td>
@@ -36,7 +35,7 @@
           <td>L. {{invPrdPrice}}</td>
 
           <td>
-            <a id="update" href="index.php?page=admin_producto&mode=UPD&id={{invPrdId}}" role="button">
+            <a id="clavesView" href="index.php?page=admin_ClavesDetalles&id={{invPrdId}}&opt=1" role="button">
               <i style="font-size:x-large; " class="fas fa-plus-circle"></i></a>
           </td>
         </tr>
