@@ -9,6 +9,9 @@ class Login extends \Controllers\PublicController
     private $generalError = "";
     private $hasError = false;
 
+
+    //HOLAAAAAAAAAAA
+
     public function run() :void
     {
         if ($this->isPostBack()) {
@@ -60,7 +63,15 @@ class Login extends \Controllers\PublicController
                                 \Utilities\Context::getContextByKey("redirto")
                             );
                         } else {
-                            \Utilities\Site::redirectTo("index.php");
+
+                            if (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "ADM")) {
+                                \Utilities\Site::redirectTo("index.php?page=admin_productos");
+                            }else if (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "SPU")) {
+                                //SuperUsuario
+                                \Utilities\Site::redirectTo("index.php?page=admin_usuarios");
+                            }else{
+                                \Utilities\Site::redirectTo("index.php");
+                            }
                         }
                     }
                 } else {
@@ -78,4 +89,5 @@ class Login extends \Controllers\PublicController
         \Views\Renderer::render("security/login", $dataView);
     }
 }
+
 ?>

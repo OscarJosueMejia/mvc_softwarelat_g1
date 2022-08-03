@@ -32,6 +32,7 @@ class Index extends PublicController
     {
         $viewData = array();
         $viewData["Productos"] = DaoProductos::getAllFeatureProducts();
+
         \Views\Renderer::render("index", $viewData);
     }
 }

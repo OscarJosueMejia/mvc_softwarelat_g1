@@ -77,7 +77,8 @@
             <a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> &nbsp;&nbsp; Perfil</a>
             <a class="dropdown-item" href="#"><i class="fas fa-question"></i>&nbsp;&nbsp; Another Option</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Cerrar Sesión</a>
+            <a class="dropdown-item" href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;
+              Cerrar Sesión</a>
           </div>
         </li>
       </ul>
@@ -118,6 +119,14 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="index.php?page=orders_orders" class="nav-link">
+                <i class="fas fa-history"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;Registro de Compras
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="index.php?page=admin_categorias" class="nav-link">
                 <i class="nav-icon fas fa-tags"></i>
                 <p>
@@ -130,6 +139,31 @@
                 <i class="fas fa-key"></i>
                 <p>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Claves
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=admin_roles" class="nav-link">
+                <i class="fas fa-user-tag"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roles
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?page=admin_funciones" class="nav-link">
+                <i class="fas fa-list"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Funciones
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?page=admin_usuarios" class="nav-link">
+                <i class="fas fa-user"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Usuarios
                 </p>
               </a>
             </li>

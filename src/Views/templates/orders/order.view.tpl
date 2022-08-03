@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-center align-items-center mt-5 mb-4">
     <div class="d-flex align-items-center pt-3 mt-4">
-        <h1 class="text-center ">Compra Realizada</h1>
-        <img class="ml-4" src="https://cdn-icons-png.flaticon.com/512/1828/1828651.png" width="60px">
+        <h1 class="text-center ">Datos de la Compra</h1>
+        <img class="ml-4" src="https://cdn-icons-png.flaticon.com/512/891/891462.png" width="60px">
     </div>
 </div>
+
 <hr>
 <section>
     <div class="mx-5 mt-4 mb-5">
@@ -28,12 +29,14 @@
                     </tr>
                     {{endfor OrderItems}}
                 </table>
-                <small style="font-size: 1rem;"> <i>El precio de cada item tiene impuestos incluidos.</i></small>
+                <small style="font-size: 1rem;"><strong><i>El precio de cada item tiene impuestos&nbsp;
+                            incluidos.</i></strong></small>
 
             </div>
         </div>
+        <br>
         <hr>
-        <div class="d-flex justify-content-center flex-row flex-wrap mt-4">
+        <div class="d-flex justify-content-center flex-row flex-wrap mt-4 ">
 
             <div class="mx-5 mt-4 px-5 py-4 shadow-sm" style="background-color: #e8e9ec; border-radius:20px">
                 <div class="align-items-center justify-content-center shadow" style="display:flex; position:relative; top:-40px; right:70px; width: 4rem; height:4rem; border-radius:50px;

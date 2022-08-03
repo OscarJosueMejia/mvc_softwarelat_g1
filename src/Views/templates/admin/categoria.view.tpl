@@ -23,16 +23,17 @@
 
           <div class="form-group" style="border-color:transparent;">
             <label for="catdesc">Descripción Categoría</label>
-            <textarea class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="catdesc" name="catdesc" placeholder="Descripción" />{{catdesc}}</textarea>
+            <textarea class="form-control" {{if readonly}} readonly {{endif readonly}} type="text" id="catdesc"
+              name="catdesc" placeholder="Descripción" />{{catdesc}}</textarea>
             {{if error_catdesc}}
             {{foreach error_catdesc}}
             <div class="error">{{this}}</div>
             {{endfor error_catdesc}}
             {{endif error_catdesc}}
           </div>
-          
+
           {{if viewState}}
-            <div class="form-group" style="border-color:transparent;">
+          <div class="form-group" style="border-color:transparent;">
             <label for="catest">Estado</label><br />
             <select name="catest" id="catest" {{if readonly}} readonly disabled {{endif readonly}}
               class="form-control col-md-6">
@@ -48,7 +49,8 @@
 
           <div class="d-flex align-items-center justify-content-center">
             {{if showBtn}}
-            <button name="btnEnviar" class="btn btn-warning" type="button" data-toggle="modal" data-target="#confirm-submit">{{btnEnviarText}}</button>
+            <button name="btnEnviar" class="btn btn-warning" type="button" data-toggle="modal"
+              data-target="#confirm-submit">{{btnEnviarText}}</button>
             &nbsp;&nbsp;&nbsp;
             {{endif showBtn}}
             <button class="btn btn-danger" name="btnCancelar" id="btnCancelar">Cancelar</button>
@@ -59,27 +61,30 @@
     </div>
 
   </div><!-- /.container-fluid -->
-  
-  <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <b>Confirmación de Operación</b>
-            </div>
-            <img class="mt-3" style="margin: auto; width:50px" src="https://i.ibb.co/6Bz2x2r/question.png" alt="question" border="0">
-            <div class="modal-body">
-                ¿Está seguro de ejecutar esta operación?
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" name="btnCancelar" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">No</button>
-                <button type="button" name="btnEnviar" id="btnEnviar" class="btn btn-success success">Sí</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <b>Confirmación de Operación</b>
         </div>
+        <img class="mt-3" style="margin: auto; width:50px" src="https://i.ibb.co/6Bz2x2r/question.png" alt="question"
+          border="0">
+        <div class="modal-body">
+          ¿Está seguro de ejecutar esta operación?
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" name="btnCancelar" id="btnCancelar" class="btn btn-danger"
+            data-dismiss="modal">No</button>
+          <button type="button" name="btnEnviar" id="btnEnviar" class="btn btn-success success">Sí</button>
+        </div>
+      </div>
     </div>
-</div>
- 
+  </div>
+
 </div>
 <!-- /.content -->
 <script>
@@ -89,7 +94,7 @@
       window.location.href = "index.php?page=admin_Categorias";
     });
   });
-  $('#btnEnviar').click(function(){
+  $('#btnEnviar').click(function () {
     $('#form').submit();
   });
 </script>
