@@ -9,9 +9,6 @@ class Login extends \Controllers\PublicController
     private $generalError = "";
     private $hasError = false;
 
-
-    //HOLAAAAAAAAAAA
-
     public function run() :void
     {
         if ($this->isPostBack()) {

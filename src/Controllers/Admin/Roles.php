@@ -5,11 +5,10 @@
 
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Dao\Admin\Roles as DaoRoles;
 use Views\Renderer;
 
-class Roles extends PublicController
+class Roles extends \Controllers\PrivateController
 {
     public function run():void
     {

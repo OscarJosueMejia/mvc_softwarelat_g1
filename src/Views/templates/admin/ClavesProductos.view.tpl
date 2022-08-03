@@ -32,7 +32,7 @@
           </td>
           <td>{{invPrdCat}}</td>
           <td>{{stock}}</td>
-          <td>L. {{invPrdPrice}}</td>
+          <td>L. {{invPrdPriceISV}}</td>
 
           <td>
             <a id="clavesView" href="index.php?page=admin_ClavesDetalles&id={{invPrdId}}&opt=1" role="button">

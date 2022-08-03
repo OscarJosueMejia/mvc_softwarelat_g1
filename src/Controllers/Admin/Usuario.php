@@ -4,7 +4,6 @@ namespace Controllers\Admin;
 // ---------------------------------------------------------------
 // Sección de imports
 // ---------------------------------------------------------------
-use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Validators;
 use Dao\Admin\Usuarios as Usuarios;
@@ -20,7 +19,7 @@ use Sec\Exception;
  * @license  MIT http://
  * @link     http://
  */
-class Usuario extends PublicController
+class Usuario extends \Controllers\PrivateController
 {
     private $viewData = array();
     private $arrModeDesc = array();

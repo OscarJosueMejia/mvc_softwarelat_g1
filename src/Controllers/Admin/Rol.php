@@ -4,13 +4,12 @@
  */
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Validators;
 use Dao\Admin\Roles;
 use Dao\Admin\Funciones as DaoFunciones;
 
-class Rol extends PublicController{
+class Rol extends \Controllers\PrivateController {
 
     private $viewData = array();
     private $arrModeDesc = array();

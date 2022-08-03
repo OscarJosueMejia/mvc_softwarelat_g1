@@ -1,11 +1,10 @@
 <?php 
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Dao\Admin\Funciones as DaoFunciones;
 use Views\Renderer;
 
-class Funciones extends PublicController
+class Funciones extends \Controllers\PrivateController
 {
     public function run():void
     {

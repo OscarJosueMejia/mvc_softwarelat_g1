@@ -1,12 +1,11 @@
 <?php 
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Views\Renderer;
 use Utilities\Validators;
 use Dao\Admin\Funciones;
 
-class Funcion extends PublicController{
+class Funcion extends \Controllers\PrivateController {
 
     private $viewData = array();
     private $arrModeDesc = array();

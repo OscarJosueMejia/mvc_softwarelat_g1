@@ -1,11 +1,10 @@
 <?php
 namespace Controllers\Admin;
 
-use Controllers\PublicController;
 use Dao\Security\Security as DaoSecurity;
 use Views\Renderer;
 
-class Usuarios extends PublicController
+class Usuarios extends \Controllers\PrivateController
 {
     public function run():void
     {

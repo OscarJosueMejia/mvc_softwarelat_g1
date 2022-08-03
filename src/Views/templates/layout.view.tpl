@@ -63,7 +63,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="index.php?page=index"><img id="img-header" style="width: 500px; height: auto;"
+      <a class="navbar-brand" href="index.php?page=index"><img id="img-header" style="width: 375px; height: auto;"
           src="/{{BASE_DIR}}/public/imgs/imagesPublic/logo_transparent.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,22 +79,28 @@
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=productos_lista&pag=1">Productos</a>
           </li>
-          <li id="about" class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="index.php?page=pages_about">Sobre Nosotros</a>
-          </li>
-          <li style="width: 150px;" class="nav-item">
-            <a class="nav-link" href="index.php?page=orders_cartItems">Carrito</a>
-          </li>
-          <li style="width: 150px;" class="nav-item">
-            <a class="nav-link" href="index.php?page=orders_orders">Mis Compras</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=pages_contact">Contáctanos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?page=sec_login"><i style="font-size: x-large;"
-                class="fas fa-user    "></i></a>
+            <a class="nav-link" href="index.php?page=orders_orders"><i style="font-size: x-large;" class="fas fa-shopping-bag"></i></a>
           </li>
+          <li id="last" style="margin-left: -7px; margin-right: -7px;" class="nav-item">
+            <a class="nav-link" href="index.php?page=orders_cartItems"><i style="font-size: x-large;" class="fas fa-shopping-cart"></i></a>
+          </li>
+ 
+            {{if login}}
+              {{with login}}
+              <input type="hidden" id="isLogeado" value="true">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.php?page=sec_logout"><i style="font-size: x-large;" class="fas fa-sign-out-alt"></i></i></a>
+                </li>
+                <p class="nav-link">¡BIENVENIDO, {{userName}}!</p>
+              {{endwith login}}
+            {{endif login}}
         </ul>
       </div>
     </div>
@@ -128,12 +134,9 @@
         <div class="col-md-12">
           <div class="social-icons">
             <ul>
-              <li><a href="https://www.facebook.com/softwarelat" target="_blank"><i class="fab fa-facebook-f"></i></a>
-              </li>
-              <li><a href="https://www.instagram.com/softwarelat_/" target="_blank"><i class="fab fa-instagram"></i></a>
-              </li>
-              <li><a href="https://api.whatsapp.com/send?phone=50498753532" target="_blank"><i
-                    class="fab fa-whatsapp"></i></a></li>
+              <li><a href="https://www.facebook.com/softwarelat" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="https://www.instagram.com/softwarelat_/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="https://api.whatsapp.com/send?phone=50498753532" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
             </ul>
           </div>
         </div>
@@ -141,7 +144,6 @@
     </div>
   </div>
   <!-- Footer Ends Here -->
-
 
   <!-- Sub Footer Starts Here -->
   <div class="sub-footer">
@@ -155,6 +157,8 @@
       </div>
     </div>
   </div>
+
+
   <!-- Sub Footer Ends Here --> 
 
   <!-- Bootstrap core JavaScript -->
@@ -173,7 +177,19 @@
   <script>
     $(document).ready(function () {
       $("<p>Copyright &copy; " + new Date().getFullYear() + " Softwarelat Honduras</p>").insertAfter(".copyright-text");
-    })
+      
+      if($("#isLogeado").val() == undefined) {
+        $(`<li class="nav-item">
+                <a class="nav-link" id="loginIcon" href="index.php?page=sec_login"><i style="font-size: x-large;" class="fas fa-user"></i></a>
+              </li>`).insertAfter("#last");
+        $("#navbarResponsive").css({ left: "40%" });
+      }
+      else{
+        $("#loginIcon").empty();
+      }
+      
+      
+    });
   </script>
 
 

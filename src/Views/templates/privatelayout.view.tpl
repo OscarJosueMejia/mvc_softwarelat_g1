@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Softwarelat | Admin</title>
+  <link rel="icon" href="/{{BASE_DIR}}/public/imgs/imagesPublic/favicon.png" type="image/x-icon">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
@@ -75,7 +76,6 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> &nbsp;&nbsp; Perfil</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-question"></i>&nbsp;&nbsp; Another Option</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;
               Cerrar Sesión</a>
@@ -88,7 +88,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="index.php?page=admin_productos" class="brand-link">
         <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3" style="opacity: .8" />
         <span class="brand-text font-weight-light">Softwarelat Admin</span>
@@ -99,11 +99,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/user2-160x160.jpg"
+            <img src="/{{BASE_DIR}}/public/imgs/imagesPublic/favicon.png"
               class="img-circle elevation-2" alt="User Image" />
           </div>
           <div class="info">
-            <a href="#" class="d-block">Usuario</a>
+            <a href="index.php?page=admin_productos" class="d-block">{{with login}} {{userName}} {{endwith login}}</a>
           </div>
         </div>
 
@@ -194,10 +194,10 @@
     <footer class="main-footer mt-auto">
       <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
-        ICONOS DE REDES
+        Ver. 1.0
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2022 <a href="">Softwarelat Honduras</a>.</strong>
+      <strong>Copyright &copy; 2022 <a href="https://www.facebook.com/softwarelat">Softwarelat Honduras</a>.</strong>
       Todos los derechos reservados.
     </footer>
   </div>
