@@ -32,6 +32,7 @@ class Accept extends PrivateController{
                     die();
                 }
                 
+        
                 //Orden Aceptada, Pago Realizado.
                 $ShoppingSession = DaoCart::getShoppingSession($CurrentUser);
                 $CartItems = DaoCart::getCartItems($ShoppingSession["shopSessionId"]);

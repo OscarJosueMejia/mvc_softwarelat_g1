@@ -13,6 +13,7 @@ class Usuarios extends \Controllers\PrivateController
         $viewData["Usuarios"] = DaoSecurity::getUsuarios();
         error_log(json_encode($viewData));
     
+
         Renderer::render("admin/usuarios", $viewData);
     }
 }

@@ -201,7 +201,7 @@ class Security extends \Dao\Table
     {
         $sqlstr = "select * from roles a inner join
         roles_usuarios b on a.rolescod = b.rolescod where a.rolesest = 'ACT'
-        and b.usercod=:usercod and a.rolescod=:rolescod limit 1;";
+        and b.usercod=:usercod and a.rolescod=:rolescod and b.roleuserest = 'ACT' limit 1;";
         $resultados = self::obtenerRegistros(
             $sqlstr,
             array(

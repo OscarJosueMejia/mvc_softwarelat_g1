@@ -214,6 +214,7 @@ class Usuario extends \Controllers\PrivateController
                         "Usuario Actualizado Satisfactoriamente","Usuario Actualizado", false
                     );
                 }
+            
                 break;
             }
         }
@@ -248,6 +249,11 @@ class Usuario extends \Controllers\PrivateController
                     $this->viewData["usertipo"]
                 );
             
+            if ($this->viewData["usertipo"]  == "SPU"){
+                $this->viewData["readonlyEmail"] = true;
+                $this->viewData["readonly"] = true; 
+            }
+
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
                 $this->viewData["readonlyEmail"] = true;
