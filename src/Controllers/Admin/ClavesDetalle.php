@@ -15,7 +15,6 @@
       // ---------------------------------------------------------------
       // Sección de imports
       // ---------------------------------------------------------------
-      use Controllers\PublicController;
       use Views\Renderer;
       use Utilities\Validators;
       use Dao\Admin\ClavesDetalles;
@@ -68,6 +67,7 @@
         $this->viewData["invClvSerial"] = "";
         $this->viewData["invClvExp"] = "";
         $this->viewData["invClvEst"] = "";
+        $this->viewData["invPrdName"] = "";
 
         $this->viewData["error_invPrdId"] = array();
         $this->viewData["error_invClvSerial"] = array();
@@ -79,7 +79,18 @@
 
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
+        $this->viewData["readonlyProduct"] = true;
+        $this->viewData["readonlyDate"] = true;
+        $this->viewData["goingtoUPDdate"] = "";
+  
+
         $this->viewData["showBtn"] = true;
+        $this->viewData["viewState"] = false;
+        $this->viewData["viewProduct"] = false;
+        $this->viewData["viewProductI"] = false;
+        $this->viewData["viewDate"] = false;
+        $this->viewData["viewSwitch"] = false;
+
 
         $this->arrModeDesc = array(
             "INS"=>"Nueva Clave",
@@ -103,20 +114,26 @@
             if (!isset($this->arrModeDesc[$this->viewData["mode"]])) {
                 error_log("Error: (ClavesDetalle) Mode solicitado no existe.");
                 \Utilities\Site::redirectToWithMsg(
-                    "index.php?page=admin_ClavesDetalles",
+                    "index.php?page=admin_ClavesProductos",
                     "No se puede procesar su solicitud!",
                     "Error en la operación Ejecutada",
                     true
                 );
             }
         }
-        if ($this->viewData["mode"] !== "INS" && isset($_GET["id"])) {
-            $this->viewData["invClvId"] = intval($_GET["id"]);
-            $tmpClavesDetalles = ClavesDetalles::getById($this->viewData["invClvId"]);
+        if ($this->viewData["mode"] !== "INS" && isset($_GET["idC"]) && isset($_GET["id"])) {
+            $this->viewData["invClvId"] = intval($_GET["idC"]);
+            $this->viewData["invPrdId"] = intval($_GET["id"]);
+            $tmpClavesDetalles = ClavesDetalles::getById($this->viewData["invClvId"], $this->viewData["invPrdId"]);
             error_log(json_encode($tmpClavesDetalles));
             \Utilities\ArrUtils::mergeFullArrayTo($tmpClavesDetalles, $this->viewData);
         }
+        if ($this->viewData["mode"] == "INS") {
+        
+        }
+
     }
+
     private function procesarPost()
     {
         // Validar la entrada de Datos
@@ -127,25 +144,15 @@
             && $_SESSION[$this->name . "crsf_token"] !== $this->viewData["crsf_token"]
         ) {
             \Utilities\Site::redirectToWithMsg(
-                "index.php?page=admin_ClavesDetalles",
+                "index.php?page=admin_ClavesProductos",
                 "ERROR: Algo inesperado sucedió con la petición Intente de nuevo.",
                 "Error en la operación Ejecutada",
                 true
             );
         }
 
-        if (Validators::IsEmpty($this->viewData["invPrdId"])) {
-        $this->viewData["error_invPrdId"][] = "El invPrdId es requerido";
-        $hasErrors = true;
-        }
-        
         if (Validators::IsEmpty($this->viewData["invClvSerial"])) {
         $this->viewData["error_invClvSerial"][]= "El invClvSerial es requerido";
-        $hasErrors = true;
-        }
-        
-        if (Validators::IsEmpty($this->viewData["invClvExp"])) {
-        $this->viewData["error_invClvExp"][] = "El invClvExp es requerido";
         $hasErrors = true;
         }
 
@@ -157,13 +164,11 @@
             case "INS":
                 $result = ClavesDetalles::insert(
                     $this->viewData["invPrdId"],
-                    $this->viewData["invClvSerial"],
-                    $this->viewData["invClvExp"],
-                    $this->viewData["invClvEst"]
+                    $this->viewData["invClvSerial"]
                 );
                 if ($result) {
                         \Utilities\Site::redirectToWithMsg(
-                            "index.php?page=admin_ClavesDetalles",
+                            "index.php?page=admin_ClavesDetalles&id=".$this->viewData["invPrdId"]."&opt=1",
                             "Clave Guardada Satisfactoriamente!",
                             "Operación Ejecutada Correctamente",
                             false
@@ -176,11 +181,13 @@
                   $this->viewData["invPrdId"],
                   $this->viewData["invClvSerial"],
                   $this->viewData["invClvExp"],
-                  $this->viewData["invClvEst"]
+                  $this->viewData["invClvEst"],
+                  $this->viewData["goingtoUPDdate"],
+
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=admin_ClavesDetalles",
+                        "index.php?page=admin_ClavesDetalles&id=".$this->viewData["invPrdId"]."&opt=1",
                         "Clave Actualizada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
@@ -193,7 +200,7 @@
                 );
                 if ($result) {
                     \Utilities\Site::redirectToWithMsg(
-                        "index.php?page=admin_ClavesDetalles",
+                        "index.php?page=admin_ClavesDetalles&id=".$this->viewData["invPrdId"]."&opt=1",
                         "Clave Eliminada Satisfactoriamente.",
                         "Operación Ejecutada Correctamente",
                         false
@@ -210,6 +217,13 @@
             $this->viewData["mode_desc"]  = $this->arrModeDesc["INS"];
             $this->viewData["btnEnviarText"] = "Guardar Nuevo";
             $this->viewData["viewState"] = false;
+            $this->viewData["viewDate"] = false;
+            $this->viewData["viewProduct"] = true;
+            $this->viewData["opt"] = intval($_GET["opt"]);
+            $this->viewData["invPrdId"] = intval($_GET["id"]);
+            $tmpClavesDetalle = ClavesDetalles::getByIdForInsert($this->viewData["invPrdId"]);
+            error_log(json_encode($tmpClavesDetalle));
+            \Utilities\ArrUtils::mergeFullArrayTo($tmpClavesDetalle, $this->viewData);
         } else {
             $this->viewData["mode_desc"]  = sprintf(
                 $this->arrModeDesc[$this->viewData["mode"]],
@@ -229,15 +243,23 @@
                 $this->viewData["readonly"] = true;
                 $this->viewData["showBtn"] = false;
                 $this->viewData["viewState"] = true;
+                $this->viewData["viewDate"] = true;
+                $this->viewData["viewProductI"] = true;
             }
             if ($this->viewData["mode"] === "DEL") {
                 $this->viewData["readonly"] = true;
                 $this->viewData["btnEnviarText"] = "Eliminar";
                 $this->viewData["viewState"] = false;
+                $this->viewData["viewDate"] = true;
+                $this->viewData["viewProductI"] = true;
             }
             if ($this->viewData["mode"] === "UPD") {
                 $this->viewData["btnEnviarText"] = "Actualizar";
                 $this->viewData["viewState"] = true;
+                $this->viewData["viewDate"] = true;
+                $this->viewData["readonlyDate"] = true;
+                $this->viewData["viewProductI"] = true;
+                $this->viewData["viewSwitch"] = true;
             }
         }
         $this->viewData["crsf_token"] = md5(getdate()[0] . $this->name);
