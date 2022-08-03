@@ -22,7 +22,7 @@
               atenderle! </strong>
             </p>
             <div class="main-button">
-              <a href="#">VER PRODUCTOS</a>
+              <a href="index.php?page=productos_lista&pag=1">VER PRODUCTOS</a>
             </div>
           </div>
         </div>
@@ -130,6 +130,40 @@
     </div>
   </div>
   <!-- FAQ Here -->
+
+  <!-- Why Choose Here -->
+  <div class="why-choose">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h1 class="text-center">Nuestros Clientes Nos Respaldan</h1>
+          </div>
+        </div>
+        <div class="container-wc m-auto-sm">
+          <div class="detail-wc col-sm-12 col-md-4">
+            <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fkerin.sanchez.94%2Fposts%2Fpfbid0PSLc3Ss7wskGmpjqVr5nqSfkcAywsqvj6aFFcxtcbSMFzSvRiSCctFSej9Pf4kJcl&width=350&show_text=true&appId=351115680552314&height=329" width="350" height="329" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+          </div>
+        </div>
+        <div class="container-wc m-auto-sm">
+          <div class="detail-wc col-sm-12 col-md-4">
+            <div>
+              <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Ffwuilton%2Fposts%2Fpfbid0fwg4GoEQCSLLymb736T8PgzBagF5Cm669gGZcwJY4y4Lzcp3UgfcHQV75Xu2AzHLl&width=350&show_text=true&appId=351115680552314&height=214" width="350" height="214" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+
+            </div>
+          </div>
+        </div>
+        <div class="container-wc m-auto-sm">
+          <div class="detail-wc col-sm-12 col-md-4">
+            <div>
+              <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Frafa1828%2Fposts%2Fpfbid0whYZ1xVadiYpRt1rxVHVbPQJN45oYXDQyaST9J8pQR9PiCJZVBzcbU9g22QH6w2Hl&width=350&show_text=true&appId=551665489555248&height=242" width="350" height="242" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Why Choose Here -->
 
   <!-- Subscribe Form Starts Here -->
   <div class="subscribe-form">

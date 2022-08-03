@@ -1,6 +1,6 @@
 /* 
 
-Tooplate 2114 Pixie
+Tooplate 2114 Pixie Modified by @HacknelR
 
 https://www.tooplate.com/view/2114-pixie
 
@@ -38,6 +38,23 @@ a {
 	transition: all 0.5s;
 }
 .main-button a:hover {
+	opacity: 0.7;
+}
+.main-button-btn {
+	background-color: #443a54;
+	border-radius: 5px;
+	border-width: 0px;
+	color: #fff;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 300;
+	padding: 7px 25px;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	text-decoration: none;
+	transition: all 0.5s;
+}
+.main-button-btn:hover {
 	opacity: 0.7;
 }
 .section-heading {
@@ -188,10 +205,10 @@ a {
 }
 .featured-item h6 {
 	color: #443a54;
-	font-size: 18px;
+	font-size: 25px;
 	font-weight: 700;
-	position: absolute;
-	bottom: 0;
+	text-align: center;
+	margin-top: 10px;
 }
 .owl-theme .owl-dots {
 	text-align: center;
@@ -210,6 +227,43 @@ a {
 	display: inline-block;
 	margin: 0px 5px;
 	outline: none;
+}
+
+/* Featured Style */
+.list-items {
+	margin-bottom: 70px;
+}
+.list-item {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: 1px solid #eee;
+	padding: 20px;
+	transition: all 0.5s;
+	height: 680px;
+}
+.list-item:hover {
+	opacity: 0.9;
+}
+.list-item img {
+	width: 100%;
+}
+.list-item h4 {
+	font-size: 17px;
+	font-weight: 700;
+	color: #1e1e1e;
+	margin-top: 15px;
+	transition: all 0.5s;
+}
+.list-item:hover h4 {
+	color: #443a54;
+}
+.list-item h6 {
+	color: #443a54;
+	font-size: 25px;
+	font-weight: 700;
+	text-align: center;
+	margin-top: 10px;
 }
 
 
@@ -250,6 +304,11 @@ a {
 	border-color: #d4d1d1;
 	margin: 25px;
 	padding: 30px;
+}
+
+.container-reviews {
+	display: flex;
+	justify-content: center;
 }
 
 /* Subscribe Style */
@@ -421,32 +480,7 @@ a {
 	font-weight: 700;
 	background-color: transparent;
 }
-/* Isotope Transitions
-------------------------------- */
-.isotope,
-.isotope .item {
-  -webkit-transition-duration: 0.8s;
-     -moz-transition-duration: 0.8s;
-      -ms-transition-duration: 0.8s;
-       -o-transition-duration: 0.8s;
-          transition-duration: 0.8s;
-}
 
-.isotope {
-  -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
-}
-
-.isotope .item {
-  -webkit-transition-property: -webkit-transform, opacity;
-     -moz-transition-property:    -moz-transform, opacity;
-      -ms-transition-property:     -ms-transform, opacity;
-       -o-transition-property:         top, left, opacity;
-          transition-property:         transform, opacity;
-}
 
 .page-navigation ul {
 	text-align: center;
@@ -655,7 +689,7 @@ a {
 }
 .contact-page .right-content input,
 .contact-page .right-content textarea {
-	border-radius: 0px;
+	border-radius: 5px;
 	outline: none;
 	box-shadow: none;
 	font-size: 14px;
@@ -717,12 +751,21 @@ a {
 	border: none;
 }
 
-
-
-
-
+.search-bar {
+	display: flex;
+	justify-content: center;
+	margin-top: -25px;
+}
 
 /* Responsive Style */
+@media (min-width: 991px) {
+
+	#about {
+		width: 150px !important;
+	}
+
+}
+
 @media (max-width: 991px) {
 
 	.banner {
@@ -776,7 +819,12 @@ a {
 	.contact-page {
 		margin-top: 0px;
 	}
-
+	.list-item {
+		height: 510px;
+	}
+	.m-auto-sm {
+		margin: auto;
+	}
 }
 
 @media (max-width: 767px) {
@@ -800,10 +848,22 @@ a {
 	.featured-item {
 		height: 515px;
 	}
+	.list-item {
+		height: 515px;
+	}
+	#about {
+		width: auto !important;
+	}
+	.search-bar {
+		display: flex;
+		justify-content: left;
+		margin-top: -25px;
+	}
+	
 
 }
 
-@media (max-width: 512px) {
+@media (max-width: 524px) {
 	#img-header {
 		width: 200px !important;
 	}
@@ -815,5 +875,14 @@ a {
 	}
 	.featured-item {
 		height: 675px;
+	}
+	.list-item {
+		height: 675px;
+	}
+}
+
+@media (max-width: 350px) {
+	.list-item {
+		height: 615px;
 	}
 }

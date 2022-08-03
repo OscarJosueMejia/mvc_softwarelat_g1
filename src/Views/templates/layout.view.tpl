@@ -28,6 +28,18 @@
 
   <script src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/plugins/jquery/jquery.min.js"></script>
 
+  <!-- Start of Async Callbell Code -->
+  <script>
+    window.callbellSettings = {
+      token: "NNNwXdenGkrrVwjd3W3mXX1h"
+    };
+  </script>
+  <script>
+    (function(){var w=window;var ic=w.callbell;if(typeof ic==="function"){ic('reattach_activator');ic('update',callbellSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Callbell=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://dash.callbell.eu/include/'+window.callbellSettings.token+'.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+  </script>
+  <!-- End of Async Callbell Code -->
+
+
 </head>
 
 <body>
@@ -46,7 +58,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="#"><img id="img-header" style="width: 500px; height: auto;"
+      <a class="navbar-brand" href="index.php?page=index"><img id="img-header" style="width: 500px; height: auto;"
           src="/{{BASE_DIR}}/public/imgs/imagesPublic/logo_transparent.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,18 +67,18 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">Inicio
+            <a class="nav-link" href="index.php?page=index">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="products.html">Productos</a>
+            <a class="nav-link" href="index.php?page=productos_lista&pag=1">Productos</a>
           </li>
-          <li style="width: 150px;" class="nav-item">
-            <a class="nav-link" href="about.html">Sobre Nosotros</a>
+          <li id="about" class="nav-item">
+            <a class="nav-link" href="index.php?page=pages_about">Sobre Nosotros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contáctanos</a>
+            <a class="nav-link" href="index.php?page=pages_contact">Contáctanos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=sec_login"><i style="font-size: x-large;" class="fas fa-user    "></i></a>
@@ -92,11 +104,11 @@
         <div class="col-md-12">
           <div class="footer-menu">
             <ul>
-              <li><a href="#">Inicio</a></li>
-              <li><a href="#">Ayuda</a></li>
-              <li><a href="#">Política de Privacidad</a></li>
-              <li><a href="#">¿Cómo Funciona?</a></li>
-              <li><a href="#">Contáctanos</a></li>
+              <li><a href="index.php?page=index">Inicio</a></li>
+              <li><a href="index.php?page=index">Ayuda</a></li>
+              <li><a href="index.php?page=index">Política de Privacidad</a></li>
+              <li><a href="https://docs.google.com/document/d/e/2PACX-1vQ-Mtgb85cKyrrVWfaFSIyabkZIaoFNdSs4M47Qk7vZojso1AJO-p9sV_qJLR42Z0WTEHBEU63PiCPc/pub" target="_blank">Términos y Condiciones</a></li>
+              <li><a href="index.php?page=pages_contact">Contáctanos</a></li>
             </ul>
           </div>
         </div>
@@ -127,8 +139,7 @@
       </div>
     </div>
   </div>
-  <!-- Sub Footer Ends Here -->
-
+  <!-- Sub Footer Ends Here --> 
 
   <!-- Bootstrap core JavaScript -->
   <!-- jQuery -->

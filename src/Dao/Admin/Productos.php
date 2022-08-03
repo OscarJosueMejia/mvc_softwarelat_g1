@@ -53,6 +53,54 @@
           }
 
           /**
+           * Obtiene todos los registros de Productos paginados
+           *
+           * @return array
+           */
+          public static function getAllByPagination(int $lim, int $offs, $catid, $search)
+          {
+              if (intval($catid) == -1) {
+                  $sqlstr = "SELECT pr.invPrdId,
+                  pr.invPrdName,
+                  pr.invPrdDsc,
+                  cat.catnom as invPrdCat,
+                  pr.invPrdEst,
+                  pr.invPrdPriceISV,
+                  pr.invPrdPrice,
+                  pr.invPrdEst,
+                  pr.invPrdImg, COUNT(cd.invPrdId) as stock FROM softwarelat_db.productos pr
+                  inner join softwarelat_db.categorias cat
+                    ON pr.invPrdCat = cat.catid
+                    left join (SELECT * FROM softwarelat_db.claves_detalle WHERE invClvEst = 'ACT'  AND invClvExp > now()) as cd
+                    ON pr.invPrdId = cd.invPrdId WHERE pr.invPrdName LIKE ".$search." AND pr.invPrdEst = 'ACT'
+                    GROUP BY pr.invPrdId LIMIT :lim OFFSET :offs;";
+                  $sqlParams = array(
+                    "lim" => $lim,
+                    "offs" => $offs);
+              }else{
+                    $sqlstr = "SELECT pr.invPrdId,
+                    pr.invPrdName,
+                    pr.invPrdDsc,
+                    cat.catnom as invPrdCat,
+                    pr.invPrdEst,
+                    pr.invPrdPriceISV,
+                    pr.invPrdPrice,
+                    pr.invPrdEst,
+                    pr.invPrdImg, COUNT(cd.invPrdId) as stock FROM softwarelat_db.productos pr
+				            inner join softwarelat_db.categorias cat
+                    ON pr.invPrdCat = cat.catid
+                    left join (SELECT * FROM softwarelat_db.claves_detalle WHERE invClvEst = 'ACT'  AND invClvExp > now()) as cd
+                    ON pr.invPrdId = cd.invPrdId  WHERE cat.catid =:catid AND pr.invPrdEst = 'ACT'
+                    GROUP BY pr.invPrdId LIMIT :lim OFFSET :offs;";
+                    $sqlParams = array(
+                    "lim" => $lim,
+                    "offs" => $offs,
+                    "catid" => $catid);
+              }
+              return self::obtenerRegistros($sqlstr, $sqlParams);
+          }
+
+          /**
            * Obtiene todos los registros de Productos para el filtro de productos destacados
            *
            * @return array
@@ -98,6 +146,30 @@
               from claves_detalle 
               where invPrdId =:invPrdId and invClvEst = 'ACT' and invClvExp >= now();";
               $sqlParams = array("invPrdId" => $invPrdId);
+              return self::obtenerUnRegistro($sqlstr, $sqlParams);
+          }
+
+          /**
+           * Get Count of Product for Pagination
+           *
+           *
+           * @return array
+           */
+          public static function getProductsCount($catid, $search)
+          {
+            if (intval($catid) == -1 ) {
+              $sqlstr = "SELECT count(*) as countProductos
+              FROM softwarelat_db.productos pr 
+              where pr.invPrdName LIKE ".$search." AND pr.invPrdEst = 'ACT';";
+              $sqlParams = array();
+            }
+            else{
+              $sqlstr = "SELECT count(*) as countProductos
+                FROM softwarelat_db.productos pr 
+                where pr.invPrdEst = 'ACT' AND pr.invPrdCat=:catid;";
+              $sqlParams = array("catid" => $catid);
+            }
+              
               return self::obtenerUnRegistro($sqlstr, $sqlParams);
           }
 
