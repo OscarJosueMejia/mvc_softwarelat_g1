@@ -41,7 +41,19 @@
                         {{endif error_username}}
                     </div>
 
-
+                    {{if isInsert}}
+                    <div class="form-group" style="border-color:transparent;">
+                        <label for="userpswd">Contraseña</label>
+                        <input class="form-control" {{if readonly}} readonly {{endif readonly}} type="password"
+                            id="userpswd" name="userpswd" value="{{userpswd}}" />
+                        {{if error_userpswd}}
+                        {{foreach error_userpswd}}
+                        <div class="error">{{this}}</div>
+                        {{endfor error_userpswd}}
+                        {{endif error_userpswd}}
+                    </div>
+                    {{endif isInsert}}
+                    {{ifnot isInsert}}
                     <div class="form-group" style="border-color:transparent;">
                         <label for="userest">Estado</label><br />
                         <select name="userest" id="userest" {{if readonly}} readonly disabled {{endif readonly}}
@@ -51,6 +63,8 @@
                             {{endfor userestArr}}
                         </select>
                     </div>
+                    {{endifnot isInsert}}
+
 
                     <div class="form-group" style="border-color:transparent;">
                         <label for="usertipo">Tipo</label><br />

@@ -3,6 +3,7 @@
 namespace Controllers\Sec;
 
 use Controllers\PublicController;
+use Dao\Security\UsuarioTipo;
 use \Utilities\Validators;
 use Exception;
 use Throwable;
@@ -39,7 +40,7 @@ class Register extends PublicController
             
             if (!$this->hasErrors) {
                 try{
-                    if (\Dao\Security\Security::newUsuario($this->txtEmail, $this->txtPswd, $this->txtUser)) {
+                    if (\Dao\Security\Security::newUsuario($this->txtEmail, $this->txtPswd, $this->txtUser, UsuarioTipo::PUBLICO)) {
                         \Dao\Admin\Usuarios::insertUsuarioRol(\Dao\Security\Security::getUsuarioByEmail($this->txtEmail)["usercod"],"PBL");
                         \Utilities\Site::redirectToWithMsg("index.php?page=sec_login", "¡Usuario Registrado Satisfactoriamente!", "Usuario Registrado", false);
                     }
