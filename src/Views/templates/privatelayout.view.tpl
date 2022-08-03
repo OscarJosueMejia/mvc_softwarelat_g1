@@ -34,6 +34,11 @@
       padding: 1rem !important;
     }
 
+    .w-45 {
+      width: 45% !important;
+      margin-bottom: 50px !important;
+    }
+
     @media (min-width: 576px) {
       #containerForm {
         width: 100%;
@@ -59,13 +64,11 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=index" class="nav-link">Inicio</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index.php?page=admin_productos" class="nav-link">Productos</a>
+        <li {{ifnot optionLinkSHOW}} style="display: none !important;" {{endifnot optionLinkSHOW}} id="optionLink" class="nav-item d-none d-sm-inline-block">
+          <a href="{{optionLinkHREF}}" class="nav-link">{{optionLinkText}}</a>
         </li>
       </ul>
+      
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
@@ -88,7 +91,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index.php?page=admin_productos" class="brand-link">
+      <a href="index.php?page=admin_dashboard&op=1" class="brand-link">
         <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3" style="opacity: .8" />
         <span class="brand-text font-weight-light">Softwarelat Admin</span>
@@ -103,13 +106,21 @@
               class="img-circle elevation-2" alt="User Image" />
           </div>
           <div class="info">
-            <a href="index.php?page=admin_productos" class="d-block">{{with login}} {{userName}} {{endwith login}}</a>
+            <a href="index.php?page=admin_dashboard&op=1" class="d-block">{{with login}} {{userName}} {{endwith login}}</a>
           </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="index.php?page=admin_dashboard&op=1" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;Dashboard
+                </p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="index.php?page=admin_productos" class="nav-link">
                 <i class="nav-icon fas fa-boxes"></i>
