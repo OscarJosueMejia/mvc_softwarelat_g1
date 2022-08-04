@@ -4,7 +4,7 @@
         <div class="mt-2">
             <div class="d-flex align-items-center pt-2 mt-2">
                 <h2 class="text-center">Categorías</h2> 
-                <img class="ml-4" src="https://cdn-icons-png.flaticon.com/512/347/347674.png" width="60px">
+                <img class="ml-4" src="/{{BASE_DIR}}/public/imgs/imagesPublic/tag.png" width="60px">
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->

@@ -23,13 +23,13 @@ class Checkout extends PrivateController{
             if ($lpsInUsdValue !== false) {
                 $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
                     "test".(time() - 10000000),
-                    "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_error",
-                    "http://localhost/NegociosWeb/mvc_softwarelat_g1/index.php?page=checkout_accept"
+                    "http://localhost/mvc_softwarelat_g1/index.php?page=checkout_error",
+                    "http://localhost/mvc_softwarelat_g1/index.php?page=checkout_accept"
                 );
                 
                 foreach ($CartItems as $CartItem) {
                     $PayPalOrder->addItem($CartItem["invPrdName"], 
-                    $CartItem["invPrdDsc"],
+                    $CartItem["catnom"],
                     $CartItem["invPrdId"],
                     round(doubleval($CartItem["invPrdPriceISV"]) * $lpsInUsdValue, 2), 
                     0,  

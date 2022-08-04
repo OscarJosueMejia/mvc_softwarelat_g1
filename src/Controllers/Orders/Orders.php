@@ -14,7 +14,7 @@ class Orders extends PrivateController
         $viewData = array();
         $CurrentUser = \Utilities\Security::getUserId();
 
-        if(\Utilities\Security::isInRol($CurrentUser, "ADM")){
+        if(\Utilities\Security::isInRol($CurrentUser, "ADM") || \Utilities\Security::isInRol($CurrentUser, "SPU")){
             $viewData["Orders"] = DaoOrder::getOrdersAdm();
         }else{
             $viewData["Orders"] = DaoOrder::getOrders($CurrentUser);

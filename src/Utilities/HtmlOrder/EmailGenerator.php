@@ -31,7 +31,7 @@ class EmailGenerator {
                                 <h2 style="color:black; font-family: `Segoe UI`;"><strong>'. $Product["invPrdName"] .'</strong></h2>
                                 <span style="color:black; font-size:1rem; font-family: `Segoe UI`;">'. $Product["catnom"] .'</span>
                                 <p style="color:black; font-size:1.2rem; font-family: `Segoe UI`;">
-                                    <strong>Product Key: '.$Product["invPrdName"].'</strong> 
+                                    <strong>Product Key: '.$Product["invClvSerial"].'</strong> 
                                 </p>
                             </div>
                         </div>

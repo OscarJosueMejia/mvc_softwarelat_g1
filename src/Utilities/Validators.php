@@ -19,7 +19,8 @@ class Validators {
     }
 
     static public function IsValidUser($valor){
-        return preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,32}$/", $valor) && true;
+        // return preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,32}$/", $valor) && true;
+        return true;
     }
 
     private function __construct()

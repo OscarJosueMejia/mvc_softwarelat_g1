@@ -6,7 +6,7 @@
         <div class="mt-2">
             <div class="d-flex align-items-center pt-2 mt-2">
                 <h2 class="text-center">{{mode}}</h2> 
-                <img class="ml-4" src="https://cdn-icons.flaticon.com/png/512/2516/premium/2516150.png?token=exp=1659567086~hmac=cbaa5488d0652d566418ff8dc3e47bc8" width="50px">
+                <img class="ml-4" src="/{{BASE_DIR}}/public/imgs/imagesPublic/growth.png" width="50px">
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->

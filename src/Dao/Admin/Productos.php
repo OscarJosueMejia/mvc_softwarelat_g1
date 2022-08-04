@@ -111,7 +111,7 @@
               from order_item oi right join productos pr 
               on oi.invPrdId = pr.invPrdId 
               inner join categorias ca on ca.catid = pr.invPrdCat
-              group by pr.invPrdId order by CantidadVendida desc LIMIT 12;";
+              group by pr.invPrdId order by CantidadVendida desc LIMIT 10;";
               return self::obtenerRegistros($sqlstr, array());
           }
 
@@ -122,8 +122,8 @@
            */
           public static function getSalesCountByMonth()
           {
-              $sqlstr = "SELECT me.idmes, count(month(oi.created_at)) as cantVentas FROM softwarelat_db.meses ME
-              LEFT JOIN order_item oi ON me.idmes = month(oi.created_at) 
+              $sqlstr = "SELECT me.idmes, count(month(od.created_at)) as cantVentas FROM softwarelat_db.meses ME
+              LEFT JOIN order_details od ON me.idmes = month(od.created_at) 
               GROUP BY (me.idmes) ORDER by me.idmes ASC;";
               return self::obtenerRegistros($sqlstr, array());
           }

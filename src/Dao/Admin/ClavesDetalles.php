@@ -116,8 +116,7 @@
             $invClvSerial,
             $invClvExp,
             $invClvEst,
-            $goingtoUPDdate,
-            $opt
+            $goingtoUPDdate
           ){  if($goingtoUPDdate == 0){
               $sqlstr = "UPDATE `claves_detalle` set
               `invPrdId`=:invPrdId,
