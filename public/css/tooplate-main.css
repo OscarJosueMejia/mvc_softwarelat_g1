@@ -132,6 +132,16 @@ a {
 .navbar-dark .navbar-nav .show>.nav-link {
 	color: #443a54;
 }
+.nav-link-user {
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: 700;
+	color: #1e1e1e;
+	transition: all 0.5s;
+}
+.nav-link-user:hover {
+	color: #443a54
+}
 .navbar:after {
 	width: 100%;
 	height: 1px;

@@ -92,7 +92,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index.php?page=admin_dashboard&op=1" class="brand-link">
-        <img src="https://cdn-icons.flaticon.com/png/512/3666/premium/3666227.png?token=exp=1659566844~hmac=58f395ef9461c86ded2137b7a70d0e96" alt="AdminLTE Logo"
+        <img src="https://cdn-icons.flaticon.com/png/512/3666/premium/3666227.png?token=exp=1659580954~hmac=9de311722487bb1acb84cfc6a0b40db4" alt="S"
           class="brand-image img-circle elevation-3" style="opacity: .8" />
         <span class="brand-text font-weight-light">Softwarelat Admin</span>
       </a>

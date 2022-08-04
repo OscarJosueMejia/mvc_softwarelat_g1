@@ -98,7 +98,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="index.php?page=sec_logout"><i style="font-size: x-large;" class="fas fa-sign-out-alt"></i></i></a>
                 </li>
-                <p class="nav-link">¡BIENVENIDO, <a href="index.php?page=pages_infouser"> {{userName}}! </a></p>
+                <p class="nav-link">¡BIENVENIDO(a), <a class="nav-link-user" href="index.php?page=pages_infouser"> {{userName}}! </a></p>
               {{endwith login}}
             {{endif login}}
         </ul>
