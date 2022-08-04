@@ -129,7 +129,12 @@ class PasswordRecovery extends \Controllers\PublicController
                                     \Dao\Security\Estados::ACTIVO,
                                     $dbUser["usertipo"],
                                 );
-                                \Utilities\Site::redirectTo("index.php?page=sec_login");
+                                \Utilities\Site::redirectToWithMsg(
+                                    "index.php?page=sec_login",
+                                    "Contraseña Actualizada Correctamente. Por Favor Inicie Sesión Nuevamente.",
+                                    "Operación Ejecutada Correctamente",
+                                    false
+                                );
                             } catch (\Throwable $th) {
                                 echo "<br><br><br><br>";
                                 echo $th;

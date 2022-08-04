@@ -92,7 +92,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index.php?page=admin_dashboard&op=1" class="brand-link">
-        <img src="/{{BASE_DIR}}/vendor/almasaeed2010/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+        <img src="https://cdn-icons.flaticon.com/png/512/3666/premium/3666227.png?token=exp=1659566844~hmac=58f395ef9461c86ded2137b7a70d0e96" alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3" style="opacity: .8" />
         <span class="brand-text font-weight-light">Softwarelat Admin</span>
       </a>
@@ -122,18 +122,18 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="index.php?page=admin_productos" class="nav-link">
-                <i class="nav-icon fas fa-boxes"></i>
-                <p>
-                  &nbsp;&nbsp;&nbsp;Productos
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="index.php?page=orders_orders" class="nav-link">
                 <i class="fas fa-history"></i>
                 <p>
                   &nbsp;&nbsp;&nbsp;Registro de Compras
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?page=admin_productos" class="nav-link">
+                <i class="nav-icon fas fa-boxes"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp;Productos
                 </p>
               </a>
             </li>

@@ -1,12 +1,13 @@
 <!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Claves de Productos</h1>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+<div class="container text-center">
+    <div class="row mb-2 justify-content-center">
+        <div class="mt-2">
+            <div class="d-flex align-items-center pt-2 mt-2">
+                <h2 class="text-center">Claves de Productos</h2> 
+                <img class="ml-4" src="https://cdn-icons.flaticon.com/png/512/4438/premium/4438696.png?token=exp=1659567806~hmac=79da31275bafd6c69da9280d7b2852d1" width="60px">
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 </div>
 <!-- /.content-header -->
 

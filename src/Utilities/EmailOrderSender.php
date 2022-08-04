@@ -38,7 +38,9 @@ class EmailOrderSender {
             $mail->addAddress($target); //Name is optional
         
             //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->CharSet = 'UTF-8';
+            $mail->isHTML(true);     
+            $subject = utf8_decode($subject);                             //Set email format to HTML
             $mail->Subject = $subject;
             $mail->Body    = $emailHtml;
         

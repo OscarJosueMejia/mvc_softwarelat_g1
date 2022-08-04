@@ -148,23 +148,23 @@
 
         if (Validators::IsEmpty($this->viewData["invPrdName"])) {
             $this->viewData["error_invPrdName"][]
-             = "El invPrdName es requerido";
+             = "El Nombre del Producto es requerido";
             $hasErrors = true;
         }
 
         if (Validators::IsEmpty($this->viewData["invPrdDsc"])) {
             $this->viewData["error_invPrdDsc"][]
-             = "El invPrdDsc es requerido";
+             = "La Descripción del Producto es requerida";
             $hasErrors = true;
         }
         if (Validators::IsEmpty($this->viewData["invPrdPriceISV"])) {
             $this->viewData["error_invPrdPrice"][]
-             = "El invPrdPriceISV es requerido";
+             = "El Precio del Producto es requerido";
             $hasErrors = true;
         }
         if (Validators::IsEmpty($this->viewData["invPrdImg"])) {
             $this->viewData["error_invPrdImg"][]
-             = "El invPrdImg es requerido";
+             = "La Imágen del Producto es requerida";
             $hasErrors = true;
         }
 

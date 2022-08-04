@@ -63,7 +63,7 @@ class Login extends \Controllers\PublicController
                         } else {
 
                             if (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "ADM")) {
-                                \Utilities\Site::redirectTo("index.php?page=admin_productos");
+                                \Utilities\Site::redirectTo("index.php?page=admin_dashboard&op=1");
                             }else if (\Utilities\Security::isInRol(\Utilities\Security::getUserId(), "SPU")) {
                                 //SuperUsuario
                                 \Utilities\Site::redirectTo("index.php?page=admin_usuarios");

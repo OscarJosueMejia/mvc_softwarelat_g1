@@ -3,7 +3,7 @@
     <div class="row mb-2 justify-content-center">
         <div class="mt-4">
             <div class="d-flex align-items-center pt-2 mt-2">
-                <h1 class="text-center ">Historial de Compras</h1>
+                <h2 class="text-center ">Historial de Compras</h2>
                 <img class="ml-4"
                     src="https://firebasestorage.googleapis.com/v0/b/servientregasbd.appspot.com/o/shophistoric.png?alt=media&token=feeb6b26-012d-4469-ac14-bd5d3a626a47"
                     width="60px">

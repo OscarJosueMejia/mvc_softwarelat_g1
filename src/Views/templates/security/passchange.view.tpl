@@ -19,7 +19,7 @@
                     <div class="form-group" style="border-color:transparent;">
                         <label style="font-size: medium;" for="txtEmail">Correo Electrónico</label>
                         <div>
-                            <input class="form-control" type="email" id="txtEmail" name="txtEmail" placeholder="Correo Electrónico..." value="{{txtEmail}}" />
+                            <input class="form-control" readonly type="email" id="txtEmail" name="txtEmail" placeholder="Correo Electrónico..." value="{{txtEmail}}" />
                         </div>
                         {{if errorEmail}}
                         <div class="error">{{errorEmail}}</div>

@@ -152,7 +152,7 @@
         }
 
         if (Validators::IsEmpty($this->viewData["invClvSerial"])) {
-        $this->viewData["error_invClvSerial"][]= "El invClvSerial es requerido";
+        $this->viewData["error_invClvSerial"][]= "La Clave de Producto es requerida";
         $hasErrors = true;
         }
 

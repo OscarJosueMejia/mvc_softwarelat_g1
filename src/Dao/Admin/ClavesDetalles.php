@@ -73,8 +73,8 @@
            */
           public static function getByIdForInsert(int $invPrdId)
           {
-              $sqlstr = "SELECT cd.invClvId, pr.invPrdName, pr.invPrdId, cd.invClvSerial, cd.invClvExp, cd.invClvEst FROM softwarelat_db.claves_detalle cd
-                         INNER JOIN softwarelat_db.productos pr ON cd.invPrdId = pr.invPrdId WHERE pr.invPrdId = :invPrdId";
+              $sqlstr = "SELECT pr.invPrdName, pr.invPrdId FROM 
+                  softwarelat_db.productos pr WHERE pr.invPrdId = :invPrdId AND pr.invPrdEst = 'ACT'";
               $sqlParams = array("invPrdId" => $invPrdId);
               return self::obtenerUnRegistro($sqlstr, $sqlParams);
           }
