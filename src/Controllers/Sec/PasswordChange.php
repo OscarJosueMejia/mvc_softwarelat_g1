@@ -69,7 +69,12 @@ class PasswordChange extends \Controllers\PublicController
                                     \Dao\Security\Estados::ACTIVO,
                                     $dbUser["usertipo"],
                                 );
-                                \Utilities\Site::redirectTo("index.php?page=pages_infouser");
+                                \Utilities\Site::redirectToWithMsg(
+                                    "index.php?page=pages_infouser",
+                                    "Contraseña Actualizada Satisfactoriamente",
+                                    "Operación Ejecutada Correctamente",
+                                    false
+                                );
                             } catch (\Throwable $th) {
                                 error_log($th);
                             }
