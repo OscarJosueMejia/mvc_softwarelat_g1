@@ -75,7 +75,7 @@
             Mi Cuenta
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> &nbsp;&nbsp; Perfil</a>
+            <a class="dropdown-item" href="index.php?page=pages_infouser"><i class="fas fa-user-circle"></i> &nbsp;&nbsp; Perfil</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;
               Cerrar Sesión</a>
