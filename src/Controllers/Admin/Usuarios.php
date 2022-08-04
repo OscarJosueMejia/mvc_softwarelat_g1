@@ -11,8 +11,14 @@ class Usuarios extends \Controllers\PrivateController
         // code
         $viewData = array();
         $viewData["Usuarios"] = DaoSecurity::getUsuarios();
-        error_log(json_encode($viewData));
     
+        $isAuthorized = \Utilities\Security::isInRol(\Utilities\Security::getUserId(), 'SPU');
+        
+        $viewData["CanInsert"] = $isAuthorized ? true:false;
+        $viewData["CanUpdate"] = $isAuthorized ? true:false;
+        $viewData["CanDelete"] = $isAuthorized ? true:false;
+        $viewData["CanView"] = $isAuthorized ? true:false;
+
 
         Renderer::render("admin/usuarios", $viewData);
     }

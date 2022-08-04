@@ -11,11 +11,12 @@ class Funciones extends \Controllers\PrivateController
         $viewData = array();
         $viewData["Funciones"] = DaoFunciones::getAll();
         
-    // \Utilities\Security::isInRol();
-        $viewData["CanInsert"] = true;
-        $viewData["CanUpdate"] = true;
-        $viewData["CanDelete"] = true;
-        $viewData["CanView"] = true;
+        $isAuthorized = \Utilities\Security::isInRol(\Utilities\Security::getUserId(), 'SPU');
+        
+        $viewData["CanInsert"] = $isAuthorized ? true:false;
+        $viewData["CanUpdate"] = $isAuthorized ? true:false;
+        $viewData["CanDelete"] = $isAuthorized ? true:false;
+        $viewData["CanView"] = $isAuthorized ? true:false;
 
         Renderer::render("admin/funciones", $viewData);
     }
