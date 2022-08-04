@@ -80,7 +80,7 @@ class Usuario extends \Controllers\PrivateController
         $this->viewData["usertipo"] = "";
         $this->viewData["usertipoArr"] = array();
 
-            
+        $this->viewData["isSuperUser"] = false; 
         $this->viewData["btnEnviarText"] = "Guardar";
         $this->viewData["readonly"] = false;
         $this->viewData["readonlyEmail"] = false;
@@ -99,8 +99,9 @@ class Usuario extends \Controllers\PrivateController
         );
 
         $roles = Roles::getAll();
+        
         foreach ($roles as $rol) {
-            if ($rol["rolesest"]==="ACT") {
+            if ($rol["rolesest"]==="ACT" && $rol["rolescod"] !== "SPU") {
                 array_push($this->arrTipoUsuario, array("value" => $rol["rolescod"], "text" => $rol["rolesdsc"]));
             }
         }
@@ -253,6 +254,7 @@ class Usuario extends \Controllers\PrivateController
             if ($this->viewData["usertipo"]  == "SPU"){
                 $this->viewData["readonlyEmail"] = true;
                 $this->viewData["readonly"] = true; 
+                $this->viewData["isSuperUser"] = true; 
                 $this->viewData["showBtn"] = false;
             }
 
