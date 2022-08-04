@@ -12,7 +12,7 @@
             <span class="name mt-3">Fecha creacion: {{userfching}}</span>
             <br>    
             <div style="text-align: center;" class="reg-login">
-                <a href="index.php?page=sec_passwordrecovery">Cambiar contraseña</a>
+                <a href="index.php?page=sec_passwordchange">Cambiar contraseña</a>
             </div>
             {{endwith login}}
         </div>
