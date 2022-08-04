@@ -15,13 +15,14 @@ class Usuarios extends Table
      * @param [char] $usertipo New User Tipo
      * @return void
      */
-    public static function updateUsuario($usercod, $userest, $usertipo) {
+    public static function updateUsuario($usercod, $username, $userest, $usertipo) {
         $sqlstr = "UPDATE `usuario` SET 
-        `userest`=:userest, `usertipo`=:usertipo 
+        `userest`=:userest, `username`=:username, `usertipo`=:usertipo 
         where `usercod` =:usercod;";
         
         $sqlParams = [
             "userest" => $userest,
+            "username" => $username,
             "usertipo" => $usertipo,
             "usercod" => $usercod,
         ];

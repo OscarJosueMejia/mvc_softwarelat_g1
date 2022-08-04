@@ -195,6 +195,7 @@ class Usuario extends \Controllers\PrivateController
             case "UPD":
                 $result = Usuarios::updateUsuario(
                     $this->viewData["usercod"],
+                    $this->viewData["username"],
                     $this->viewData["userest"],
                     $this->viewData["usertipo"]
                 );
@@ -252,6 +253,7 @@ class Usuario extends \Controllers\PrivateController
             if ($this->viewData["usertipo"]  == "SPU"){
                 $this->viewData["readonlyEmail"] = true;
                 $this->viewData["readonly"] = true; 
+                $this->viewData["showBtn"] = false;
             }
 
             if ($this->viewData["mode"] === "UPD") {
