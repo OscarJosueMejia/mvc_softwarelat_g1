@@ -65,7 +65,17 @@
                     </div>
                     {{endifnot isInsert}}
 
+                    {{if isSuperUser}}
+                    <div class="form-group" style="border-color:transparent;">
+                        <label for="usertipo">Tipo</label><br />
+                        <select name="usertipo" id="usertipo" {{if readonly}} readonly disabled {{endif readonly}}
+                            class="form-control col-md-6">
+                            <option value="" selected="true">Superusuario</option>
+                        </select>
+                    </div>
+                    {{endif isSuperUser}}
 
+                    {{ifnot isSuperUser}}
                     <div class="form-group" style="border-color:transparent;">
                         <label for="usertipo">Tipo</label><br />
                         <select name="usertipo" id="usertipo" {{if readonly}} readonly disabled {{endif readonly}}
@@ -75,6 +85,7 @@
                             {{endfor usertipoArr}}
                         </select>
                     </div>
+                    {{endifnot isSuperUser}}
 
 
                     <hr className="mt-5" />

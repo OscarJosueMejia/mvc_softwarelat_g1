@@ -67,6 +67,8 @@ class CartItems extends PrivateController
                     }
                 }
                 if (!$cartErrors) {
+                    
+                    DaoOrder::deleteOrderToken($CurrentUser);
                     \Utilities\Site::redirectTo("index.php?page=checkout_checkout");
                 }
             }

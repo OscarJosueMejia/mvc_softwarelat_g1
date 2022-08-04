@@ -25,15 +25,28 @@
             <tbody>
                 {{foreach Funciones}}
                 <tr>
+                    {{if ~CanView}}
+                    <td><a href="index.php?page=admin_funcion&mode=DSP&id={{fncod}}">{{fncod}}</td>
+                    {{endif ~CanView}}
+
+                    {{ifnot ~CanView}}
                     <td>{{fncod}}</td>
-                    <td><a href="index.php?page=admin_funcion&mode=DSP&id={{fncod}}">{{fndsc}}</td>
+                    {{endifnot ~CanView}}
+
+                    <td>{{fndsc}}</td>
                     <td>{{fnest}}</td>
                     <td>{{fntyp}}</td>
 
                     <td>
-                        <a href="index.php?page=admin_funcion&mode=UPD&id={{fncod}}">Editar</a>
+                        {{if ~CanUpdate}}
+                        <a href="index.php?page=admin_funcion&mode=UPD&id={{fncod}}"><i class="fas fa-pen"></i></a>
+                        {{endif ~CanUpdate}}
                         &NonBreakingSpace;
-                        <a href="index.php?page=admin_funcion&mode=DEL&id={{fncod}}">Eliminar</a>
+                        {{if ~CanDelete}}
+                        <a href="index.php?page=admin_funcion&mode=DEL&id={{fncod}}">
+                            <i class="ml-3 fas fa-trash-alt"></i>
+                        </a>
+                        {{endif ~CanDelete}}
                     </td>
                 </tr>
                 {{endfor Funciones}}

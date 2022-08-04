@@ -24,18 +24,31 @@
             <tbody>
                 {{foreach Roles}}
                 <tr>
+                    {{if ~CanView}}
                     <td><a href="index.php?page=admin_rol&mode=DSP&id={{rolescod}}">{{rolescod}}</a></td>
+                    {{endif ~CanView}}
+
+                    {{ifnot ~CanView}}
+                    <td>{{rolescod}}</td>
+                    {{endifnot ~CanView}}
+
                     <td>{{rolesdsc}}</td>
                     <td>{{rolesest}}</td>
 
                     <td>
-                        <a href="index.php?page=admin_rol&mode=UPD&id={{rolescod}}">Editar</a>
+                        {{if ~CanUpdate}}
+                        <a href="index.php?page=admin_rol&mode=UPD&id={{rolescod}}"><i class="fas fa-pen"></i></a>
                         &NonBreakingSpace;
                         &NonBreakingSpace;
-                        <a href="index.php?page=admin_rolesfn&id={{rolescod}}">Funciones</a>
+                        <a class="ml-3" href="index.php?page=admin_rolesfn&id={{rolescod}}">
+                            <i class="fas fa-list-alt"></i></a>
+                        {{endif ~CanUpdate}}
                         &NonBreakingSpace;
                         &NonBreakingSpace;
-                        <a href="index.php?page=admin_rol&mode=DEL&id={{rolescod}}">Eliminar</a>
+                        {{if ~CanDelete}}
+                        <a class="ml-3" href="index.php?page=admin_rol&mode=DEL&id={{rolescod}}">
+                            <i class="fas fa-trash-alt"></i></a>
+                        {{endif ~CanDelete}}
                     </td>
                 </tr>
                 {{endfor Roles}}

@@ -27,15 +27,23 @@
             <tbody>
                 {{foreach Usuarios}}
                 <tr>
+                    {{if ~CanView}}
                     <td> <a href="index.php?page=admin_usuario&mode=DSP&id={{usercod}}">{{useremail}}</a></td>
+                    {{endif ~CanView}}
+
+                    {{ifnot ~CanView}}
+                    <td>{{useremail}}</td>
+                    {{endifnot ~CanView}}
+
                     <td>{{username}}</td>
                     <td>{{userpswdexp}}</td>
                     <td>{{userest}}</td>
                     <td>{{usertipo}}</td>
-
+                    {{if ~CanUpdate}}
                     <td>
-                        <a href="index.php?page=admin_usuario&mode=UPD&id={{usercod}}">Editar</a>
+                        <a href="index.php?page=admin_usuario&mode=UPD&id={{usercod}}"><i class="fas fa-pen"></i></a>
                     </td>
+                    {{endif ~CanUpdate}}
                 </tr>
                 {{endfor Usuarios}}
             </tbody>
