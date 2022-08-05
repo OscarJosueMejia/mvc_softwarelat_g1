@@ -21,10 +21,12 @@ class Checkout extends PrivateController{
             $lpsInUsdValue = \Utilities\ExchangeCurrency::getUSDCurrentValue();
     
             if ($lpsInUsdValue !== false) {
+
+                $basedir = \Utilities\Context::getContextByKey("BASE_DIR");
                 $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
                     "test".(time() - 10000000),
-                    "http://localhost/mvc_softwarelat_g1/index.php?page=checkout_error",
-                    "http://localhost/mvc_softwarelat_g1/index.php?page=checkout_accept"
+                    "http://localhost/".$basedir."/index.php?page=checkout_error",
+                    "http://localhost/".$basedir."/index.php?page=checkout_accept"
                 );
                 
                 foreach ($CartItems as $CartItem) {
